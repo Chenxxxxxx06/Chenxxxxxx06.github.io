@@ -1,6 +1,6 @@
 # <i class="fas fa-user section-icon"></i> About Me
 
-Hey there! I'm **Chen Xi (陈曦)**, a junior undergrad at **NPU SE** (Northwestern Polytechnical University, Software Engineering). I actually started out in Mathematics & Statistics before making the jump to CS — turns out I like building things more than proving theorems. 😄
+Hey there! I'm **Chen Xi**, a junior undergrad at **NPU SE** (Northwestern Polytechnical University, Software Engineering). I actually started out in Mathematics & Statistics before making the jump to CS — turns out I like building things more than proving theorems. 😄
 
 > **"Really getting it?"**
 

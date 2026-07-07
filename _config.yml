@@ -1,5 +1,5 @@
 # Site Settings
-title                    : "Chen Xi (陈曦)"
+title                    : "Chen Xi"
 description              : "Really getting it?"
 direction                : "NPU SE · VLM · VLA · Agent"
 repository               : "NPUwho/NPUwho.github.io"
@@ -11,7 +11,7 @@ baidu_site_verification  :
 
 # Site Author
 author:
-  name          : "Chen Xi (陈曦)"
+  name          : "Chen Xi"
   avatar        : "images/avatar.jpg"
   email         : "chenxxxxxx@mail.nwpu.edu.cn"
   googlescholar : ""
