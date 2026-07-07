@@ -1,0 +1,813 @@
+---
+---
+
+/*
+ *    Minimal Mistakes Jekyll Theme
+ *
+ *  - Michael Rose
+ *  - mademistakes.com
+ *  - https://twitter.com/mmistakes
+ *
+*/
+
+@import "vendor/breakpoint/breakpoint"; // media query mixins
+@import "config";   // ← 集中配置文件（字体/尺寸），在此修改全局参数
+@import "variables";
+@import "mixins";
+@import "vendor/susy/susy";
+
+@import "reset";
+@import "base";
+
+@import "utilities";
+@import "animations";
+@import "tables";
+@import "buttons";
+@import "notices";
+@import "masthead";
+@import "navigation";
+@import "footer";
+@import "syntax";
+
+@import "forms";
+
+@import "page";
+@import "archive";
+@import "sidebar";
+@import "portfolio";
+@import "custom";
+
+@import "vendor/font-awesome/fontawesome";
+@import "vendor/font-awesome/solid";
+@import "vendor/font-awesome/brands";
+@import "vendor/magnific-popup/magnific-popup";
+@import "print";
+
+/* =====================================================================
+   Theme System — 4 colour schemes via CSS custom properties
+   Switch by setting data-theme="" | "yellow" | "blue" | "dark" on <html>
+   ===================================================================== */
+:root {
+  /* --- Pure White (default) --- */
+  --bg:              #ffffff;
+  --masthead-bg:     #f5f5f5;
+  --masthead-border: #e8e8e8;
+  --paper-border:    #efefef;
+  --paper-hover:     #f7f7f7;
+  --h1-border:       #e8e8e8;
+  /* component (buttons, seg-control) */
+  --c-bg-start:      #ffffff;
+  --c-bg-end:        #f5f5f5;
+  --c-border:        rgba(0, 0, 0, 0.12);
+  --c-text:          #1a1a1a;
+  --c-hover-start:   #f0f0f0;
+  --c-hover-end:     #e8e8e8;
+  --c-hover-border:  rgba(0, 0, 0, 0.28);
+  --c-hover-text:    #000000;
+  /* seg-control active indicator */
+  --seg-start:       #1a1a1a;
+  --seg-end:         #333333;
+  --seg-shadow:      rgba(0, 0, 0, 0.22);
+  --seg-inactive:    #888888;
+  --seg-active-text: #ffffff;
+  /* glow (ask-me-btn breathing animation) */
+  --glow-rgb:        0, 0, 0;
+}
+
+[data-theme="yellow"] {
+  --bg:              #faf8f4;
+  --masthead-bg:     #f0ebe1;
+  --masthead-border: #e5ddd0;
+  --paper-border:    #e8e0d5;
+  --paper-hover:     #f0ece4;
+  --h1-border:       #ddd6c8;
+  --c-bg-start:      #ffffff;
+  --c-bg-end:        #faf4ea;
+  --c-border:        rgba(140, 95, 35, 0.22);
+  --c-text:          #3d2810;
+  --c-hover-start:   #f5ede0;
+  --c-hover-end:     #ede0cc;
+  --c-hover-border:  rgba(140, 95, 35, 0.5);
+  --c-hover-text:    #1c1208;
+  --seg-start:       #1c1208;
+  --seg-end:         #3a2410;
+  --seg-shadow:      rgba(28, 18, 8, 0.28);
+  --seg-inactive:    #8a7055;
+  --seg-active-text: #ffffff;
+  --glow-rgb:        180, 128, 40;
+}
+
+[data-theme="blue"] {
+  --bg:              #f3f5f8;
+  --masthead-bg:     #e3e8ef;
+  --masthead-border: #d3dae3;
+  --paper-border:    #dde4ed;
+  --paper-hover:     #e8eef5;
+  --h1-border:       #ccd4de;
+  --c-bg-start:      #ffffff;
+  --c-bg-end:        #edf2fa;
+  --c-border:        rgba(38, 88, 155, 0.22);
+  --c-text:          #1a3654;
+  --c-hover-start:   #e8f0fb;
+  --c-hover-end:     #d8e8f8;
+  --c-hover-border:  rgba(38, 88, 155, 0.5);
+  --c-hover-text:    #102847;
+  --seg-start:       #1a3654;
+  --seg-end:         #1e4a7a;
+  --seg-shadow:      rgba(26, 54, 84, 0.3);
+  --seg-inactive:    #6a8aaa;
+  --seg-active-text: #ffffff;
+  --glow-rgb:        38, 88, 155;
+}
+
+[data-theme="dark"] {
+  --bg:              #111110;
+  --masthead-bg:     #1c1c1a;
+  --masthead-border: #2e2e2b;
+  --paper-border:    #252522;
+  --paper-hover:     #1a1a18;
+  --h1-border:       #2e2e2b;
+  --c-bg-start:      #1e1e1c;
+  --c-bg-end:        #252520;
+  --c-border:        rgba(255, 255, 255, 0.1);
+  --c-text:          #e8e6df;
+  --c-hover-start:   #2a2a26;
+  --c-hover-end:     #303028;
+  --c-hover-border:  rgba(255, 255, 255, 0.22);
+  --c-hover-text:    #ffffff;
+  --seg-start:       #e8e6df;
+  --seg-end:         #d0cec7;
+  --seg-shadow:      rgba(232, 230, 223, 0.12);
+  --seg-inactive:    #666660;
+  --seg-active-text: #111110;
+  --glow-rgb:        220, 210, 180;
+}
+
+.paper-box {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 2em 0.75em;
+    border-radius: 6px;
+    margin-left: -0.75em;
+    margin-right: -0.75em;
+    transition: box-shadow 0.22s ease, transform 0.22s ease, background 0.22s ease;
+
+    &:hover {
+        background: var(--paper-hover);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+        transform: translateY(-2px);
+    }
+
+    .paper-box-image{
+        justify-content: center;
+        display: flex;
+        width: 100%;
+        order: 2;
+        img {
+            max-width: 400px;
+            box-shadow: 3px 3px 6px #888;
+            object-fit: cover;
+        }
+    }
+
+    .paper-box-text{
+        max-width: 100%;
+        order: 1;
+    }
+
+    @include breakpoint($medium) {
+        .paper-box-image{
+            justify-content: left;
+            min-width: 200px;
+            max-width: 35%;
+            order: 1;
+        }
+
+        .paper-box-text{
+            justify-content: left;
+            padding-left: 2em;
+            max-width: 65%;
+            order: 2;
+        }
+    }
+}
+
+$scroll_offset : 2em;
+h1:before, .anchor:before { 
+    content: ''; 
+    display: block; 
+    position: relative; 
+    width: 0; 
+    height: $scroll_offset; 
+    margin-top: -$scroll_offset;
+}
+
+.badge {
+    position: absolute;
+    top: .5em;
+    left: .5em;
+    padding: .2rem .6rem;
+    border-radius: .4rem;
+    color: #fff;
+    font-size: $badge-font-size;
+    font-weight: 600;
+    letter-spacing: .02em;
+    box-shadow: 0 2px 6px rgba(0,0,0,.15);
+}
+.badge.core { 
+    background-color: #1a8917; 
+    box-shadow: 0 4px 6px rgba(26, 137, 23, 0.3);
+} /* Core: green */
+.badge.non-core { background-color: #6c757d; } /* Non-core: gray */
+
+/* image wrapper for badge overlay */
+.paper-box-image > div { position: relative; display: inline-block; }
+
+/* Segmented control — used for pub filter and news toggle */
+.seg-control {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, var(--c-bg-start) 0%, var(--c-bg-end) 100%);
+  border: 1.5px solid var(--c-border);
+  border-radius: 10px;
+  padding: 3px;
+  user-select: none;
+
+  .seg-indicator {
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    border-radius: 7px;
+    background: linear-gradient(135deg, var(--seg-start) 0%, var(--seg-end) 100%);
+    box-shadow: 0 4px 14px var(--seg-shadow);
+    transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .seg-btn {
+    position: relative;
+    z-index: 1;
+    appearance: none;
+    background: transparent;
+    border: none;
+    color: var(--seg-inactive);
+    padding: 7px 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+    border-radius: 7px;
+    font-family: inherit;
+
+    &.active {
+      color: var(--seg-active-text);
+    }
+  }
+}
+
+#pubFilter {
+  margin: 0.5rem 0 1.25rem;
+}
+
+/* News Section Styles */
+.news-wrapper {
+    position: relative;
+    margin-bottom: 2em;
+}
+
+.news-content {
+    max-height: 300px;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+    -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+}
+
+.news-content.expanded {
+    -webkit-mask-image: none;
+    mask-image: none;
+}
+
+
+
+.news-toggle-container {
+    text-align: center;
+    margin-top: -20px;
+    position: relative;
+    z-index: 10;
+}
+
+.news-content.expanded ~ .news-toggle-container {
+    margin-top: 0.75em;
+}
+
+.news-toggle-icon {
+    font-size: 0.78em;
+    transition: transform 0.35s ease;
+}
+
+.news-content.expanded ~ .news-toggle-container .news-toggle-icon {
+    transform: rotate(180deg);
+}
+
+.seg-toggle-btn {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    background: linear-gradient(135deg, var(--c-bg-start) 0%, var(--c-bg-end) 100%);
+    border: 1.5px solid var(--c-border);
+    border-radius: 10px;
+    color: var(--c-text);
+    padding: 7px 28px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+        background: linear-gradient(135deg, var(--c-hover-start) 0%, var(--c-hover-end) 100%);
+        border-color: var(--c-hover-border);
+        color: var(--c-hover-text);
+        transform: translateY(-1px);
+        box-shadow: 0 3px 12px rgba(var(--glow-rgb), 0.15);
+    }
+}
+
+/* Ask Me Anything Button */
+@keyframes glowBreathe {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(var(--glow-rgb), 0),
+                    0 2px 8px rgba(var(--glow-rgb), 0.07);
+    }
+    50% {
+        box-shadow: 0 0 0 5px rgba(var(--glow-rgb), 0.04),
+                    0 0 28px 8px rgba(var(--glow-rgb), 0.16),
+                    0 2px 8px rgba(var(--glow-rgb), 0.09);
+    }
+}
+
+.ask-me-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55em;
+    width: 80%;
+    margin: 1.75em auto 2.5em;
+    padding: 0.85em 2em;
+    border-radius: 12px;
+    border: 1.5px solid var(--c-border);
+    background: linear-gradient(135deg, var(--c-bg-start) 0%, var(--c-bg-end) 100%);
+    color: var(--c-text);
+    font-size: 1em;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-decoration: none !important;
+    cursor: pointer;
+    animation: glowBreathe 3.5s ease-in-out infinite;
+    transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        background: linear-gradient(135deg, var(--c-hover-start) 0%, var(--c-hover-end) 100%);
+        border-color: var(--c-hover-border);
+        color: var(--c-hover-text);
+        transform: translateY(-2px);
+        text-decoration: none !important;
+        animation: none;
+        box-shadow: 0 0 0 5px rgba(var(--glow-rgb), 0.04),
+                    0 0 28px 8px rgba(var(--glow-rgb), 0.16),
+                    0 2px 8px rgba(var(--glow-rgb), 0.09);
+    }
+}
+
+/* App Cards — premium card grid replacing Markdown table */
+.app-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.8em;
+  margin: 1em 0 1.5em;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* <a> is the static hit area — never moves, so no flicker at edges */
+.app-card {
+  display: block;
+  color: var(--c-text);
+  text-decoration: none !important;
+
+  &:hover { text-decoration: none !important; color: var(--c-hover-text); }
+  &:hover .app-card__inner {
+    transform: translateY(-2px);
+    border-color: var(--c-hover-border);
+    background: linear-gradient(135deg, var(--c-hover-start) 0%, var(--c-hover-end) 100%);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Only the inner visual layer animates */
+.app-card__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+  padding: 1em 1.1em;
+  border-radius: 10px;
+  border: 1.5px solid var(--c-border);
+  background: linear-gradient(135deg, var(--c-bg-start) 0%, var(--c-bg-end) 100%);
+  height: 100%;
+  box-sizing: border-box;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.app-card__name {
+  font-weight: 700;
+  font-size: $app-card-name-size;
+  color: inherit;
+}
+
+.app-card__desc {
+  font-size: $app-card-desc-size;
+  line-height: 1.5;
+  opacity: 0.7;
+  color: inherit;
+}
+
+/* Custom Highlights */
+.highlight-red {
+    color: #C00000;
+}
+
+.author-highlight {
+    color: #000000;
+}
+
+/* Section heading icons */
+.section-icon {
+    font-size: $section-icon-size;
+    margin-right: 0.45em;
+    opacity: 0.5;
+    vertical-align: 0.08em;
+}
+
+/* ==========================================================================
+   Design Overrides — Modern AI Researcher Aesthetic
+   ========================================================================== */
+
+/* 1. Font: Space Grotesk — geometric, modern, technical */
+body, .sidebar, .page__content, .author__name, .masthead {
+    font-family: 'Space Grotesk', "Trebuchet MS", Helvetica, sans-serif;
+}
+html { font-size: $font-size-base !important; } /* lock base — prevents theme reset.scss (15px) winning */
+body { font-weight: $content-font-weight; }     /* Space Grotesk medium */
+
+/* 2. Warm cream background — Claude-style low-saturation yellow */
+/* Only html gets the solid colour; body/#main are transparent so the
+   canvas wave-mosaic (z-index:0) shows through */
+html {
+    background-color: var(--bg);
+}
+body, #main {
+    background-color: transparent;
+}
+.page__content {
+    background-color: transparent;
+}
+/* Keep sidebar background transparent — inherits page background */
+.sidebar {
+    background-color: transparent;
+    -webkit-transform: none !important;
+    transform: none !important; /* remove theme's translate3d globally — causes stacking context on mobile blocking click events */
+}
+/* Masthead: slightly darker than background */
+.masthead {
+    background-color: var(--masthead-bg) !important;
+    border-bottom: 1px solid var(--masthead-border);
+}
+/* Nav bar inside masthead: transparent so it inherits masthead color */
+.greedy-nav {
+    background: transparent !important;
+}
+
+/* ── Custom site-nav — fully independent of greedy-nav ──────────────────────── */
+
+/* Center the nav within the masthead */
+.masthead__menu,
+.masthead__inner-wrap {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100%;
+}
+
+.site-nav {
+    width: 100%;
+    min-width: 0; /* prevent flex child from expanding page width */
+    overflow-x: auto; /* scroll container — isolates overflow from page */
+    scrollbar-width: none;
+    &::-webkit-scrollbar { display: none; }
+}
+
+.site-nav__links {
+    display: flex;
+    flex-wrap: nowrap;          /* never let items stack vertically */
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    /* min-width:100% → centered when fits; max-content → overflows right-only when narrow */
+    width: max-content;
+    min-width: 100%;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 6px 8px;
+    gap: 4px;                   /* gap >= inset ring spread so rings never touch neighbours */
+}
+
+.site-nav__link {
+    padding: $nav-link-padding !important; /* locked height — same on all screen sizes */
+    border-radius: 7px;
+    font-weight: normal !important;
+    font-family: inherit;
+    font-size: inherit;
+    text-decoration: none !important;
+    color: inherit;
+    white-space: nowrap;
+    transition: background 0.2s ease, color 0.2s ease;
+
+    &.nav-active {
+        background: rgba(var(--glow-rgb), 0.13);
+    }
+}
+
+/* Hover only on real pointer devices — prevents sticky hover on touch screens */
+@media (hover: hover) and (pointer: fine) {
+    .site-nav__link:hover {
+        background: rgba(var(--glow-rgb), 0.07);
+        text-decoration: none !important;
+    }
+    [data-theme="dark"] .site-nav__link:hover { color: #ffffff; }
+}
+
+/* Dark mode nav link colour */
+[data-theme="dark"] .site-nav__link {
+    color: #e8e6df;
+}
+
+/* 3. Sidebar: JS pins to fixed position (CSS sticky unreliable — see custom-scripts.js) */
+/* Remove intro animation globally — prevents stacking context that breaks sidebar on all screen sizes */
+#main {
+    animation: none !important;
+    position: relative;
+    z-index: 1;
+}
+@media (min-width: 925px) {
+    #main {
+        display: flex !important;
+        align-items: flex-start;
+        position: relative;
+        z-index: 1;
+    }
+    .sidebar {
+        flex-shrink: 0;
+        padding-top: 2.4em;
+        overflow: hidden;
+    }
+    .sidebar--pinned {
+        position: fixed !important;
+        overflow: hidden !important;
+        max-height: 100vh;
+    }
+    .page {
+        flex: 1 1 0 !important;
+        min-width: 0;
+    }
+}
+
+/* Hide scrollbars everywhere (scroll still works via wheel/trackpad) */
+* {
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+/* 6. Section h1: slightly refined weight and tracking */
+.page__content {
+    font-size: $content-p-size !important; /* sets em context for child elements */
+}
+/* Override theme's hardcoded 16px on p/li/dl inside page content */
+.page__content p,
+.page__content li,
+.page__content dl {
+    font-size: $content-p-size !important;
+}
+.page__content h1 {
+    font-size: $h1-font-size !important;
+    font-weight: $h1-font-weight;
+    letter-spacing: $h1-letter-spacing;
+    border-bottom: none;
+}
+
+/* 7. Page entry animation: subtle fade-up for main content */
+.page__content {
+    animation: fadeUpIn 0.2s ease both;
+}
+@keyframes fadeUpIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* 8. Link hover transition */
+.page__content a {
+    transition: color 0.15s ease;
+}
+
+/* 9. Author profile: compact icon-only social row */
+.profile_box {
+    flex-wrap: wrap; /* allow direction + icons to stack below avatar row on mobile */
+}
+
+/* Sidebar font sizes — override theme defaults on all screen sizes */
+.sidebar .author__name {
+    font-size: $sidebar-name-size !important;
+}
+.sidebar .author__bio {
+    font-size: $sidebar-bio-size !important;
+}
+
+.author__direction {
+    flex: 1 1 100%;
+    font-size: $sidebar-direction-size !important; /* !important needed: beats .sidebar p specificity from theme */
+    line-height: 1.55;
+    margin: 0.5em 0 0.25em;
+    color: inherit;
+    opacity: 0.8;
+}
+
+.author__social-icons {
+    flex: 1 1 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55em;
+    margin-top: 0.4em;
+
+    a {
+        color: inherit;
+        font-size: $sidebar-icon-size;
+        opacity: 0.6;
+        text-decoration: none;
+        line-height: 1;
+        transition: opacity 0.15s ease;
+        touch-action: manipulation; /* remove 300ms tap delay on mobile */
+
+        &:hover {
+            opacity: 1;
+            text-decoration: none;
+        }
+    }
+}
+
+/* Mobile sidebar: compact horizontal layout */
+@media (max-width: 924px) {
+    .sidebar {
+        position: relative;
+        z-index: 2;
+    }
+    .profile_box {
+        padding: 0.75em 1em;
+        gap: 0;
+    }
+    .author__avatar {
+        width: 76px !important;
+        flex-shrink: 0;
+    }
+    .author__avatar img {
+        max-width: 76px !important;
+        min-width: 56px !important;
+    }
+    .author__content {
+        padding-left: 0.75em;
+        flex: 1;
+        min-width: 0;
+    }
+    .author__name {
+        font-size: $sidebar-name-size !important;
+        margin: 0 0 0.2em !important;
+    }
+    .author__bio {
+        font-size: $sidebar-bio-size !important;
+        margin: 0 !important;
+    }
+    .author__direction {
+        font-size: $sidebar-direction-size !important;
+        margin-top: 0.4em;
+    }
+    .author__social-icons a {
+        font-size: $sidebar-icon-size !important;
+    }
+}
+
+/* Remove border/padding around profile photo on all screen sizes */
+.author__avatar img {
+    border: none !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+}
+
+/* ==========================================================================
+   Dark Mode — text & link colour overrides
+   ========================================================================== */
+[data-theme="dark"] {
+    color-scheme: dark;
+
+    /* Text selection highlight */
+    ::selection      { background: rgba(160, 180, 220, 0.35); color: #ffffff; }
+    ::-moz-selection { background: rgba(160, 180, 220, 0.35); color: #ffffff; }
+
+    body, .page__content, .page__content p, .page__content li,
+    .page__content h1, .page__content h2, .page__content h3,
+    .page__content h4, .page__content h5, .page__content h6,
+    .author__name, .author__bio, .author__direction,
+    .masthead, .greedy-nav, .greedy-nav a,
+    .nav__title, .page__footer {
+        color: #e8e6df;
+    }
+
+    .page__content a {
+        color: #a8c0d8;
+        &:hover { color: #c8daf0; }
+    }
+
+    .greedy-nav a:hover { color: #ffffff; }
+
+    blockquote {
+        border-left-color: #3a3a36;
+        color: #b0aea8;
+    }
+
+    table th, table td {
+        border-color: #2e2e2b;
+    }
+
+    table tr:nth-child(2n) {
+        background: #1a1a18;
+    }
+}
+
+/* ==========================================================================
+   Theme Switcher — floating dot palette
+   ========================================================================== */
+#theme-switcher {
+    position: fixed;
+    bottom: 1.5em;
+    right: 1.5em;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--masthead-bg);
+    border: 1px solid var(--masthead-border);
+    border-radius: 9999px;
+    padding: 9px 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.theme-dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+    &[data-theme="white"]  { background: #ffffff; border-color: #c8c8c8; }
+    &[data-theme="yellow"] { background: #e8d5a0; border-color: #c4a060; }
+    &[data-theme="blue"]   { background: #a8c4e8; border-color: #5e8ec8; }
+    &[data-theme="dark"]   { background: #2a2a26; border-color: #585852; }
+
+    &.active {
+        transform: scale(1.35);
+        box-shadow: 0 0 0 2px var(--bg), 0 0 0 3.5px var(--masthead-border);
+    }
+
+    &:hover:not(.active) { transform: scale(1.18); }
+}
+
+/* (nav link styles now in .site-nav__link above) */

@@ -1,0 +1,106 @@
+# Site Settings
+title                    : "Chen Xi (陈曦)"
+description              : "Really getting it?"
+direction                : "NPU SE · VLM · VLA · Agent"
+repository               : "NPUwho/NPUwho.github.io"
+
+# SEO Related
+google_site_verification :
+bing_site_verification   :
+baidu_site_verification  :
+
+# Site Author
+author:
+  name          : "Chen Xi (陈曦)"
+  avatar        : "images/avatar.jpg"
+  email         : "chenxxxxxx@mail.nwpu.edu.cn"
+  googlescholar : ""
+  github        : "NPUwho"
+  twitter       : ""
+  linkedin      : ""
+
+
+# Reading Files
+include:
+  - .htaccess
+  - _pages
+  - files
+exclude:
+  - "*.sublime-project"
+  - "*.sublime-workspace"
+  - .asset-cache
+  - .bundle
+  - .jekyll-assets-cache
+  - .sass-cache
+  - CHANGELOG
+  - Capfile
+  - Gemfile
+  - Gruntfile.js
+  - LICENSE
+  - README
+  - Rakefile
+  - config
+  - gulpfile.js
+  - log
+  - node_modules
+  - package.json
+  - tmp
+  - vendor
+keep_files:
+  - .git
+  - .svn
+encoding: "utf-8"
+markdown_ext: "markdown,mkdown,mkdn,mkd,md"
+
+
+# Conversion
+markdown: kramdown
+highlighter: rouge
+lsi: false
+excerpt_separator: "\n\n"
+incremental: false
+
+
+# Markdown Processing
+kramdown:
+  input: GFM
+  hard_wrap: false
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  smart_quotes: lsquo,rsquo,ldquo,rdquo
+  enable_coderay: false
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: default
+      author_profile: true
+
+
+# Sass/SCSS
+sass:
+  sass_dir: _sass
+  style: compressed
+
+
+# Outputting
+permalink: /:categories/:title/
+timezone: Asia/Shanghai
+
+
+# Plugins
+plugins:
+  - jekyll-sitemap
+  - jekyll-feed
+
+
+# HTML Compression
+compress_html:
+  clippings: all
+  ignore:
+    envs: development

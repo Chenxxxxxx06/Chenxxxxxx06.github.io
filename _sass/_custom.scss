@@ -1,0 +1,136 @@
+/* ==========================================================================
+   Custom Sections (Teaser, Chat, etc.)
+   ========================================================================== */
+
+/* Section spacing */
+.page__content h1 {
+  margin-top: 2.2em !important;
+  margin-bottom: 0.6em !important;
+}
+.page__content h1:first-of-type {
+  margin-top: 0.6em !important;
+}
+
+/* ── Publication teaser ── */
+.teaser-section {
+  text-align: center;
+  padding: 40px 24px;
+  background: var(--masthead-bg);
+  border-radius: 12px;
+  border: 1px dashed var(--masthead-border);
+}
+[data-theme="dark"] .teaser-section {
+  border-style: dashed;
+}
+.teaser-emoji {
+  font-size: 3em;
+  display: block;
+  margin-bottom: 16px;
+}
+.teaser-section p {
+  font-size: 1.05em;
+  color: var(--c-text);
+  max-width: 500px;
+  margin: 0 auto 8px auto;
+  line-height: 1.6;
+  opacity: 0.7;
+}
+.teaser-hint {
+  font-size: 0.9em !important;
+  font-style: italic;
+  opacity: 0.5 !important;
+}
+
+/* ── Chat / Open Inbox ── */
+.chat-section { max-width: 600px; }
+.chat-card {
+  display: flex;
+  gap: 20px;
+  background: var(--masthead-bg);
+  border: 1px solid var(--masthead-border);
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 16px;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.chat-card:hover {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+.chat-icon {
+  font-size: 2.4em;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.chat-content p {
+  margin: 0 0 10px 0;
+  font-size: 0.95em;
+  color: var(--c-text);
+  opacity: 0.75;
+  line-height: 1.6;
+}
+.chat-link {
+  display: inline-block;
+  background: var(--c-text);
+  color: var(--bg) !important;
+  text-decoration: none !important;
+  padding: 8px 18px;
+  border-radius: 24px;
+  font-size: 0.92em;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+.chat-link:hover {
+  opacity: 0.8;
+}
+.chat-note {
+  font-size: 0.82em !important;
+  opacity: 0.4 !important;
+  margin-top: 12px !important;
+}
+
+/* ── Portfolio note ── */
+.portfolio-note {
+  text-align: center;
+  margin-top: 8px;
+  color: var(--c-text);
+  opacity: 0.45;
+  font-size: 0.9em;
+}
+
+/* ── Vlog grid ── */
+.vlog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 1em 0 1.5em;
+}
+@media (max-width: 768px) {
+  .vlog-grid { grid-template-columns: 1fr; }
+}
+.vlog-card {
+  background: var(--masthead-bg);
+  border: 1px solid var(--masthead-border);
+  border-radius: 14px;
+  padding: 28px 22px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.vlog-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+  border-color: var(--c-border);
+}
+[data-theme="dark"] .vlog-card:hover {
+  box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+}
+.vlog-placeholder {
+  font-size: 2.8em;
+  margin-bottom: 12px;
+}
+.vlog-card p {
+  font-size: 0.88em;
+  color: var(--c-text);
+  opacity: 0.55;
+  line-height: 1.5;
+  margin: 0;
+}
