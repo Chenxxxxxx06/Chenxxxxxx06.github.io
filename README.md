@@ -1,7 +1,5 @@
 # black-yt.github.io
 
-Personal academic homepage of **Wanghan Xu (徐望瀚)**, PhD student in Electronic Information at Shanghai Jiao Tong University.
-
 🌐 **Live site:** [black-yt.github.io](https://black-yt.github.io)
 
 ## About
