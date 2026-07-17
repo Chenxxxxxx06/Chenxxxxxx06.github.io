@@ -1,10 +1,14 @@
-# black-yt.github.io
+# NPUwho.github.io
 
-🌐 **Live site:** [black-yt.github.io](https://black-yt.github.io)
+Personal academic homepage of **Chen Xi**, focusing on VLM · VLA · Agent at Northwestern Polytechnical University (NPU).
+
+🌐 **Live site:** [npuwho.github.io](https://npuwho.github.io)
 
 ## About
 
 Built on [Jekyll](https://jekyllrb.com/) with the [Minimal Mistakes](https://github.com/mmistakes/minimal-mistakes) theme, hosted on GitHub Pages. Features a custom design system with 4 switchable colour themes, animated UI components, and auto-updated Google Scholar citation counts.
+
+The layout and design system are adapted from the excellent personal homepage of [**Wanghan Xu (徐望瀚)**](https://black-yt.github.io) — many thanks to the original author for sharing such a clean and well-crafted template. All content on this site is my own.
 
 ## Features
 
@@ -23,8 +27,8 @@ All typography and spacing values are centralised in **`_sass/_config.scss`**. E
 | `$font-size-base` | Em base for the whole page | px | `15px` |
 | `$nav-font-size` | Navigation tab text | px | `21px` |
 | `$nav-link-padding` | Tab height / width (top-bottom × left-right) | em | `0.1em 0.6em` |
-| `$sidebar-name-size` | Name ("Wanghan Xu") | em | `1.3em` |
-| `$sidebar-bio-size` | Affiliation ("PhD at SJTU") | em | `1.1em` |
+| `$sidebar-name-size` | Name ("Chen Xi") | em | `1.3em` |
+| `$sidebar-bio-size` | Affiliation ("NPU") | em | `1.1em` |
 | `$sidebar-direction-size` | Research direction ("Focusing on...") | em | `1.0em` |
 | `$sidebar-icon-size` | Social icons (GitHub, Scholar…) | em | `1.3em` |
 | `$content-p-size` | Body paragraphs and lists | px | `17px` |
