@@ -15,8 +15,16 @@
     <div class="experience-item__content">
       <p class="experience-item__role">Research Student</p>
       <h3>Air-Space-Ground-Sea Integrated Systems Laboratory</h3>
-      <p class="experience-item__place">Northwestern Polytechnical University</p>
-      <p class="experience-item__detail"><i class="fas fa-user-tie" aria-hidden="true"></i> Working with Prof. Peng Wu</p>
+      <div class="experience-item__affiliation">
+        <span class="experience-item__logo" aria-hidden="true">
+          <img src="{{ '/assets/images/brand/nwpu-logo.png' | relative_url }}" alt="">
+        </span>
+        <p class="experience-item__place">Northwestern Polytechnical University</p>
+      </div>
+      <p class="experience-item__detail">
+        <span class="experience-item__detail-label">Advisor</span>
+        <span>Prof. Peng Wu</span>
+      </p>
     </div>
   </article>
 </div>
