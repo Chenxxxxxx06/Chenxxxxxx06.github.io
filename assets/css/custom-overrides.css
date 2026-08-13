@@ -267,7 +267,7 @@
 }
 
 .experience-item__content .experience-item__role {
-  margin: 0 0 8px !important;
+  margin: 0 !important;
   color: var(--c-text);
   font-size: 0.64rem !important;
   font-weight: 700;
@@ -278,7 +278,7 @@
 
 .experience-item__content h3 {
   max-width: 28ch;
-  margin: 0 0 15px !important;
+  margin: 0 0 9px !important;
   color: var(--c-text);
   font-size: clamp(1.04rem, 1.7vw, 1.2rem);
   font-weight: 650;
@@ -286,31 +286,38 @@
   letter-spacing: -0.025em;
 }
 
-.experience-item__affiliation {
+.experience-item__identity {
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-bottom: 11px;
 }
 
 .experience-item__logo {
+  position: relative;
   display: block;
-  flex: 0 0 36px;
-  width: 36px;
-  height: 36px;
+  flex: 0 0 38px;
+  width: 38px;
+  height: 38px;
   overflow: hidden;
-  border-radius: 50%;
+  background: #0054a3;
+  border: 1px solid rgba(0, 84, 163, 0.2);
+  border-radius: 9px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
 .experience-item__logo img {
+  position: absolute;
+  top: 6px;
+  left: 6px;
   display: block;
   width: auto !important;
   max-width: none !important;
-  height: 36px;
-  transform: translateX(-1px);
+  height: 26px;
 }
 
 .experience-item__content .experience-item__place {
-  margin: 0 !important;
+  margin: 0 0 14px !important;
   color: var(--experience-blue) !important;
   font-size: 0.8rem !important;
   font-weight: 650;
@@ -321,7 +328,7 @@
   display: flex;
   align-items: baseline;
   gap: 9px;
-  margin: 15px 0 0 !important;
+  margin: 0 !important;
   color: var(--c-text) !important;
   font-size: 0.71rem !important;
 }
@@ -337,12 +344,7 @@
 .experience-item__detail > span:last-child { font-weight: 550; opacity: 0.7; }
 
 [data-theme="dark"] .experience-item__content { --experience-blue: #76afe4; }
-[data-theme="dark"] .experience-item__logo {
-  padding: 2px;
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 0 0 1px rgba(118, 175, 228, 0.24);
-}
-[data-theme="dark"] .experience-item__logo img { height: 32px; }
+[data-theme="dark"] .experience-item__logo { border-color: rgba(118, 175, 228, 0.32); }
 
 /* Interactive status mascot */
 .mascot-widget {
