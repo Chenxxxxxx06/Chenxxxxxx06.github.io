@@ -2,7 +2,8 @@
 title                    : "Chen Xi"
 description              : "Really getting it?"
 direction                : "NPU SE · VLM · VLA · Agent"
-repository               : "NPUwho/NPUwho.github.io"
+repository               : "Chenxxxxxx06/Chenxxxxxx06.github.io"
+url                      : "https://chenxxxxxx06.github.io"
 
 # SEO Related
 google_site_verification :
@@ -15,7 +16,7 @@ author:
   avatar        : "images/avatar.jpg"
   email         : "chenxxxxxx@mail.nwpu.edu.cn"
   googlescholar : ""
-  github        : "NPUwho"
+  github        : "Chenxxxxxx06"
   twitter       : ""
   linkedin      : ""
 
@@ -44,6 +45,7 @@ exclude:
   - log
   - node_modules
   - package.json
+  - scripts
   - tmp
   - vendor
 keep_files:

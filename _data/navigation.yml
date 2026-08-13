@@ -3,6 +3,9 @@ main:
   - title: "About Me"
     url: "#-about-me"
 
+  - title: "Activity"
+    url: "#-activity"
+
   - title: "News"
     url: "#-news"
 
@@ -15,8 +18,5 @@ main:
   - title: "Honors"
     url: "#-honors"
 
-  - title: "Vlog"
-    url: "#-vlog"
-
-  - title: "Open Inbox"
-    url: "#-open-inbox"
+  - title: "Experience"
+    url: "#-experience"

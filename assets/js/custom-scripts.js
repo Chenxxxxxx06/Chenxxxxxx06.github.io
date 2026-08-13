@@ -393,3 +393,334 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.addEventListener('DOMContentLoaded', setupPortfolioVideos);
 })();
+
+// Activity heatmaps. The JSON contains aggregate counts only and is refreshed
+// locally every six hours by scripts/activity_sync_loop.ps1.
+(function () {
+  var SVG_NS = 'http://www.w3.org/2000/svg';
+  var DAY_MS = 24 * 60 * 60 * 1000;
+  var REFRESH_MS = 6 * 60 * 60 * 1000;
+
+  function compact(value) {
+    var number = Number(value || 0);
+    var units = [
+      { value: 1e12, suffix: 'T' },
+      { value: 1e9, suffix: 'B' },
+      { value: 1e6, suffix: 'M' },
+      { value: 1e3, suffix: 'K' }
+    ];
+    for (var i = 0; i < units.length; i++) {
+      if (number >= units[i].value) {
+        var scaled = number / units[i].value;
+        return (scaled >= 100 ? scaled.toFixed(0) : scaled.toFixed(1).replace(/\.0$/, '')) + units[i].suffix;
+      }
+    }
+    return number.toLocaleString('en-US');
+  }
+
+  function quantiles(days, valueKey) {
+    var values = days.map(function (item) { return Number(item[valueKey] || 0); })
+      .filter(function (value) { return value > 0; })
+      .sort(function (a, b) { return a - b; });
+    if (!values.length) return [1, 2, 3, 4];
+    function at(percent) { return values[Math.min(values.length - 1, Math.floor((values.length - 1) * percent))]; }
+    return [at(0.2), at(0.48), at(0.73), at(0.9)];
+  }
+
+  function levelFor(value, breaks) {
+    if (!value) return 0;
+    if (value <= breaks[0]) return 1;
+    if (value <= breaks[1]) return 2;
+    if (value <= breaks[2]) return 3;
+    return 4;
+  }
+
+  function svgNode(name, attrs) {
+    var node = document.createElementNS(SVG_NS, name);
+    Object.keys(attrs || {}).forEach(function (key) { node.setAttribute(key, attrs[key]); });
+    return node;
+  }
+
+  function renderHeatmap(element, days, valueKey, unitLabel) {
+    if (!element || !days || !days.length) return;
+    var sorted = days.slice().sort(function (a, b) { return a.date.localeCompare(b.date); });
+    var first = new Date(sorted[0].date + 'T00:00:00Z');
+    var firstSunday = new Date(first.getTime() - first.getUTCDay() * DAY_MS);
+    var last = new Date(sorted[sorted.length - 1].date + 'T00:00:00Z');
+    var weekCount = Math.floor((last - firstSunday) / (7 * DAY_MS)) + 1;
+    var step = 13;
+    var size = 11;
+    var left = 24;
+    var top = 18;
+    var width = left + weekCount * step + 3;
+    var height = top + 7 * step + 4;
+    var breaks = quantiles(sorted, valueKey);
+    var svg = svgNode('svg', {
+      viewBox: '0 0 ' + width + ' ' + height,
+      role: 'img',
+      'aria-label': element.getAttribute('aria-label') || 'Activity heatmap',
+      preserveAspectRatio: 'xMinYMin meet'
+    });
+
+    [['Mon', 1], ['Wed', 3], ['Fri', 5]].forEach(function (item) {
+      var text = svgNode('text', { x: 0, y: top + item[1] * step + 6 });
+      text.textContent = item[0];
+      svg.appendChild(text);
+    });
+
+    var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    var lastMonth = -1;
+    var lastMonthColumn = -6;
+
+    sorted.forEach(function (item) {
+      var date = new Date(item.date + 'T00:00:00Z');
+      var column = Math.floor((date - firstSunday) / (7 * DAY_MS));
+      var weekday = date.getUTCDay();
+      var month = date.getUTCMonth();
+      if (month !== lastMonth && column - lastMonthColumn >= 4) {
+        var label = svgNode('text', { x: left + column * step, y: 8 });
+        label.textContent = monthNames[month];
+        svg.appendChild(label);
+        lastMonthColumn = column;
+      }
+      lastMonth = month;
+
+      var value = Number(item[valueKey] || 0);
+      var rect = svgNode('rect', {
+        x: left + column * step,
+        y: top + weekday * step,
+        width: size,
+        height: size,
+        class: 'activity-cell level-' + levelFor(value, breaks),
+        tabindex: '-1'
+      });
+      var title = svgNode('title');
+      title.textContent = item.date + ': ' + value.toLocaleString('en-US') + ' ' + unitLabel;
+      rect.appendChild(title);
+      svg.appendChild(rect);
+    });
+
+    element.replaceChildren(svg);
+    window.requestAnimationFrame(function () {
+      element.scrollLeft = element.scrollWidth;
+    });
+  }
+
+  function updateActivity(payload) {
+    var githubMetric = document.getElementById('githubActivityMetric');
+    var tokenMetric = document.getElementById('tokenActivityMetric');
+    var requestCount = document.getElementById('tokenRequestCount');
+    var updated = document.getElementById('activityUpdated');
+    if (!githubMetric || !tokenMetric) return;
+
+    githubMetric.textContent = Number(payload.github.total_contributions || 0).toLocaleString('en-US');
+    githubMetric.title = githubMetric.textContent + ' contributions';
+    var periodTokens = Number(payload.ai.period_tokens || payload.ai.total_tokens || 0);
+    var periodRequests = Number(payload.ai.period_requests || payload.ai.total_requests || 0);
+    tokenMetric.textContent = compact(periodTokens);
+    tokenMetric.title = periodTokens.toLocaleString('en-US') + ' tokens in the last 6 months';
+    requestCount.textContent = compact(periodRequests) + ' requests · last 6 months';
+
+    renderHeatmap(document.getElementById('githubHeatmap'), payload.github.days, 'count', 'contributions');
+    renderHeatmap(document.getElementById('tokenHeatmap'), payload.ai.days, 'tokens', 'tokens');
+
+    var generated = new Date(payload.generated_at);
+    updated.textContent = 'Local aggregates updated ' + generated.toLocaleString('en-US', {
+      month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+    }) + '. Next refresh within 6 hours.';
+  }
+
+  function loadActivity() {
+    var grid = document.getElementById('activityGrid');
+    if (!grid) return;
+    var source = grid.getAttribute('data-source');
+    fetch(source + '?v=' + Date.now(), { cache: 'no-store' })
+      .then(function (response) {
+        if (!response.ok) throw new Error('Activity data unavailable');
+        return response.json();
+      })
+      .then(updateActivity)
+      .catch(function () {
+        var updated = document.getElementById('activityUpdated');
+        if (updated) updated.textContent = 'Showing the built-in activity snapshot. The next 6-hour refresh will retry.';
+      });
+  }
+
+  function loadFallbackActivity() {
+    var fallback = document.getElementById('activityFallbackData');
+    if (!fallback) return false;
+    try {
+      var payload = JSON.parse(fallback.textContent || '{}');
+      if (!payload.github || !payload.ai) return false;
+      updateActivity(payload);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    if (!document.getElementById('activityGrid')) return;
+    loadFallbackActivity();
+    loadActivity();
+    window.setInterval(loadActivity, REFRESH_MS);
+  });
+})();
+
+// Time-aware mascot. Schedule is calculated in Asia/Shanghai regardless of the
+// visitor's local timezone, then images cross-fade at natural daily boundaries.
+(function () {
+  var states = {
+    working:  { file: 'mascot-working.webp',  label: 'WORKING',  alt: 'Chen Xi is working' },
+    sleeping: { file: 'mascot-sleeping.webp', label: 'SLEEPING', alt: 'Chen Xi is sleeping' },
+    eating:   { file: 'mascot-eating.webp',   label: 'EATING',   alt: 'Chen Xi is eating' },
+    drinking: { file: 'mascot-drinking.webp', label: 'OFF DUTY', alt: 'Chen Xi is relaxing with a drink' }
+  };
+
+  function shanghaiMinutes() {
+    var parts = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Asia/Shanghai', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+    }).formatToParts(new Date());
+    var values = {};
+    parts.forEach(function (part) { values[part.type] = part.value; });
+    return (Number(values.hour) % 24) * 60 + Number(values.minute);
+  }
+
+  function scheduledState(minutes) {
+    if (minutes < 390) return 'sleeping';       // 00:00 to 06:30
+    if (minutes < 480) return 'eating';         // breakfast
+    if (minutes < 705) return 'working';        // morning work
+    if (minutes < 810) return 'eating';         // lunch
+    if (minutes < 1080) return 'working';       // afternoon work
+    if (minutes < 1170) return 'eating';        // dinner
+    if (minutes < 1350) return 'drinking';      // evening break
+    return 'sleeping';                          // 22:30 to midnight
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var widget = document.getElementById('mascotWidget');
+    var button = document.getElementById('mascotButton');
+    var image = document.getElementById('mascotImage');
+    var status = document.getElementById('mascotStatus');
+    var bubble = document.getElementById('mascotBubble');
+    var contact = document.getElementById('mascotContact');
+    var contactClose = document.getElementById('mascotContactClose');
+    var emailSend = document.getElementById('mascotEmailSend');
+    var emailCopy = document.getElementById('mascotEmailCopy');
+    var emailAddress = document.getElementById('mascotEmailAddress');
+    if (!widget || !button || !image || !status || !bubble || !contact) return;
+
+    var baseUrl = image.getAttribute('data-base-url') || '/assets/images/mascot/';
+    var currentState = '';
+    var interactionStep = 0;
+    var contactOpen = false;
+    var bubbleTimer = null;
+
+    Object.keys(states).forEach(function (name) {
+      var preload = new Image();
+      preload.src = baseUrl + states[name].file;
+    });
+
+    function closeBubble(resetStep) {
+      bubble.classList.remove('is-visible');
+      if (resetStep !== false && !contactOpen) interactionStep = 0;
+    }
+
+    function closeContact() {
+      contact.classList.remove('is-visible');
+      contact.setAttribute('aria-hidden', 'true');
+      contactOpen = false;
+      interactionStep = 0;
+    }
+
+    function openContact() {
+      window.clearTimeout(bubbleTimer);
+      closeBubble(false);
+      contact.classList.add('is-visible');
+      contact.setAttribute('aria-hidden', 'false');
+      contactOpen = true;
+      interactionStep = 2;
+      if (emailSend) emailSend.focus({ preventScroll: true });
+    }
+
+    function setState(nextState, immediate) {
+      if (nextState === currentState) return;
+      var details = states[nextState];
+      currentState = nextState;
+      widget.setAttribute('data-state', nextState);
+      status.textContent = details.label;
+      status.title = 'Automatically follows Beijing time';
+      button.setAttribute('aria-label', details.alt + '. Click to talk.');
+      closeBubble();
+      closeContact();
+
+      if (immediate) {
+        image.src = baseUrl + details.file;
+        image.alt = details.alt;
+        return;
+      }
+
+      image.classList.add('is-changing');
+      window.setTimeout(function () {
+        image.src = baseUrl + details.file;
+        image.alt = details.alt;
+        window.requestAnimationFrame(function () {
+          window.requestAnimationFrame(function () { image.classList.remove('is-changing'); });
+        });
+      }, 230);
+    }
+
+    function syncState(immediate) {
+      var preview = new URLSearchParams(window.location.search).get('mascot');
+      setState(states[preview] ? preview : scheduledState(shanghaiMinutes()), immediate);
+    }
+
+    button.addEventListener('click', function () {
+      if (contactOpen) {
+        var email = widget.getAttribute('data-email');
+        window.location.href = 'mailto:' + email + '?subject=' + encodeURIComponent('Hi Chen Xi, let’s chat');
+        closeBubble();
+        return;
+      }
+
+      if (interactionStep === 1) {
+        openContact();
+        return;
+      }
+
+      bubble.textContent = currentState === 'working'
+        ? '\u60f3\u8ddf\u6211\u804a\u804a\u561b\uff1f'
+        : '\u6211\u5728\u73a9\uff0c\u624d\u4e0d\u4f1a\u7406\u4f60\u5462\u3002';
+      bubble.classList.add('is-visible');
+      interactionStep = 1;
+      window.clearTimeout(bubbleTimer);
+      bubbleTimer = window.setTimeout(function () { closeBubble(true); }, 7000);
+    });
+
+    if (contactClose) contactClose.addEventListener('click', closeContact);
+
+    if (emailCopy) {
+      emailCopy.addEventListener('click', function () {
+        var email = widget.getAttribute('data-email');
+        var copied = navigator.clipboard && navigator.clipboard.writeText
+          ? navigator.clipboard.writeText(email)
+          : Promise.reject(new Error('Clipboard API unavailable'));
+        copied.then(function () {
+          emailCopy.textContent = '\u5df2\u590d\u5236';
+          window.setTimeout(function () { emailCopy.textContent = '\u590d\u5236\u90ae\u7bb1'; }, 1600);
+        }).catch(function () {
+          if (emailAddress) {
+            var range = document.createRange();
+            range.selectNodeContents(emailAddress);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+          }
+          emailCopy.textContent = '\u8bf7\u624b\u52a8\u590d\u5236';
+        });
+      });
+    }
+
+    syncState(true);
+    window.setInterval(function () { syncState(false); }, 60 * 1000);
+  });
+})();
