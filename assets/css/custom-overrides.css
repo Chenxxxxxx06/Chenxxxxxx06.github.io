@@ -369,8 +369,8 @@
   position: absolute;
   left: 142px;
   bottom: 93px;
-  width: 270px;
-  padding: 17px;
+  width: 168px;
+  padding: 16px;
   color: var(--c-text);
   background: var(--bg);
   border: 1px solid var(--c-hover-border);
@@ -404,45 +404,22 @@
   opacity: 0.5;
 }
 
-.mascot-contact__eyebrow {
-  display: block;
-  margin-bottom: 7px;
-  font-size: 0.58rem;
-  font-weight: 600;
-  letter-spacing: 0.11em;
-  opacity: 0.48;
-}
-
-.mascot-contact strong { display: block; margin-bottom: 8px; font-size: 1.03rem; }
-.mascot-contact__address {
-  display: block;
-  overflow: hidden;
-  color: var(--c-text) !important;
-  font-size: 0.71rem;
-  text-decoration: none !important;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  opacity: 0.65;
-}
-
-.mascot-contact__actions { display: flex; gap: 8px; margin-top: 14px; }
-.mascot-contact__send,
-.mascot-contact__copy {
+.mascot-contact__send {
   display: inline-flex;
-  min-height: 34px;
+  width: 100%;
+  min-height: 40px;
   align-items: center;
   justify-content: center;
-  padding: 7px 12px;
-  border-radius: 8px;
+  padding: 8px 30px 8px 12px;
+  border-radius: 10px;
   cursor: pointer;
   font-family: inherit;
-  font-size: 0.68rem;
+  font-size: 0.76rem;
   font-weight: 600;
   text-decoration: none !important;
 }
 
 .mascot-contact__send { color: var(--bg) !important; background: var(--c-text); border: 1px solid var(--c-text); }
-.mascot-contact__copy { color: var(--c-text); background: transparent; border: 1px solid var(--c-border); }
 
 [data-theme="dark"] .activity-card,
 [data-theme="dark"] .experience-item__content,

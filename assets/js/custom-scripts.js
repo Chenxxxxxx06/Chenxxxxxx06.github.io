@@ -606,8 +606,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var contact = document.getElementById('mascotContact');
     var contactClose = document.getElementById('mascotContactClose');
     var emailSend = document.getElementById('mascotEmailSend');
-    var emailCopy = document.getElementById('mascotEmailCopy');
-    var emailAddress = document.getElementById('mascotEmailAddress');
     if (!widget || !button || !image || !status || !bubble || !contact) return;
 
     var baseUrl = image.getAttribute('data-base-url') || '/assets/images/mascot/';
@@ -677,8 +675,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     button.addEventListener('click', function () {
       if (contactOpen) {
-        var email = widget.getAttribute('data-email');
-        window.location.href = 'mailto:' + email + '?subject=' + encodeURIComponent('Hi Chen Xi, let’s chat');
+        if (emailSend) emailSend.click();
         closeBubble();
         return;
       }
@@ -698,27 +695,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     if (contactClose) contactClose.addEventListener('click', closeContact);
-
-    if (emailCopy) {
-      emailCopy.addEventListener('click', function () {
-        var email = widget.getAttribute('data-email');
-        var copied = navigator.clipboard && navigator.clipboard.writeText
-          ? navigator.clipboard.writeText(email)
-          : Promise.reject(new Error('Clipboard API unavailable'));
-        copied.then(function () {
-          emailCopy.textContent = '\u5df2\u590d\u5236';
-          window.setTimeout(function () { emailCopy.textContent = '\u590d\u5236\u90ae\u7bb1'; }, 1600);
-        }).catch(function () {
-          if (emailAddress) {
-            var range = document.createRange();
-            range.selectNodeContents(emailAddress);
-            window.getSelection().removeAllRanges();
-            window.getSelection().addRange(range);
-          }
-          emailCopy.textContent = '\u8bf7\u624b\u52a8\u590d\u5236';
-        });
-      });
-    }
 
     syncState(true);
     window.setInterval(function () { syncState(false); }, 60 * 1000);

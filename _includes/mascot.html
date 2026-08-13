@@ -1,14 +1,8 @@
-<aside class="mascot-widget" id="mascotWidget" data-email="{{ site.author.email }}" aria-label="Chen Xi's current status">
+<aside class="mascot-widget" id="mascotWidget" aria-label="Chen Xi's current status">
   <div class="mascot-bubble" id="mascotBubble" role="status" aria-live="polite"></div>
-  <section class="mascot-contact" id="mascotContact" aria-hidden="true" aria-label="Email Chen Xi">
+  <section class="mascot-contact" id="mascotContact" aria-hidden="true" aria-label="Contact Chen Xi">
     <button class="mascot-contact__close" id="mascotContactClose" type="button" aria-label="Close email card">×</button>
-    <span class="mascot-contact__eyebrow">OPEN MAILBOX</span>
-    <strong>Let’s talk.</strong>
-    <a class="mascot-contact__address" id="mascotEmailAddress" href="mailto:{{ site.author.email }}" target="_self">{{ site.author.email }}</a>
-    <div class="mascot-contact__actions">
-      <a class="mascot-contact__send" id="mascotEmailSend" href="mailto:{{ site.author.email }}?subject=Hi%20Chen%20Xi%2C%20let%27s%20chat" target="_self">写邮件</a>
-      <button class="mascot-contact__copy" id="mascotEmailCopy" type="button">复制邮箱</button>
-    </div>
+    <a class="mascot-contact__send" id="mascotEmailSend" href="mailto:{{ site.author.email }}?subject=Hi%20Chen%20Xi%2C%20let%27s%20chat" target="_self">Let’s talk</a>
   </section>
   <button class="mascot-button" id="mascotButton" type="button" aria-label="Talk to Chen Xi">
     <img
