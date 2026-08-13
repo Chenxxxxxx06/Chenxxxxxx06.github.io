@@ -136,6 +136,62 @@
   });
 })();
 
+// ── Visitor Map ─────────────────────────────────────────────────────────────
+// Statable's "auto" theme follows the operating system, while this site has
+// its own theme switcher. Recreate the widget when the site theme changes so
+// the map and the page always speak the same visual language.
+(function () {
+  var MAP_PALETTES = {
+    white:  { theme: 'light', primary: '#6f927f', ocean: '#f1f4f2', text: '#60736a' },
+    yellow: { theme: 'light', primary: '#9a7d4e', ocean: '#f4ebdd', text: '#735d38' },
+    blue:   { theme: 'light', primary: '#668bb4', ocean: '#e8eef5', text: '#536c88' },
+    dark:   { theme: 'dark',  primary: '#8caf9d', ocean: '#1b1d1b', text: '#c8d5ce' }
+  };
+  var renderedTheme = null;
+  var rerenderTimer = null;
+
+  function currentTheme() {
+    return document.documentElement.getAttribute('data-theme') || 'white';
+  }
+
+  function renderVisitorMap() {
+    var host = document.getElementById('visitorMapWidget');
+    if (!host) return;
+
+    var theme = currentTheme();
+    if (theme === renderedTheme && host.querySelector('svg')) return;
+    var palette = MAP_PALETTES[theme] || MAP_PALETTES.white;
+    renderedTheme = theme;
+    host.replaceChildren();
+
+    var script = document.createElement('script');
+    script.src = host.dataset.widgetSrc;
+    script.dataset.id = host.dataset.widgetId;
+    script.dataset.period = '30d';
+    script.dataset.displayMode = 'heatmap';
+    script.dataset.theme = palette.theme;
+    script.dataset.width = '240';
+    script.dataset.height = '150';
+    script.dataset.primaryColor = palette.primary;
+    script.dataset.oceanColor = palette.ocean;
+    script.dataset.statsTextColor = palette.text;
+    script.dataset.outerRadius = '12';
+    script.dataset.showStats = 'false';
+    host.appendChild(script);
+  }
+
+  function scheduleRender() {
+    window.clearTimeout(rerenderTimer);
+    rerenderTimer = window.setTimeout(renderVisitorMap, 80);
+  }
+
+  document.addEventListener('DOMContentLoaded', renderVisitorMap);
+  new MutationObserver(scheduleRender).observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme']
+  });
+})();
+
 // ── Scroll-spy — highlight the active section's nav link ─────────────────────
 (function () {
   document.addEventListener('DOMContentLoaded', function () {

@@ -49,19 +49,12 @@
 
   <section class="visitor-map-widget" aria-label="Visitor map for the last 30 days">
     <span class="visitor-map-widget__label">VISITOR MAP · 30D</span>
-    <div class="visitor-map-widget__canvas">
-      <script
-        src="https://statable.com/js/x6p0dD7a69/t/mw.js"
-        data-id="3211604"
-        data-period="30d"
-        data-display-mode="heatmap"
-        data-theme="auto"
-        data-width="240"
-        data-height="150"
-        data-primary-color="#4f8f70"
-        data-outer-radius="12"
-        data-show-stats="false"
-        defer></script>
+    <div
+      class="visitor-map-widget__canvas"
+      id="visitorMapWidget"
+      data-widget-src="https://statable.com/js/x6p0dD7a69/t/mw.js"
+      data-widget-id="3211604">
+      <span class="visitor-map-widget__loading">Loading visitor map…</span>
     </div>
   </section>
 
