@@ -281,13 +281,38 @@
 
 /* Interactive status mascot */
 .mascot-widget {
+  --mascot-roam: 24px;
+  --mascot-roam-mid: 10px;
   position: fixed;
   z-index: 90;
   left: 10px;
   bottom: 0;
-  width: 190px;
-  height: 190px;
+  width: 218px;
+  height: 218px;
   pointer-events: none;
+}
+
+.mascot-widget[data-state="sleeping"] { --mascot-roam: 6px; --mascot-roam-mid: 3px; }
+.mascot-widget[data-state="eating"] { --mascot-roam: 18px; --mascot-roam-mid: 8px; }
+.mascot-widget[data-state="drinking"] { --mascot-roam: 34px; --mascot-roam-mid: 15px; }
+
+@keyframes mascot-roam {
+  0%, 14% { transform: translate3d(0, 0, 0) rotate(0); }
+  30%, 44% { transform: translate3d(var(--mascot-roam-mid), -3px, 0) rotate(-0.35deg); }
+  60%, 74% { transform: translate3d(var(--mascot-roam), 0, 0) rotate(0.35deg); }
+  90%, 100% { transform: translate3d(0, -3px, 0) rotate(0); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mascot-widget {
+    animation: mascot-roam 17s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    will-change: transform;
+  }
+  .mascot-widget[data-state="sleeping"] { animation-duration: 22s; }
+  .mascot-widget[data-state="eating"] { animation-duration: 15s; }
+  .mascot-widget[data-state="drinking"] { animation-duration: 13s; }
+  .mascot-widget:hover,
+  .mascot-widget:focus-within { animation-play-state: paused; }
 }
 
 .mascot-button {
@@ -306,7 +331,7 @@
   pointer-events: auto;
 }
 
-.mascot-button:focus-visible { outline: 2px solid var(--c-text); outline-offset: -8px; border-radius: 32px; }
+.mascot-button:focus-visible { outline: 2px solid var(--c-text); outline-offset: -8px; border-radius: 36px; }
 
 .mascot-image {
   display: block;
@@ -343,8 +368,8 @@
 
 .mascot-bubble {
   position: absolute;
-  left: 142px;
-  bottom: 132px;
+  left: 160px;
+  bottom: 151px;
   width: max-content;
   max-width: 220px;
   padding: 11px 14px;
@@ -367,8 +392,8 @@
 
 .mascot-contact {
   position: absolute;
-  left: 142px;
-  bottom: 93px;
+  left: 160px;
+  bottom: 106px;
   width: 168px;
   padding: 16px;
   color: var(--c-text);
@@ -504,6 +529,17 @@
   .activity-heatmap { min-height: 90px; }
 }
 
+@media (min-width: 601px) and (max-width: 1000px) {
+  .mascot-widget {
+    --mascot-roam: 12px;
+    --mascot-roam-mid: 6px;
+    width: 200px;
+    height: 200px;
+  }
+  .mascot-bubble { left: 148px; bottom: 140px; }
+  .mascot-contact { left: 148px; bottom: 98px; }
+}
+
 @media (max-width: 600px) {
   .activity-card { padding: 18px 15px 14px; border-radius: 15px; }
   .activity-card__footer { align-items: flex-end; }
@@ -516,9 +552,9 @@
   .experience-item__date { grid-column: 2; grid-row: 1; justify-self: start; padding: 0 0 8px; font-size: 1.2rem; }
   .experience-item__node { grid-column: 1; grid-row: 1 / span 2; padding-top: 8px; }
   .experience-item__content { grid-column: 2; grid-row: 2; padding: 18px; }
-  .mascot-widget { left: 2px; width: 124px; height: 124px; }
-  .mascot-bubble { left: 92px; bottom: 91px; max-width: min(205px, calc(100vw - 112px)); font-size: 0.7rem; }
-  .mascot-contact { left: 90px; bottom: 72px; width: min(260px, calc(100vw - 102px)); }
+  .mascot-widget { --mascot-roam: 10px; --mascot-roam-mid: 5px; left: 2px; width: 140px; height: 140px; }
+  .mascot-bubble { left: 104px; bottom: 103px; max-width: min(205px, calc(100vw - 124px)); font-size: 0.7rem; }
+  .mascot-contact { left: 104px; bottom: 81px; width: min(260px, calc(100vw - 118px)); }
   .mascot-status { bottom: 3px; font-size: 0.43rem; }
 }
 
@@ -526,6 +562,7 @@
   .activity-card,
   .activity-cell,
   .experience-item__content,
+  .mascot-widget,
   .mascot-image,
   .mascot-bubble,
   .mascot-contact { transition: none !important; }

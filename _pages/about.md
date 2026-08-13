@@ -19,8 +19,8 @@ redirect_from:
 
 {% include_relative includes/portfolio.md %}
 
-{% include_relative includes/honors.md %}
-
 {% include_relative includes/experience.md %}
+
+{% include_relative includes/honors.md %}
 
 <span class='anchor' id='end-page'></span>
