@@ -170,8 +170,8 @@
     script.dataset.period = '30d';
     script.dataset.displayMode = 'heatmap';
     script.dataset.theme = palette.theme;
-    script.dataset.width = '240';
-    script.dataset.height = '150';
+    script.dataset.width = '264';
+    script.dataset.height = '165';
     script.dataset.primaryColor = palette.primary;
     script.dataset.oceanColor = palette.ocean;
     script.dataset.statsTextColor = palette.text;
