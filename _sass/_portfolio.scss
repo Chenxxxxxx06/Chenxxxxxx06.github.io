@@ -294,15 +294,15 @@
   line-height: 1.22;
 }
 
-.portfolio-card__desc {
+.page__content .portfolio-card__desc {
   margin: 0 !important;
   color: var(--c-text, #444);
-  font-size: 0.76em !important;
+  font-size: 0.9em !important;
   line-height: 1.6;
   opacity: 0.66;
 }
 
-.portfolio-card__tags {
+.page__content .portfolio-card__tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
@@ -317,7 +317,7 @@
     border-radius: 7px;
     background: var(--masthead-bg, #f6f6f6);
     color: var(--c-text, #333);
-    font-size: 0.57em !important;
+    font-size: 0.9em !important;
     font-weight: 600;
     letter-spacing: 0.025em;
     line-height: 1;
