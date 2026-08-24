@@ -450,6 +450,107 @@ document.addEventListener('DOMContentLoaded', function() {
   document.addEventListener('DOMContentLoaded', setupPortfolioVideos);
 })();
 
+// ── Portfolio carousel controls ────────────────────────────────────────────
+(function () {
+  function setupPortfolioCarousel(root) {
+    var track = root.querySelector('[data-portfolio-track]');
+    var cards = Array.prototype.slice.call(root.querySelectorAll('.portfolio-card'));
+    var prev = root.querySelector('[data-portfolio-prev]');
+    var next = root.querySelector('[data-portfolio-next]');
+    var currentLabel = root.querySelector('[data-portfolio-current]');
+    var progress = root.querySelector('[data-portfolio-progress]');
+    var currentIndex = 0;
+    var ticking = false;
+
+    if (!track || !cards.length || !prev || !next) return;
+
+    function cardScrollLeft(card) {
+      return card.offsetLeft - cards[0].offsetLeft;
+    }
+
+    function indexFromScroll() {
+      var maxScroll = track.scrollWidth - track.clientWidth;
+      if (maxScroll > 0 && track.scrollLeft >= maxScroll - 2) return cards.length - 1;
+
+      var target = track.scrollLeft;
+      var nearest = 0;
+      var nearestDistance = Infinity;
+      cards.forEach(function (card, index) {
+        var distance = Math.abs(cardScrollLeft(card) - target);
+        if (distance < nearestDistance) {
+          nearest = index;
+          nearestDistance = distance;
+        }
+      });
+      return nearest;
+    }
+
+    function update(index) {
+      currentIndex = Math.max(0, Math.min(index, cards.length - 1));
+      prev.disabled = currentIndex === 0;
+      next.disabled = currentIndex === cards.length - 1;
+
+      if (currentLabel) {
+        currentLabel.textContent = String(currentIndex + 1).padStart(2, '0');
+      }
+      if (progress) {
+        progress.style.width = (((currentIndex + 1) / cards.length) * 100) + '%';
+      }
+      cards.forEach(function (card, index) {
+        card.classList.toggle('is-current', index === currentIndex);
+      });
+    }
+
+    function goTo(index) {
+      var targetIndex = Math.max(0, Math.min(index, cards.length - 1));
+      // Direct assignment is deliberate: Chromium can cancel a smooth programmatic
+      // scroll when mandatory snap points are active, leaving the carousel at zero.
+      track.scrollLeft = cardScrollLeft(cards[targetIndex]);
+      update(targetIndex);
+    }
+
+    prev.addEventListener('click', function () { goTo(currentIndex - 1); });
+    next.addEventListener('click', function () { goTo(currentIndex + 1); });
+
+    track.addEventListener('keydown', function (event) {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        goTo(currentIndex - 1);
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        goTo(currentIndex + 1);
+      } else if (event.key === 'Home') {
+        event.preventDefault();
+        goTo(0);
+      } else if (event.key === 'End') {
+        event.preventDefault();
+        goTo(cards.length - 1);
+      }
+    });
+
+    track.addEventListener('scroll', function () {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function () {
+        update(indexFromScroll());
+        ticking = false;
+      });
+    }, { passive: true });
+
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(function () { update(indexFromScroll()); }).observe(track);
+    } else {
+      window.addEventListener('resize', function () { update(indexFromScroll()); });
+    }
+
+    update(0);
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-portfolio]').forEach(setupPortfolioCarousel);
+  });
+})();
+
 // Activity heatmaps. The JSON contains aggregate counts only and is refreshed
 // locally every six hours by scripts/activity_sync_loop.ps1.
 (function () {
