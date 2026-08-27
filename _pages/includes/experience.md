@@ -13,7 +13,7 @@
     <div class="experience-item__node" aria-hidden="true"><span></span></div>
     <div class="experience-item__content">
       <span class="experience-item__logo" aria-hidden="true">
-        <img src="{{ '/assets/images/brand/nwpu-logo.png' | relative_url }}" alt="">
+        <img src="{{ '/assets/images/brand/nwpu-emblem-white.png' | relative_url }}" alt="">
       </span>
       <div class="experience-item__copy">
         <time class="experience-item__date" datetime="2025/2026">2025 — 2026</time>
