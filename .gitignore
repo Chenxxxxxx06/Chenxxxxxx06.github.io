@@ -3,6 +3,8 @@ push.sh
 .DS_Store
 /github_myprofile_updater/README.md
 tmp/
+__pycache__/
+*.pyc
 assets/images/mascot/*.png
 
 # Never upload personal CV / resume

@@ -551,8 +551,8 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 })();
 
-// Activity heatmaps. The JSON contains aggregate counts only and is refreshed
-// locally every six hours by scripts/activity_sync_loop.ps1.
+// Activity heatmaps. The JSON contains aggregate counts only. A local scheduled
+// task runs scripts/refresh_activity.ps1 every six hours and publishes the snapshot.
 (function () {
   var SVG_NS = 'http://www.w3.org/2000/svg';
   var DAY_MS = 24 * 60 * 60 * 1000;
