@@ -1,124 +1,98 @@
 (function () {
   'use strict';
 
-  const terminalData = {
-    inspect: [
-      'agent inspect --scene lab.mp4',
-      '✓ 4 objects tracked\n! audio lag detected at 00:07.4\n→ anomaly score: 0.82'
-    ],
-    plan: [
-      'agent plan --goal "place cup"',
-      '01 locate handle\n02 approach from left\n03 grasp at 18 N\n04 place inside tray'
-    ],
-    explain: [
-      'agent explain --failure run_042',
-      'root cause: visual occlusion\nevidence: audio state remained stable\nnext test: extend memory by 2.0 s'
-    ]
-  };
+  const ASK_TIMEOUT_MS = 12000;
 
-  const routeData = [
-    {
-      point: [62, 174],
-      note: "Xi'an · began with anomaly detection.",
-      detail: 'Learning to notice what a model misses—and why it matters.'
-    },
-    {
-      point: [370, 102],
-      note: 'Lab · moved from recognition to action.',
-      detail: 'VLM and VLA work turned perception questions into embodied ones.'
-    },
-    {
-      point: [698, 141],
-      note: 'Next · looking for the question that changes both.',
-      detail: 'A deliberate open ending for the next lab, project, or collaborator.'
-    }
-  ];
-
-  function setPressed(items, active) {
-    items.forEach(function (item) {
-      const selected = item === active;
-      item.classList.toggle('is-active', selected);
-      item.setAttribute('aria-pressed', selected ? 'true' : 'false');
-    });
+  function askEndpoint(widget) {
+    return (widget.getAttribute('data-placement-ask-endpoint') || '').trim();
   }
 
-  function runTerminal(button) {
-    const widget = button.closest('[data-placement-widget="terminal"]');
-    const key = button.getAttribute('data-placement-command');
-    const data = terminalData[key];
-    if (!widget || !data) return;
-
-    const command = widget.querySelector('[data-placement-terminal-command]');
-    const output = widget.querySelector('[data-placement-terminal-output]');
-    const buttons = Array.from(widget.querySelectorAll('[data-placement-command]'));
-    const runId = String((Number(widget.dataset.runId || 0) + 1));
-    widget.dataset.runId = runId;
-    setPressed(buttons, button);
-    command.textContent = data[0];
-    output.textContent = 'running…';
-
-    window.setTimeout(function () {
-      if (widget.dataset.runId === runId) output.textContent = data[1];
-    }, 220);
+  function writeAskResult(widget, commandText, outputText, statusText, state) {
+    widget.setAttribute('data-placement-knowledge-state', state);
+    widget.querySelector('[data-placement-terminal-command]').textContent = commandText;
+    widget.querySelector('[data-placement-terminal-output]').textContent = outputText;
+    widget.querySelector('[data-placement-ask-status]').textContent = statusText;
   }
 
-  function moveRoute(node) {
-    const widget = node.closest('[data-placement-widget="route"]');
-    const index = Number(node.getAttribute('data-placement-route'));
-    const data = routeData[index];
-    if (!widget || !data) return;
-
-    const nodes = Array.from(widget.querySelectorAll('[data-placement-route]'));
-    const dot = widget.querySelector('[data-placement-route-dot]');
-    const note = widget.querySelector('[data-placement-route-note]');
-    const detail = widget.querySelector('[data-placement-route-detail]');
-    const counter = widget.querySelector('.placement-route__note small');
-    setPressed(nodes, node);
-    dot.setAttribute('cx', String(data.point[0]));
-    dot.setAttribute('cy', String(data.point[1]));
-    note.textContent = data.note;
-    detail.textContent = data.detail;
-    counter.textContent = 'ROUTE NOTE · 0' + (index + 1) + ' / 03';
+  function approvedAnswerText(payload) {
+    const answer = payload && typeof payload.answer === 'string' ? payload.answer.trim() : '';
+    const sources = payload && Array.isArray(payload.sources)
+      ? payload.sources.map(function (source) { return source && (source.label || source.id); }).filter(Boolean)
+      : [];
+    if (!answer || sources.length === 0) return '';
+    return answer + '\n\nSources → ' + sources.join(' · ');
   }
 
-  function selectCity(node) {
-    const widget = node.closest('[data-placement-widget="atlas"]');
-    if (!widget) return;
-
-    const nodes = Array.from(widget.querySelectorAll('[data-placement-city]'));
-    const city = node.getAttribute('data-placement-city');
-    const note = node.getAttribute('data-placement-city-note');
-    setPressed(nodes, node);
-    widget.querySelector('[data-placement-city-name]').textContent = city;
-    widget.querySelector('[data-placement-city-copy]').textContent = note;
-  }
-
-  document.addEventListener('click', function (event) {
-    const command = event.target.closest('[data-placement-command]');
-    if (command) {
-      runTerminal(command);
+  async function submitAsk(form) {
+    const widget = form.closest('[data-placement-widget="terminal"]');
+    const input = form.querySelector('[data-placement-ask-input]');
+    const submit = form.querySelector('[data-placement-ask-submit]');
+    const question = input.value.trim();
+    if (!widget || !question) {
+      input.focus();
       return;
     }
 
-    const route = event.target.closest('[data-placement-route]');
-    if (route) {
-      moveRoute(route);
+    const commandText = 'ask "' + question + '"';
+    const endpoint = askEndpoint(widget);
+    submit.disabled = true;
+    input.value = '';
+    writeAskResult(widget, commandText, 'retrieving approved knowledge…', 'GPT · checking the personal knowledge base', 'retrieving');
+
+    if (!endpoint) {
+      window.setTimeout(function () {
+        writeAskResult(
+          widget,
+          commandText,
+          'knowledge base · draft\nNo approved answer is connected yet.\nThis question is ready for the personal knowledge base you add later.',
+          'Knowledge source: waiting for your approved content.',
+          'draft'
+        );
+        submit.disabled = false;
+        input.focus();
+      }, 260);
       return;
     }
 
-    const city = event.target.closest('[data-placement-city]');
-    if (city) selectCity(city);
+    const controller = new AbortController();
+    const timeout = window.setTimeout(function () { controller.abort(); }, ASK_TIMEOUT_MS);
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: question, locale: document.documentElement.lang || 'en' }),
+        signal: controller.signal
+      });
+      if (!response.ok) throw new Error('ask endpoint returned ' + response.status);
+      const answer = approvedAnswerText(await response.json());
+      if (!answer) {
+        writeAskResult(widget, commandText, 'evidence missing\nChen has not published enough approved material to answer that yet.', 'GPT · no approved evidence', 'insufficient');
+      } else {
+        writeAskResult(widget, commandText, answer, 'GPT · grounded in the personal knowledge base', 'answered');
+      }
+    } catch (error) {
+      const copy = error && error.name === 'AbortError'
+        ? 'timeout\nThe personal knowledge base did not respond within 12 seconds.'
+        : 'offline\nThe personal knowledge base is not reachable right now.';
+      writeAskResult(widget, commandText, copy, 'GPT · knowledge service offline', 'offline');
+    } finally {
+      window.clearTimeout(timeout);
+      submit.disabled = false;
+      input.focus();
+    }
+  }
+
+  document.addEventListener('submit', function (event) {
+    const form = event.target.closest('[data-placement-ask-form]');
+    if (!form) return;
+    event.preventDefault();
+    submitAsk(form);
   });
 
-  document.addEventListener('keydown', function (event) {
-    if (event.key !== 'Enter' && event.key !== ' ') return;
-    const interactive = event.target.closest('[data-placement-route], [data-placement-city]');
-    if (!interactive) return;
-    event.preventDefault();
-    if (interactive.hasAttribute('data-placement-route')) {
-      moveRoute(interactive);
-    } else {
-      selectCity(interactive);
+  document.addEventListener('click', function (event) {
+    const terminalBody = event.target.closest('[data-placement-terminal-focus]');
+    if (terminalBody && !event.target.closest('input, button, a')) {
+      terminalBody.querySelector('[data-placement-ask-input]').focus();
     }
   });
 })();
