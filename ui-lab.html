@@ -1,0 +1,504 @@
+---
+layout: null
+permalink: /ui-lab/
+---
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>UI Lab · Chen Xi</title>
+  <meta name="description" content="50 个为 Chen Xi 个人学术主页设计的独立小组件实验。">
+  <link rel="stylesheet" href="/assets/ui-lab/ui-lab.css">
+</head>
+<body>
+  <a class="skip-link" href="#specimens">跳到组件列表</a>
+  <header class="lab-hero">
+    <div class="lab-hero__rule" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+    <p class="lab-kicker">CHEN XI · PERSONAL INTERFACE STUDIES</p>
+    <div class="lab-hero__title-row">
+      <h1>50 个主页<br><em>小型仪器</em></h1>
+      <p class="lab-hero__index" aria-label="五十个方案"><strong>50</strong><span>/ 50</span></p>
+    </div>
+    <p class="lab-hero__lede">每一项只回答一个真实问题：我此刻在做什么、研究如何生长、访客怎样理解我。点击“单独欣赏”进入检视台，用方向键逐项浏览。</p>
+    <nav class="lab-jump" aria-label="预览分组">
+      <a href="#presence">01–05 · Presence</a>
+      <a href="#research">06–10 · Research</a>
+      <a href="#rhythm">11–15 · Rhythm</a>
+      <a href="#contact">16–20 · Contact</a>
+      <a href="#works">21–25 · Works</a>
+      <a href="#papers">26–30 · Papers</a>
+      <a href="#experiments">31–35 · Experiments</a>
+      <a href="#knowledge">36–40 · Knowledge</a>
+      <a href="#journeys">41–45 · Journeys</a>
+      <a href="#character">46–50 · Character</a>
+    </nav>
+  </header>
+
+  <main id="specimens" class="specimen-list">
+    <section id="presence" class="specimen-group" aria-labelledby="presence-title">
+      <header class="group-head"><span>01</span><h2 id="presence-title">Presence</h2><p>让访客先感知“现在的我”。</p></header>
+
+      <article class="specimen" data-demo="1" data-name="Current Signal" data-description="把在线状态写成一条有呼吸感的研究信号。">
+        <header class="specimen__meta"><span class="specimen__number">01</span><div><h3>Current Signal</h3><p>把在线状态写成一条有呼吸感的研究信号。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage signal-stage" data-demo-shell>
+          <div class="signal-copy"><span class="signal-live"><i></i> LIVE FROM THE LAB</span><strong data-signal-title>Training a multimodal agent.</strong><p data-signal-note>Quiet mode · replies may be slow.</p></div>
+          <div class="signal-switch" role="group" aria-label="状态预览">
+            <button class="is-active" type="button" data-signal="work">Working</button><button type="button" data-signal="open">Open</button><button type="button" data-signal="away">Away</button>
+          </div>
+          <div class="signal-line" aria-hidden="true"><span></span></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="2" data-name="Research Compass" data-description="把研究方向做成可以转动的罗盘，而不是标签列表。">
+        <header class="specimen__meta"><span class="specimen__number">02</span><div><h3>Research Compass</h3><p>把研究方向做成可以转动的罗盘，而不是标签列表。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage compass-stage" data-demo-shell>
+          <div class="compass" aria-label="当前研究方向：VLA"><div class="compass__rings"><span></span><span></span></div><div class="compass__needle" data-compass-needle></div><div class="compass__core">VLA</div><i class="n">N</i><i class="e">E</i><i class="s">S</i><i class="w">W</i></div>
+          <div class="compass-copy"><small>CURRENT BEARING</small><strong data-compass-title>Vision–Language–Action</strong><p data-compass-text>让模型从“理解画面”走向“采取行动”。</p><div class="compass-actions" role="group" aria-label="切换研究方向"><button type="button" data-bearing="0" class="is-active">VLA</button><button type="button" data-bearing="90">VLM</button><button type="button" data-bearing="180">Agents</button><button type="button" data-bearing="270">Anomaly</button></div></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="3" data-name="Now / Next" data-description="一张只显示当前与下一步的双层工作票。">
+        <header class="specimen__meta"><span class="specimen__number">03</span><div><h3>Now / Next</h3><p>一张只显示当前与下一步的双层工作票。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage now-stage" data-demo-shell>
+          <button class="now-sheet now-sheet--front" type="button" data-now-card aria-expanded="false"><span>NOW · 14:32</span><strong>Cleaning noisy video labels</strong><em>63% complete</em><i><b style="width:63%"></b></i></button>
+          <div class="now-sheet now-sheet--back"><span>NEXT · THIS EVENING</span><strong>Read three VLA papers</strong><em>18 pages queued</em></div>
+          <p class="now-hint">Click the front sheet to peek ahead.</p>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="4" data-name="Desk Weather" data-description="不用天气 API，用桌面物件表达今天的精神气象。">
+        <header class="specimen__meta"><span class="specimen__number">04</span><div><h3>Desk Weather</h3><p>不用天气 API，用桌面物件表达今天的精神气象。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage desk-stage" data-demo-shell>
+          <div class="desk-scene" aria-hidden="true"><span class="desk-sun"></span><span class="desk-cup">∿</span><span class="desk-book"></span><span class="desk-pencil"></span></div>
+          <div class="desk-copy"><small>DESK WEATHER · XI'AN</small><strong data-desk-mood>Clear focus, warm coffee.</strong><p data-desk-detail>适合写实验，也适合认真回一封邮件。</p><div class="desk-buttons"><button class="is-active" type="button" data-mood="clear">Clear</button><button type="button" data-mood="cloudy">Cloudy</button><button type="button" data-mood="storm">Storm</button></div></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="5" data-name="Open Slot" data-description="用一段可视化时间槽表达合作可用性。">
+        <header class="specimen__meta"><span class="specimen__number">05</span><div><h3>Open Slot</h3><p>用一段可视化时间槽表达合作可用性。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage slot-stage" data-demo-shell>
+          <div class="slot-date"><span>AUG</span><strong>29</strong><em>FRI</em></div>
+          <div class="slot-body"><small>ONE OPEN CONVERSATION</small><strong>20 minutes for an idea worth testing.</strong><div class="slot-track" role="group" aria-label="选择时间"><button type="button" disabled>13:00</button><button type="button" data-slot>14:00</button><button type="button" data-slot>15:00</button><button type="button" disabled>16:00</button></div><p data-slot-copy>Select an open interval.</p></div>
+        </div>
+      </article>
+    </section>
+
+    <section id="research" class="specimen-group" aria-labelledby="research-title">
+      <header class="group-head"><span>02</span><h2 id="research-title">Research</h2><p>让抽象工作留下可读的形状。</p></header>
+
+      <article class="specimen" data-demo="6" data-name="Paper Constellation" data-description="论文不是列表，而是一张可探索的概念关系图。">
+        <header class="specimen__meta"><span class="specimen__number">06</span><div><h3>Paper Constellation</h3><p>论文不是列表，而是一张可探索的概念关系图。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage constellation-stage" data-demo-shell>
+          <svg class="constellation" viewBox="0 0 520 220" role="group" aria-label="五篇论文的概念关系图">
+            <g class="constellation__links"><path d="M90 150 L210 72 L310 122 L420 48"/><path d="M210 72 L410 174"/><path d="M90 150 L310 122"/></g>
+            <g class="constellation__nodes"><g role="button" tabindex="0" data-paper="VLA World Models"><circle cx="90" cy="150" r="10"/></g><g role="button" tabindex="0" data-paper="Embodied Planning"><circle cx="210" cy="72" r="14"/></g><g role="button" tabindex="0" data-paper="Multimodal Anomaly"><circle cx="310" cy="122" r="11"/></g><g role="button" tabindex="0" data-paper="Agent Memory"><circle cx="420" cy="48" r="8"/></g><g role="button" tabindex="0" data-paper="Data Synthesis"><circle cx="410" cy="174" r="12"/></g></g>
+            <g class="constellation__labels"><text x="58" y="180">VLA</text><text x="176" y="42">Planning</text><text x="280" y="154">Anomaly</text><text x="390" y="27">Memory</text><text x="377" y="207">Synthesis</text></g>
+          </svg>
+          <div class="constellation-note"><small>SELECTED NODE</small><strong data-paper-title>Embodied Planning</strong><p>Click a point to trace the question it connects.</p></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="7" data-name="Lab Notebook" data-description="把实验记录做成可以翻页的真实研究笔记。">
+        <header class="specimen__meta"><span class="specimen__number">07</span><div><h3>Lab Notebook</h3><p>把实验记录做成可以翻页的真实研究笔记。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage notebook-stage" data-demo-shell>
+          <div class="notebook-tabs" role="tablist" aria-label="实验日期"><button role="tab" aria-selected="true" data-note="0">08.27</button><button role="tab" aria-selected="false" data-note="1">08.24</button><button role="tab" aria-selected="false" data-note="2">08.19</button></div>
+          <div class="notebook-page"><small data-note-index>EXP. 042 · AUG 27</small><h4 data-note-title>Audio helps only when timing is honest.</h4><p data-note-body>Aligned clips raised recall; loose windows mostly added confidence without evidence.</p><div class="notebook-metric"><span>Δ Recall</span><strong data-note-metric>+8.4%</strong></div><i class="notebook-mark" aria-hidden="true">✓</i></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="8" data-name="Method Deck" data-description="把研究方法做成一副可以切换的工作卡。">
+        <header class="specimen__meta"><span class="specimen__number">08</span><div><h3>Method Deck</h3><p>把研究方法做成一副可以切换的工作卡。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage deck-stage" data-demo-shell>
+          <div class="method-deck"><div class="method-card method-card--3">03</div><div class="method-card method-card--2">02</div><div class="method-card method-card--1"><span data-method-count>01 / 04</span><strong data-method-title>Observe</strong><p data-method-copy>Start with the failure, not the benchmark.</p></div></div>
+          <div class="deck-controls"><button type="button" data-method-prev aria-label="上一个方法">←</button><p>OBSERVE · SYNTHESIZE · TEST · REFINE</p><button type="button" data-method-next aria-label="下一个方法">→</button></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="9" data-name="Citation Pulse" data-description="用轻量脉冲呈现研究影响力，而不是炫耀总数。">
+        <header class="specimen__meta"><span class="specimen__number">09</span><div><h3>Citation Pulse</h3><p>用轻量脉冲呈现研究影响力，而不是炫耀总数。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage pulse-stage" data-demo-shell>
+          <div class="pulse-number"><small>CITATION PULSE</small><strong><span data-pulse-value>28</span><em>this quarter</em></strong><p>Not a score. A trace of ideas travelling.</p></div>
+          <div class="pulse-chart" aria-label="最近六个月引用趋势"><button style="--h:22%" data-pulse="4"><span>Mar</span></button><button style="--h:36%" data-pulse="7"><span>Apr</span></button><button style="--h:48%" data-pulse="11"><span>May</span></button><button style="--h:43%" data-pulse="9"><span>Jun</span></button><button style="--h:72%" data-pulse="18"><span>Jul</span></button><button style="--h:92%" data-pulse="28" class="is-active"><span>Aug</span></button></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="10" data-name="Question Ledger" data-description="将研究兴趣改写成正在追问的三个问题。">
+        <header class="specimen__meta"><span class="specimen__number">10</span><div><h3>Question Ledger</h3><p>将研究兴趣改写成正在追问的三个问题。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage ledger-stage" data-demo-shell>
+          <ol class="ledger-list"><li><button type="button" data-question><span>Q.01</span><strong>Can an agent know when its senses disagree?</strong><em>+</em></button><p>Multimodal anomaly detection · active</p></li><li><button type="button" data-question><span>Q.02</span><strong>What makes a synthetic action believable?</strong><em>+</em></button><p>Embodied AI · collecting evidence</p></li><li><button type="button" data-question><span>Q.03</span><strong>How little memory can a useful agent keep?</strong><em>+</em></button><p>Agent systems · early notes</p></li></ol>
+        </div>
+      </article>
+    </section>
+
+    <section id="rhythm" class="specimen-group" aria-labelledby="rhythm-title">
+      <header class="group-head"><span>03</span><h2 id="rhythm-title">Rhythm</h2><p>把长期投入变成有节奏的证据。</p></header>
+
+      <article class="specimen" data-demo="11" data-name="Six-Month Rhythm" data-description="比贡献墙更克制的半年研究节律。">
+        <header class="specimen__meta"><span class="specimen__number">11</span><div><h3>Six-Month Rhythm</h3><p>比贡献墙更克制的半年研究节律。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage rhythm-stage" data-demo-shell>
+          <div class="rhythm-head"><div><small>MAR — AUG 2026</small><strong>117 focused days</strong></div><p data-rhythm-tip>Hover or focus a week.</p></div>
+          <div class="rhythm-weeks" aria-label="二十六周研究活跃度"></div>
+          <div class="rhythm-legend"><span>quiet</span><i></i><i></i><i></i><i></i><span>deep</span></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="12" data-name="Token Tide" data-description="把 AI 使用量变成潮汐，强调节奏而不是夸张总量。">
+        <header class="specimen__meta"><span class="specimen__number">12</span><div><h3>Token Tide</h3><p>把 AI 使用量变成潮汐，强调节奏而不是夸张总量。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage tide-stage" data-demo-shell>
+          <div class="tide-head"><small>AI TOOL TIDE</small><strong data-tide-total>8.4M <em>tokens · 30d</em></strong><div role="group" aria-label="时间范围"><button type="button" data-tide-range="7">7D</button><button class="is-active" type="button" data-tide-range="30">30D</button><button type="button" data-tide-range="90">90D</button></div></div>
+          <svg class="tide-chart" viewBox="0 0 720 180" preserveAspectRatio="none" aria-label="Token 使用趋势"><defs><linearGradient id="tideFade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7661b5" stop-opacity=".32"/><stop offset="1" stop-color="#7661b5" stop-opacity="0"/></linearGradient></defs><path class="tide-area" data-tide-area d="M0 150 C70 148,85 112,150 120 S230 150,300 104 S390 50,445 90 S540 130,590 62 S680 54,720 22 L720 180 L0 180 Z"/><path class="tide-line" data-tide-line d="M0 150 C70 148,85 112,150 120 S230 150,300 104 S390 50,445 90 S540 130,590 62 S680 54,720 22"/></svg>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="13" data-name="Day Rhythm" data-description="一个会随本地时间移动的日程刻度。">
+        <header class="specimen__meta"><span class="specimen__number">13</span><div><h3>Day Rhythm</h3><p>一个会随本地时间移动的日程刻度。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage day-stage" data-demo-shell>
+          <div class="day-clock"><small>LOCAL · ASIA/SHANGHAI</small><strong data-live-time>--:--</strong><p data-day-state>Reading the clock…</p></div>
+          <div class="day-track"><span style="--start:0;--span:25">sleep</span><span style="--start:25;--span:17">slow start</span><span style="--start:42;--span:33">deep work</span><span style="--start:75;--span:12">dinner</span><span style="--start:87;--span:13">notes</span><i data-day-marker></i></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="14" data-name="Reading Shelf" data-description="一本本打开，而不是再加一列书单。">
+        <header class="specimen__meta"><span class="specimen__number">14</span><div><h3>Reading Shelf</h3><p>一本本打开，而不是再加一列书单。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage shelf-stage" data-demo-shell>
+          <div class="shelf-books" role="list" aria-label="近期阅读"><button type="button" role="listitem" data-book="World Models" data-author="David Ha & Jürgen Schmidhuber" style="--book:#263d58">WORLD<br>MODELS</button><button type="button" role="listitem" data-book="The Bitter Lesson" data-author="Rich Sutton" style="--book:#9a5b48">BITTER<br>LESSON</button><button type="button" role="listitem" data-book="VLA Notes" data-author="Lab reading group" style="--book:#4d705e">VLA<br>NOTES</button><button type="button" role="listitem" data-book="Seeing Like a State" data-author="James C. Scott" style="--book:#8b7c58">SEEING<br>STATE</button></div>
+          <div class="shelf-note"><small>OPEN ON THE DESK</small><strong data-book-title>Choose a spine.</strong><p data-book-author>Four texts shaping this month's questions.</p></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="15" data-name="Milestone Filmstrip" data-description="用底片连续性替代传统项目宫格。">
+        <header class="specimen__meta"><span class="specimen__number">15</span><div><h3>Milestone Filmstrip</h3><p>用底片连续性替代传统项目宫格。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage film-stage" data-demo-shell>
+          <div class="film-window"><div class="film-strip" data-film-strip><div><span>01</span><strong>FIRST DATASET</strong><p>12k clips aligned</p></div><div><span>02</span><strong>FIRST FAILURE</strong><p>Audio drift found</p></div><div><span>03</span><strong>FIRST ROBOT RUN</strong><p>4 actions completed</p></div><div><span>04</span><strong>NEXT FRAME</strong><p>Still developing…</p></div></div></div>
+          <div class="film-controls"><button type="button" data-film-prev aria-label="上一帧">←</button><span data-film-index>FRAME 01 / 04</span><button type="button" data-film-next aria-label="下一帧">→</button></div>
+        </div>
+      </article>
+    </section>
+
+    <section id="contact" class="specimen-group" aria-labelledby="contact-title">
+      <header class="group-head"><span>04</span><h2 id="contact-title">Contact</h2><p>给访客一个自然靠近的理由。</p></header>
+
+      <article class="specimen" data-demo="16" data-name="Visitor Atlas" data-description="把访客地图收敛成一张安静的世界来信。">
+        <header class="specimen__meta"><span class="specimen__number">16</span><div><h3>Visitor Atlas</h3><p>把访客地图收敛成一张安静的世界来信。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage atlas-stage" data-demo-shell>
+          <svg class="atlas-map" viewBox="0 0 720 260" role="group" aria-label="访客来源简图"><path d="M40 104l41-39 63-18 77 25 43-17 50 16 49-30 92 5 47 31 60-2 81 46-25 38-72 10-51-20-55 15-54-25-61 31-67-13-68 22-67-17-47-19z"/><g><g role="button" tabindex="0" data-city="Vancouver"><circle cx="126" cy="84" r="6"/></g><g role="button" tabindex="0" data-city="Xi'an"><circle cx="485" cy="116" r="9"/></g><g role="button" tabindex="0" data-city="Singapore"><circle cx="503" cy="175" r="5"/></g><g role="button" tabindex="0" data-city="London"><circle cx="356" cy="77" r="5"/></g><g role="button" tabindex="0" data-city="Sydney"><circle cx="596" cy="202" r="5"/></g></g></svg>
+          <div class="atlas-caption"><small>LAST SIGNAL</small><strong data-city-name>Xi'an</strong><p>Somebody arrived with curiosity.</p></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="17" data-name="Topic Orbit" data-description="让研究关键词围绕一个真实问题缓慢重组。">
+        <header class="specimen__meta"><span class="specimen__number">17</span><div><h3>Topic Orbit</h3><p>让研究关键词围绕一个真实问题缓慢重组。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage orbit-stage" data-demo-shell>
+          <div class="topic-orbit" aria-label="研究主题轨道"><button type="button" style="--a:15deg" data-topic="VLM">VLM</button><button type="button" style="--a:82deg" data-topic="Agents">Agents</button><button type="button" style="--a:145deg" data-topic="VLA">VLA</button><button type="button" style="--a:225deg" data-topic="Anomaly">Anomaly</button><button type="button" style="--a:300deg" data-topic="Embodied AI">Embodied</button><div><small>QUESTION IN ORBIT</small><strong data-topic-title>How should machines act?</strong></div></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="18" data-name="Conversation Prompt" data-description="用一句可替换的问题代替暴露邮箱地址。">
+        <header class="specimen__meta"><span class="specimen__number">18</span><div><h3>Conversation Prompt</h3><p>用一句可替换的问题代替暴露邮箱地址。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage prompt-stage" data-demo-shell>
+          <div class="prompt-mark">?</div><div class="prompt-copy"><small>OPEN CONVERSATION</small><strong data-prompt-text>What are you building that almost works?</strong><div class="prompt-actions"><button type="button" data-prompt-next>Give me another prompt</button><a href="#contact-preview" data-preview-contact>Let's talk <span>→</span></a></div></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="19" data-name="Archive Cabinet" data-description="把作品、笔记和照片放进一只可筛选的档案柜。">
+        <header class="specimen__meta"><span class="specimen__number">19</span><div><h3>Archive Cabinet</h3><p>把作品、笔记和照片放进一只可筛选的档案柜。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage cabinet-stage" data-demo-shell>
+          <div class="cabinet-filters" role="group" aria-label="档案筛选"><button class="is-active" type="button" data-filter="all">All</button><button type="button" data-filter="code">Code</button><button type="button" data-filter="note">Notes</button><button type="button" data-filter="life">Life</button></div>
+          <div class="cabinet-grid"><button type="button" data-kind="code"><span>CODE / 024</span><strong>VLA sandbox</strong></button><button type="button" data-kind="note"><span>NOTE / 117</span><strong>Why agents forget</strong></button><button type="button" data-kind="life"><span>LIFE / 031</span><strong>Xi'an after rain</strong></button><button type="button" data-kind="code"><span>CODE / 019</span><strong>Dataset tools</strong></button><button type="button" data-kind="note"><span>NOTE / 093</span><strong>Failure taxonomy</strong></button><button type="button" data-kind="life"><span>LIFE / 028</span><strong>Late lab dinner</strong></button></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="20" data-name="Quiet Contact" data-description="一个在安静与回应之间切换的极简页尾。">
+        <header class="specimen__meta"><span class="specimen__number">20</span><div><h3>Quiet Contact</h3><p>一个在安静与回应之间切换的极简页尾。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage quiet-stage" data-demo-shell>
+          <button class="quiet-disc" type="button" data-quiet-toggle aria-pressed="false"><span>LISTEN</span><i></i></button>
+          <div class="quiet-copy"><small>NO FORM. NO FEED.</small><strong data-quiet-title>Leave one good question.</strong><p data-quiet-copy>I read every thoughtful message.</p><a href="#contact-preview" data-preview-contact>Let's talk <span>↗</span></a></div>
+          <div class="quiet-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </article>
+    </section>
+
+    <section id="works" class="specimen-group" aria-labelledby="works-title">
+      <header class="group-head"><span>05</span><h2 id="works-title">Works</h2><p>展示作品怎样被建造，而不只展示结果。</p></header>
+
+      <article class="specimen" data-demo="21" data-name="Project Blueprint" data-description="用可拆解的工程蓝图解释一个项目的组成。">
+        <header class="specimen__meta"><span class="specimen__number">21</span><div><h3>Project Blueprint</h3><p>用可拆解的工程蓝图解释一个项目的组成。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage blueprint-stage" data-demo-shell>
+          <div class="blueprint-canvas" aria-label="VLA 系统结构蓝图"><span class="bp-box bp-sense">01 · SENSE</span><span class="bp-box bp-reason">02 · REASON</span><span class="bp-box bp-act">03 · ACT</span><i class="bp-line bp-line-a"></i><i class="bp-line bp-line-b"></i><b class="bp-cross"></b></div>
+          <div class="blueprint-copy"><small>PROJECT / OPEN-VLA SANDBOX</small><strong data-blueprint-title>All layers visible.</strong><p data-blueprint-copy>Inspect the whole path from observation to action.</p><div role="group" aria-label="蓝图图层"><button class="is-active" type="button" data-blueprint="all">All</button><button type="button" data-blueprint="sense">Sense</button><button type="button" data-blueprint="reason">Reason</button><button type="button" data-blueprint="act">Act</button></div></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="22" data-name="Demo Terminal" data-description="访客亲自运行三条命令，理解作品真正能做什么。">
+        <header class="specimen__meta"><span class="specimen__number">22</span><div><h3>Demo Terminal</h3><p>访客亲自运行三条命令，理解作品真正能做什么。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage terminal-stage" data-demo-shell>
+          <div class="terminal-bar"><span></span><span></span><span></span><em>chenxi@lab / demos</em></div>
+          <div class="terminal-body"><p><i>$</i> <code data-terminal-command>agent inspect --scene lab.mp4</code></p><pre data-terminal-output>ready — choose a command below.</pre><span class="terminal-cursor" aria-hidden="true"></span></div>
+          <div class="terminal-commands" role="group" aria-label="演示命令"><button type="button" data-command="inspect">Inspect scene</button><button type="button" data-command="plan">Plan action</button><button type="button" data-command="explain">Explain failure</button></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="23" data-name="Before / After Lens" data-description="拖动一条观察镜，比较模型修复前后的行为。">
+        <header class="specimen__meta"><span class="specimen__number">23</span><div><h3>Before / After Lens</h3><p>拖动一条观察镜，比较模型修复前后的行为。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage lens-stage" data-demo-shell style="--lens:52%">
+          <div class="lens-scene lens-scene--before"><span>BEFORE · FRAME 081</span><div class="lens-arm"><i></i><i></i><b></b></div><p>grasp misses the handle</p></div>
+          <div class="lens-scene lens-scene--after"><span>AFTER · FRAME 081</span><div class="lens-arm"><i></i><i></i><b></b></div><p>contact aligned at 0.82 confidence</p></div>
+          <div class="lens-divider" aria-hidden="true"><i>↔</i></div>
+          <label class="lens-control">Compare before and after<input type="range" min="8" max="92" value="52" data-lens-slider></label>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="24" data-name="Failure Museum" data-description="把失败案例当作值得收藏与解释的作品。">
+        <header class="specimen__meta"><span class="specimen__number">24</span><div><h3>Failure Museum</h3><p>把失败案例当作值得收藏与解释的作品。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage museum-stage" data-demo-shell>
+          <div class="museum-plinth"><div data-failure-object><span></span><span></span><i></i></div><small data-failure-id>SPECIMEN F-07</small></div>
+          <div class="museum-copy"><small>FAILURE MUSEUM · PERMANENT COLLECTION</small><strong data-failure-title>The confident wrong turn.</strong><p data-failure-copy>Policy chose the shortest path and ignored the glass wall.</p><div role="group" aria-label="失败标本"><button class="is-active" type="button" data-failure="0">F-07</button><button type="button" data-failure="1">F-12</button><button type="button" data-failure="2">F-19</button></div></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="25" data-name="Build Queue" data-description="像制作台一样展示项目接下来会发生什么。">
+        <header class="specimen__meta"><span class="specimen__number">25</span><div><h3>Build Queue</h3><p>像制作台一样展示项目接下来会发生什么。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage queue-stage" data-demo-shell>
+          <div class="queue-head"><div><small>BUILD QUEUE</small><strong data-queue-done>1 / 4 shipped</strong></div><button type="button" data-queue-advance>Advance next task →</button></div>
+          <ol class="queue-list"><li class="is-done"><span>01</span><strong>Data viewer</strong><em>SHIPPED</em></li><li class="is-active"><span>02</span><strong>Robot replay</strong><em>BUILDING</em></li><li><span>03</span><strong>Failure explorer</strong><em>QUEUED</em></li><li><span>04</span><strong>Public notes</strong><em>QUEUED</em></li></ol>
+        </div>
+      </article>
+    </section>
+
+    <section id="papers" class="specimen-group" aria-labelledby="papers-title">
+      <header class="group-head"><span>06</span><h2 id="papers-title">Papers</h2><p>让论文先被理解，再被下载。</p></header>
+
+      <article class="specimen" data-demo="26" data-name="Abstract Highlighter" data-description="按贡献、方法与限制三层阅读摘要。">
+        <header class="specimen__meta"><span class="specimen__number">26</span><div><h3>Abstract Highlighter</h3><p>按贡献、方法与限制三层阅读摘要。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage abstract-stage" data-demo-shell data-abstract-mode="contribution">
+          <div class="abstract-tools" role="group" aria-label="摘要标注类型"><button class="is-active" type="button" data-abstract="contribution"><i></i>Contribution</button><button type="button" data-abstract="method"><i></i>Method</button><button type="button" data-abstract="limit"><i></i>Limit</button></div>
+          <p class="abstract-text">We introduce <mark data-mark="contribution">a temporal disagreement score for multimodal video</mark>. Our approach <mark data-mark="method">aligns visual, audio, and language evidence without frame-level labels</mark>. Across three datasets it improves event recall, while <mark data-mark="limit">performance declines when audio lag exceeds two seconds</mark>.</p>
+          <span class="abstract-caption" data-abstract-caption>Contribution · what is new?</span>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="27" data-name="Figure Reader" data-description="把论文图拆成可切换、可解释的阅读面板。">
+        <header class="specimen__meta"><span class="specimen__number">27</span><div><h3>Figure Reader</h3><p>把论文图拆成可切换、可解释的阅读面板。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage figure-stage" data-demo-shell>
+          <div class="figure-tabs" role="tablist" aria-label="图表面板"><button role="tab" aria-selected="true" data-figure="pipeline">A · Pipeline</button><button role="tab" aria-selected="false" data-figure="result">B · Result</button><button role="tab" aria-selected="false" data-figure="error">C · Error</button></div>
+          <div class="figure-canvas" data-figure-canvas><div class="figure-pipeline"><span>video</span><i>→</i><span>align</span><i>→</i><span>reason</span><i>→</i><span>act</span></div></div>
+          <p class="figure-caption"><b>Figure 2.</b> <span data-figure-caption>The four-stage inference pipeline.</span></p>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="28" data-name="Peer Review Margin" data-description="像阅读纸质稿一样点开页边同行评议。">
+        <header class="specimen__meta"><span class="specimen__number">28</span><div><h3>Peer Review Margin</h3><p>像阅读纸质稿一样点开页边同行评议。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage review-stage" data-demo-shell>
+          <article class="review-page"><small>METHOD · §3.2</small><h4>Temporal disagreement</h4><p>The score increases when one modality supports an event while another remains silent. We normalize each stream before fusion to prevent confidence scale from dominating the comparison.</p><button type="button" class="review-pin review-pin--1" data-review="0" aria-label="查看第一条评议">R1</button><button type="button" class="review-pin review-pin--2" data-review="1" aria-label="查看第二条评议">R2</button></article>
+          <aside class="review-note"><small>REVIEWER NOTE</small><strong data-review-title>Tap a margin pin.</strong><p data-review-copy>Two useful objections are attached to this excerpt.</p></aside>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="29" data-name="Citation Thread" data-description="沿着一条思想谱系向前追溯论文来源。">
+        <header class="specimen__meta"><span class="specimen__number">29</span><div><h3>Citation Thread</h3><p>沿着一条思想谱系向前追溯论文来源。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage thread-stage" data-demo-shell>
+          <div class="citation-thread"><button type="button" data-citation="0"><span>2026</span><strong>Our anomaly score</strong></button><i></i><button type="button" data-citation="1"><span>2024</span><strong>Cross-modal alignment</strong></button><i></i><button type="button" data-citation="2"><span>2021</span><strong>Temporal contrast</strong></button><i></i><button type="button" data-citation="3"><span>2017</span><strong>Attention is all you need</strong></button></div>
+          <p class="thread-note"><small>FOLLOW THE THREAD</small><strong data-citation-note>2026 · the current question</strong></p>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="30" data-name="Paper Stack" data-description="从一叠论文中抽出一篇，只显示读者真正需要的信息。">
+        <header class="specimen__meta"><span class="specimen__number">30</span><div><h3>Paper Stack</h3><p>从一叠论文中抽出一篇，只显示读者真正需要的信息。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage paperstack-stage" data-demo-shell>
+          <div class="paperstack-visual"><div></div><div></div><article><span data-stack-venue>ARXIV · 2026</span><strong data-stack-title>When Modalities Disagree</strong><p data-stack-authors>Chen Xi · Peng Wu</p><i data-stack-code>12 pages · code available</i></article></div>
+          <div class="paperstack-index" role="group" aria-label="选择论文"><button class="is-active" type="button" data-paperstack="0">01</button><button type="button" data-paperstack="1">02</button><button type="button" data-paperstack="2">03</button></div>
+        </div>
+      </article>
+    </section>
+
+    <section id="experiments" class="specimen-group" aria-labelledby="experiments-title">
+      <header class="group-head"><span>07</span><h2 id="experiments-title">Experiments</h2><p>让实验结果保留变量、误差与不确定性。</p></header>
+
+      <article class="specimen" data-demo="31" data-name="Ablation Mixer" data-description="打开或关闭实验变量，亲眼观察指标怎样变化。">
+        <header class="specimen__meta"><span class="specimen__number">31</span><div><h3>Ablation Mixer</h3><p>打开或关闭实验变量，亲眼观察指标怎样变化。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage ablation-stage" data-demo-shell>
+          <div class="ablation-controls"><small>ABLATION MIXER</small><label><input type="checkbox" checked data-ablation="audio"> Audio evidence</label><label><input type="checkbox" checked data-ablation="memory"> Agent memory</label><label><input type="checkbox" checked data-ablation="synthetic"> Synthetic clips</label></div>
+          <div class="ablation-meter"><span>EVENT RECALL</span><strong data-ablation-score>84.6</strong><em>%</em><i><b data-ablation-bar style="width:84.6%"></b></i><p data-ablation-delta>Full model · reference configuration</p></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="32" data-name="Confusion Matrix" data-description="让每一个错误格子都能解释它代表的混淆。">
+        <header class="specimen__meta"><span class="specimen__number">32</span><div><h3>Confusion Matrix</h3><p>让每一个错误格子都能解释它代表的混淆。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage matrix-stage" data-demo-shell>
+          <div class="matrix" role="grid" aria-label="四分类混淆矩阵"><span></span><span>Normal</span><span>Visual</span><span>Audio</span><span>Joint</span><b>Normal</b><button data-cell="Normal → Normal · 91%" style="--v:.91">91</button><button data-cell="Normal → Visual · 4%" style="--v:.04">4</button><button data-cell="Normal → Audio · 3%" style="--v:.03">3</button><button data-cell="Normal → Joint · 2%" style="--v:.02">2</button><b>Visual</b><button data-cell="Visual → Normal · 8%" style="--v:.08">8</button><button data-cell="Visual → Visual · 78%" style="--v:.78">78</button><button data-cell="Visual → Audio · 5%" style="--v:.05">5</button><button data-cell="Visual → Joint · 9%" style="--v:.09">9</button><b>Audio</b><button data-cell="Audio → Normal · 6%" style="--v:.06">6</button><button data-cell="Audio → Visual · 3%" style="--v:.03">3</button><button data-cell="Audio → Audio · 84%" style="--v:.84">84</button><button data-cell="Audio → Joint · 7%" style="--v:.07">7</button><b>Joint</b><button data-cell="Joint → Normal · 4%" style="--v:.04">4</button><button data-cell="Joint → Visual · 8%" style="--v:.08">8</button><button data-cell="Joint → Audio · 7%" style="--v:.07">7</button><button data-cell="Joint → Joint · 81%" style="--v:.81">81</button></div>
+          <aside><small>INSPECT A CELL</small><strong data-cell-copy>True labels run down; predictions run across.</strong></aside>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="33" data-name="Seed Stability" data-description="用散点而不是单个最好结果呈现实验稳定性。">
+        <header class="specimen__meta"><span class="specimen__number">33</span><div><h3>Seed Stability</h3><p>用散点而不是单个最好结果呈现实验稳定性。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage seeds-stage" data-demo-shell>
+          <div class="seeds-plot" aria-label="十次随机种子结果"><i style="--x:8%;--y:66%"></i><i style="--x:17%;--y:44%"></i><i style="--x:28%;--y:59%"></i><i style="--x:38%;--y:31%"></i><i style="--x:47%;--y:42%"></i><i style="--x:58%;--y:22%"></i><i style="--x:67%;--y:37%"></i><i style="--x:76%;--y:18%"></i><i style="--x:86%;--y:30%"></i><i style="--x:94%;--y:12%"></i><b data-seed-mean></b></div>
+          <div class="seeds-copy"><small>10 RANDOM SEEDS</small><strong data-seed-value>μ 82.4 ± 1.8</strong><p>Best run is not the whole result.</p><button type="button" data-seed-rerun>Re-sample seeds</button></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="34" data-name="Dataset Prism" data-description="转动棱镜，查看同一数据集的不同模态构成。">
+        <header class="specimen__meta"><span class="specimen__number">34</span><div><h3>Dataset Prism</h3><p>转动棱镜，查看同一数据集的不同模态构成。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage prism-stage" data-demo-shell>
+          <div class="prism-graphic"><span class="prism-beam"></span><div data-prism-shape></div><i class="prism-ray prism-ray-a"></i><i class="prism-ray prism-ray-b"></i><i class="prism-ray prism-ray-c"></i></div>
+          <div class="prism-copy"><small>MM-AD / 12,480 CLIPS</small><strong data-prism-title>All modalities</strong><p data-prism-copy>Video 100% · Audio 96% · Language 72%</p><div role="group" aria-label="数据模态"><button class="is-active" type="button" data-prism="all">All</button><button type="button" data-prism="video">Video</button><button type="button" data-prism="audio">Audio</button><button type="button" data-prism="text">Text</button></div></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="35" data-name="Robot Run Tape" data-description="像回放实验录像一样逐帧查看机器人执行。">
+        <header class="specimen__meta"><span class="specimen__number">35</span><div><h3>Robot Run Tape</h3><p>像回放实验录像一样逐帧查看机器人执行。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage robot-stage" data-demo-shell>
+          <div class="robot-view"><div class="robot-arm" data-robot-arm><i></i><i></i><b></b></div><div class="robot-cup"></div><span data-robot-frame>FRAME 01 · LOCATE</span></div>
+          <div class="robot-tape"><button type="button" data-robot-play aria-pressed="false">▶ Play</button><input type="range" min="0" max="3" value="0" step="1" data-robot-slider aria-label="实验帧"><span>00:00:04 / 00:00:16</span></div>
+        </div>
+      </article>
+    </section>
+
+    <section id="knowledge" class="specimen-group" aria-labelledby="knowledge-title">
+      <header class="group-head"><span>08</span><h2 id="knowledge-title">Knowledge</h2><p>把读过与想过的内容整理成可探索的知识表面。</p></header>
+
+      <article class="specimen" data-demo="36" data-name="Concept Dictionary" data-description="一本只收录个人研究语境的微型词典。">
+        <header class="specimen__meta"><span class="specimen__number">36</span><div><h3>Concept Dictionary</h3><p>一本只收录个人研究语境的微型词典。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage dictionary-stage" data-demo-shell>
+          <nav aria-label="概念首字母"><button class="is-active" type="button" data-term="agent">A</button><button type="button" data-term="embodied">E</button><button type="button" data-term="grounding">G</button><button type="button" data-term="world">W</button></nav>
+          <div class="dictionary-entry"><small data-term-index>A / 04</small><strong data-term-title>agent</strong><em data-term-phonetic>/ˈeɪdʒənt/ · noun</em><p data-term-copy>A system that must choose what to do next, and remain accountable for the choice.</p><span data-term-related>See also: memory, action, uncertainty</span></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="37" data-name="Idea Half-Life" data-description="拖动时间，观察一个想法如何从新奇变成可验证。">
+        <header class="specimen__meta"><span class="specimen__number">37</span><div><h3>Idea Half-Life</h3><p>拖动时间，观察一个想法如何从新奇变成可验证。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage halflife-stage" data-demo-shell style="--half:32%">
+          <div class="halflife-orbit"><i></i><span data-half-days>DAY 12</span></div>
+          <div class="halflife-copy"><small>IDEA HALF-LIFE</small><strong data-half-title>Interesting, not yet useful.</strong><p data-half-copy>One small experiment exists; the assumption is still fragile.</p><label>Time under evidence<input type="range" min="0" max="100" value="32" data-half-slider></label></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="38" data-name="Learning Path" data-description="点击知识节点，显示下一步最短的学习路线。">
+        <header class="specimen__meta"><span class="specimen__number">38</span><div><h3>Learning Path</h3><p>点击知识节点，显示下一步最短的学习路线。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage learning-stage" data-demo-shell>
+          <div class="learning-map"><button class="is-active" style="--x:8%;--y:58%" type="button" data-learning="vision">Vision</button><i style="--x:25%;--y:61%;--w:17%;--r:-8deg"></i><button style="--x:42%;--y:40%" type="button" data-learning="vlm">VLM</button><i style="--x:58%;--y:45%;--w:17%;--r:12deg"></i><button style="--x:75%;--y:63%" type="button" data-learning="vla">VLA</button><i style="--x:47%;--y:37%;--w:16%;--r:-42deg"></i><button style="--x:34%;--y:8%" type="button" data-learning="control">Control</button></div>
+          <p class="learning-caption"><small>NEXT ON THE PATH</small><strong data-learning-copy>Vision → VLM: learn cross-attention.</strong></p>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="39" data-name="Annotation Layers" data-description="在一句研究陈述上叠加证据、假设与待办层。">
+        <header class="specimen__meta"><span class="specimen__number">39</span><div><h3>Annotation Layers</h3><p>在一句研究陈述上叠加证据、假设与待办层。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage annotation-stage" data-demo-shell>
+          <div class="annotation-controls" role="group" aria-label="标注层"><button class="is-active" type="button" data-annotation="evidence">Evidence</button><button type="button" data-annotation="assumption">Assumption</button><button type="button" data-annotation="todo">To test</button></div>
+          <blockquote>The agent <mark data-anno="evidence">recovers after visual occlusion</mark> because <mark data-anno="assumption">audio preserves task state</mark>, but <mark data-anno="todo">longer interruptions remain untested</mark>.</blockquote>
+          <p data-annotation-copy>Evidence · observed in 37 of 42 runs.</p>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="40" data-name="Memory Drawer" data-description="输入关键词，从研究笔记抽屉中取回相关片段。">
+        <header class="specimen__meta"><span class="specimen__number">40</span><div><h3>Memory Drawer</h3><p>输入关键词，从研究笔记抽屉中取回相关片段。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage memory-stage" data-demo-shell>
+          <label class="memory-search"><span>⌕</span><input type="search" placeholder="Try “audio”, “robot”, or “failure”" data-memory-search></label>
+          <div class="memory-results"><article data-memory-tags="audio failure"><span>NOTE 117 · AUG 24</span><strong>Audio confidence hides temporal drift.</strong></article><article data-memory-tags="robot action"><span>NOTE 106 · AUG 11</span><strong>Robot hesitation is often useful evidence.</strong></article><article data-memory-tags="failure agent"><span>NOTE 093 · JUL 29</span><strong>Separate planning errors from sensing errors.</strong></article></div>
+          <p data-memory-count>3 notes in the drawer.</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="journeys" class="specimen-group" aria-labelledby="journeys-title">
+      <header class="group-head"><span>09</span><h2 id="journeys-title">Journeys</h2><p>让地点成为研究与生活的坐标，而不是打卡列表。</p></header>
+
+      <article class="specimen" data-demo="41" data-name="Field Trip Stampbook" data-description="在一本空天地海采样护照上逐枚盖章。">
+        <header class="specimen__meta"><span class="specimen__number">41</span><div><h3>Field Trip Stampbook</h3><p>在一本空天地海采样护照上逐枚盖章。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage stamp-stage" data-demo-shell>
+          <div class="stampbook"><span class="stampbook-spine"></span><div><small>FIELD NOTES · 2026</small><h4>AIR · SPACE · GROUND · SEA</h4><button type="button" data-stamp="air">AIR<br><i>未盖章</i></button><button type="button" data-stamp="ground">GROUND<br><i>未盖章</i></button></div><div><p data-stamp-note>Choose a field to stamp the page.</p><button type="button" data-stamp="space">SPACE<br><i>未盖章</i></button><button type="button" data-stamp="sea">SEA<br><i>未盖章</i></button></div></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="42" data-name="City Time Postcard" data-description="一张同时显示城市时间、光线与一句近况的明信片。">
+        <header class="specimen__meta"><span class="specimen__number">42</span><div><h3>City Time Postcard</h3><p>一张同时显示城市时间、光线与一句近况的明信片。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage postcard-stage" data-demo-shell data-postcard-mode="xian">
+          <div class="postcard-view"><span class="postcard-sun"></span><i></i><i></i><i></i><strong data-postcard-city>XI'AN</strong></div>
+          <div class="postcard-copy"><small>POSTCARD / LOCAL LIGHT</small><strong data-postcard-time>10:24</strong><p data-postcard-note>From the lab, with one unfinished experiment.</p><div role="group" aria-label="选择城市"><button class="is-active" type="button" data-postcard="xian">Xi'an</button><button type="button" data-postcard="shanghai">Shanghai</button><button type="button" data-postcard="london">London</button></div></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="43" data-name="Research Route" data-description="沿路线回看一个问题在不同实验地点怎样改变。">
+        <header class="specimen__meta"><span class="specimen__number">43</span><div><h3>Research Route</h3><p>沿路线回看一个问题在不同实验地点怎样改变。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage route-stage" data-demo-shell>
+          <svg viewBox="0 0 760 240" role="group" aria-label="研究路线"><path class="route-line" d="M62 174 C170 40 250 211 370 102 S575 45 698 141"/><g class="route-nodes"><g role="button" tabindex="0" data-route="0" transform="translate(62 174)"><circle r="29"/><text text-anchor="middle" y="-2">2025</text><text text-anchor="middle" y="10">Xi'an</text></g><g role="button" tabindex="0" data-route="1" transform="translate(370 102)"><circle r="29"/><text text-anchor="middle" y="-2">2026</text><text text-anchor="middle" y="10">Lab</text></g><g role="button" tabindex="0" data-route="2" transform="translate(698 141)"><circle r="29"/><text text-anchor="middle" y="-2">NEXT</text><text text-anchor="middle" y="10">?</text></g></g><circle data-route-dot cx="62" cy="174" r="7"/></svg>
+          <p><small>ROUTE NOTE</small><strong data-route-note>Xi'an · began with anomaly detection.</strong></p>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="44" data-name="Conference Packing" data-description="用一只会逐渐变轻的行李箱展示参会准备。">
+        <header class="specimen__meta"><span class="specimen__number">44</span><div><h3>Conference Packing</h3><p>用一只会逐渐变轻的行李箱展示参会准备。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage packing-stage" data-demo-shell>
+          <div class="packing-case"><span>CVPR / TBD</span><strong data-packing-count>0 / 4</strong><i></i></div>
+          <div class="packing-list"><small>PACKING THE IDEA</small><label><input type="checkbox" data-pack> 90-second explanation</label><label><input type="checkbox" data-pack> Honest failure slide</label><label><input type="checkbox" data-pack> Reproducible demo</label><label><input type="checkbox" data-pack> One question for others</label><p data-packing-note>Nothing packed yet.</p></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="45" data-name="Photo Exposure" data-description="推高曝光，才显出照片背后的研究手记。">
+        <header class="specimen__meta"><span class="specimen__number">45</span><div><h3>Photo Exposure</h3><p>推高曝光，才显出照片背后的研究手记。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage exposure-stage" data-demo-shell style="--exposure:.42">
+          <div class="exposure-photo"><span></span><i></i><b></b><p data-exposure-caption>Xi'an · 21:47 · the robot finally completed the fourth action.</p></div>
+          <label>EXPOSURE <input type="range" min="10" max="100" value="42" data-exposure></label>
+        </div>
+      </article>
+    </section>
+
+    <section id="character" class="specimen-group" aria-labelledby="character-title">
+      <header class="group-head"><span>10</span><h2 id="character-title">Character</h2><p>留下性格，但不把主页变成自我介绍问卷。</p></header>
+
+      <article class="specimen" data-demo="46" data-name="Taste Profile" data-description="用三条可调刻度表达做研究时的个人取向。">
+        <header class="specimen__meta"><span class="specimen__number">46</span><div><h3>Taste Profile</h3><p>用三条可调刻度表达做研究时的个人取向。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage taste-stage" data-demo-shell>
+          <div class="taste-copy"><small>RESEARCH TASTE / NOT A SCORE</small><strong data-taste-sentence>Rigorous, curious, slightly impatient.</strong><p>Move a dial to compose another working style.</p></div>
+          <div class="taste-sliders"><label>Evidence <input type="range" min="0" max="100" value="88" data-taste></label><label>Play <input type="range" min="0" max="100" value="64" data-taste></label><label>Speed <input type="range" min="0" max="100" value="71" data-taste></label></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="47" data-name="Daily Soundboard" data-description="不用播放音乐，以可视节拍记录一天的声音质感。">
+        <header class="specimen__meta"><span class="specimen__number">47</span><div><h3>Daily Soundboard</h3><p>不用播放音乐，以可视节拍记录一天的声音质感。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage soundboard-stage" data-demo-shell>
+          <div class="soundboard-grid"><button type="button" data-sound="keys"><i></i><strong>KEYS</strong><span>tap · tap</span></button><button type="button" data-sound="rain"><i></i><strong>RAIN</strong><span>soft noise</span></button><button type="button" data-sound="train"><i></i><strong>TRAIN</strong><span>low rhythm</span></button><button type="button" data-sound="glasses"><i></i><strong>GLASSES</strong><span>small cheers</span></button></div>
+          <p><small>TODAY SOUNDS LIKE</small><strong data-sound-copy>Choose a sound tile.</strong></p>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="48" data-name="Four-State Mascot" data-description="把工作、吃饭、休息与小酌变成按时间切换的小人状态。">
+        <header class="specimen__meta"><span class="specimen__number">48</span><div><h3>Four-State Mascot</h3><p>把工作、吃饭、休息与小酌变成按时间切换的小人状态。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage mascotlab-stage" data-demo-shell data-mascot="work">
+          <div class="mascotlab-person"><span class="mascotlab-head">⌐●-●</span><i class="mascotlab-body"></i><i class="mascotlab-arm"></i><b class="mascotlab-prop">⌨</b><em class="mascotlab-shoe">AJ4</em></div>
+          <div class="mascotlab-copy"><small data-mascot-time>10:00 — 12:00</small><strong data-mascot-title>Working · ask me something.</strong><p data-mascot-note>One more run before lunch.</p><div role="group" aria-label="小人状态"><button class="is-active" type="button" data-mascot-mode="work">Work</button><button type="button" data-mascot-mode="eat">Eat</button><button type="button" data-mascot-mode="sleep">Sleep</button><button type="button" data-mascot-mode="cheers">Cheers</button></div></div>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="49" data-name="Hidden Detail" data-description="移动聚光灯，在纯黑表面发现一句隐藏的自我提醒。">
+        <header class="specimen__meta"><span class="specimen__number">49</span><div><h3>Hidden Detail</h3><p>移动聚光灯，在纯黑表面发现一句隐藏的自我提醒。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage hidden-stage" data-demo-shell style="--spot-x:50%;--spot-y:50%" tabindex="0">
+          <p>Make the failure<br>specific enough<br>to teach you.</p><span>MOVE THE LIGHT · ARROW KEYS ALSO WORK</span><i aria-hidden="true"></i>
+        </div>
+      </article>
+
+      <article class="specimen" data-demo="50" data-name="Personal OS" data-description="用一条命令切换主页的工作、开放与离线模式。">
+        <header class="specimen__meta"><span class="specimen__number">50</span><div><h3>Personal OS</h3><p>用一条命令切换主页的工作、开放与离线模式。</p></div><button class="focus-open" type="button">单独欣赏 <span>↗</span></button></header>
+        <div class="specimen__stage os-stage" data-demo-shell data-os="focus">
+          <div class="os-top"><span>CHEN.OS / 0.50</span><i data-os-status>FOCUS MODE</i></div>
+          <div class="os-body"><small>CURRENT DIRECTIVE</small><strong data-os-title>Protect the next 90 minutes.</strong><p data-os-copy>Notifications quiet. One experiment active.</p></div>
+          <div class="os-command" role="group" aria-label="切换个人系统模式"><span>⌘</span><button class="is-active" type="button" data-os-mode="focus">/focus</button><button type="button" data-os-mode="open">/open</button><button type="button" data-os-mode="wander">/wander</button><button type="button" data-os-mode="offline">/offline</button></div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="lab-footer"><span>UI LAB · 2026</span><p>这些方案只存在于预览页。选择之后，再把一个真正合适的带回主页。</p><a href="#specimens">回到顶部 ↑</a></footer>
+
+  <dialog class="focus-dialog" aria-labelledby="focus-title">
+    <div class="focus-dialog__top"><div><span data-focus-number>01 / 50</span><h2 id="focus-title" data-focus-title>Current Signal</h2><p data-focus-description></p></div><button type="button" class="focus-close" aria-label="关闭检视台">×</button></div>
+    <div class="focus-dialog__canvas" data-focus-canvas></div>
+    <div class="focus-dialog__controls"><button type="button" data-focus-prev>← 上一个</button><span>← / → 也可以切换</span><button type="button" data-focus-next>下一个 →</button></div>
+  </dialog>
+
+  <script src="/assets/ui-lab/ui-lab.js" defer></script>
+</body>
+</html>
