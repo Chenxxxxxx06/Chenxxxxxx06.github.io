@@ -557,6 +557,8 @@ document.addEventListener('DOMContentLoaded', function() {
   var SVG_NS = 'http://www.w3.org/2000/svg';
   var DAY_MS = 24 * 60 * 60 * 1000;
   var REFRESH_MS = 6 * 60 * 60 * 1000;
+  var ACTIVE_REFRESH_COOLDOWN_MS = 60 * 1000;
+  var lastRemoteRequestAt = 0;
 
   function compact(value) {
     var number = Number(value || 0);
@@ -687,11 +689,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }) + '. Next refresh within 6 hours.';
   }
 
-  function loadActivity() {
+  function loadActivity(force) {
     var grid = document.getElementById('activityGrid');
     if (!grid) return;
+    var now = Date.now();
+    if (!force && now - lastRemoteRequestAt < ACTIVE_REFRESH_COOLDOWN_MS) return;
+    lastRemoteRequestAt = now;
     var source = grid.getAttribute('data-source');
-    fetch(source + '?v=' + Date.now(), { cache: 'no-store' })
+    fetch(source + '?v=' + now, { cache: 'no-store' })
       .then(function (response) {
         if (!response.ok) throw new Error('Activity data unavailable');
         return response.json();
@@ -719,9 +724,15 @@ document.addEventListener('DOMContentLoaded', function() {
   document.addEventListener('DOMContentLoaded', function () {
     if (!document.getElementById('activityGrid')) return;
     loadFallbackActivity();
-    loadActivity();
-    window.setInterval(loadActivity, REFRESH_MS);
+    loadActivity(true);
+    window.setInterval(function () { loadActivity(true); }, REFRESH_MS);
   });
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible') loadActivity(false);
+  });
+  window.addEventListener('focus', function () { loadActivity(false); });
+  window.addEventListener('pageshow', function () { loadActivity(false); });
 })();
 
 // Time-aware mascot. Schedule is calculated in Asia/Shanghai regardless of the
