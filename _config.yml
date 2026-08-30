@@ -5,6 +5,11 @@ direction                : "NPU SE · VLM · VLA · Agent"
 repository               : "Chenxxxxxx06/Chenxxxxxx06.github.io"
 url                      : "https://chenxxxxxx06.github.io"
 
+# Ask Chen API. Keep credentials on the server; this is only the public endpoint.
+# Use an absolute serverless URL when the site is deployed on GitHub Pages.
+ask_chen:
+  endpoint: ""
+
 # SEO Related
 google_site_verification :
 bing_site_verification   :
@@ -45,6 +50,8 @@ exclude:
   - log
   - node_modules
   - package.json
+  - api
+  - tests
   - scripts
   - tmp
   - vendor

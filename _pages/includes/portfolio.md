@@ -6,7 +6,7 @@
 
     <div class="portfolio-controls" aria-label="Portfolio navigation">
       <span class="portfolio-counter" aria-live="polite">
-        <span data-portfolio-current>01</span><span class="portfolio-counter__divider">/</span><span>04</span>
+        <span data-portfolio-current>01</span><span class="portfolio-counter__divider">/</span><span>05</span>
       </span>
       <button class="portfolio-arrow" type="button" data-portfolio-prev aria-label="Previous project">
         <span aria-hidden="true">←</span>
@@ -52,6 +52,37 @@
       </a>
     </article>
 
+    <article class="portfolio-card portfolio-card--labvla">
+      <a class="portfolio-card__link" href="https://github.com/zjunlp/LabVLA.git" target="_blank" rel="noopener noreferrer" aria-label="Open the LabVLA repository on GitHub">
+        <div class="portfolio-card__media portfolio-card__media--labvla">
+          <span class="portfolio-media-badge portfolio-media-badge--labvla">research code</span>
+          <img class="portfolio-labvla__symbol" src="{{ '/assets/portfolio/labvla-symbol.png' | relative_url }}" alt="" width="512" height="344" loading="lazy">
+          <img class="portfolio-labvla__wordmark" src="{{ '/assets/portfolio/labvla-wordmark.png' | relative_url }}" alt="LabVLA" width="281" height="64" loading="lazy">
+          <div class="portfolio-labvla__pipeline" aria-hidden="true">
+            <span>protocol</span><b>→</b><span>perception</span><b>→</b><span>action</span>
+          </div>
+          <span class="portfolio-labvla__bubble portfolio-labvla__bubble--one" aria-hidden="true"></span>
+          <span class="portfolio-labvla__bubble portfolio-labvla__bubble--two" aria-hidden="true"></span>
+        </div>
+        <div class="portfolio-card__body">
+          <div class="portfolio-card__topline">
+            <span class="portfolio-card__number">02</span>
+            <span class="portfolio-card__role">Research · Vision-Language-Action</span>
+          </div>
+          <h3 class="portfolio-card__title">LabVLA</h3>
+          <p class="portfolio-card__desc">A project I worked on for grounding vision-language-action models in scientific laboratories—pairing a Qwen3-VL backbone with a DiT action expert for protocol-aware robot control.</p>
+          <ul class="portfolio-card__tags" aria-label="LabVLA topics">
+            <li>Vision-Language-Action</li>
+            <li>Scientific Robotics</li>
+          </ul>
+          <div class="portfolio-card__footer">
+            <span>Protocols into robot actions</span>
+            <span class="portfolio-card__open">View repo&nbsp; ↗</span>
+          </div>
+        </div>
+      </a>
+    </article>
+
     <article class="portfolio-card portfolio-card--h3">
       <a class="portfolio-card__link" href="https://github.com/Argus-AiTeam/minimax-h3-desktop" target="_blank" rel="noopener noreferrer" aria-label="Open the MiniMax-H3 desktop optimization repository on GitHub">
         <div class="portfolio-card__media portfolio-card__media--h3">
@@ -64,7 +95,7 @@
         </div>
         <div class="portfolio-card__body">
           <div class="portfolio-card__topline">
-            <span class="portfolio-card__number">02</span>
+            <span class="portfolio-card__number">03</span>
             <span class="portfolio-card__role portfolio-card__role--live">Work in progress · GPU Systems</span>
           </div>
           <h3 class="portfolio-card__title">MiniMax-H3, Desktop Edition</h3>
@@ -93,7 +124,7 @@
         </div>
         <div class="portfolio-card__body">
           <div class="portfolio-card__topline">
-            <span class="portfolio-card__number">03</span>
+            <span class="portfolio-card__number">04</span>
             <span class="portfolio-card__role">Hackathon · Desktop AI</span>
           </div>
           <h3 class="portfolio-card__title">IronRock Desktop Pet</h3>
@@ -123,7 +154,7 @@
         </div>
         <div class="portfolio-card__body">
           <div class="portfolio-card__topline">
-            <span class="portfolio-card__number">04</span>
+            <span class="portfolio-card__number">05</span>
             <span class="portfolio-card__role">Course Project · Full-stack PHM</span>
           </div>
           <h3 class="portfolio-card__title">风调预顺</h3>

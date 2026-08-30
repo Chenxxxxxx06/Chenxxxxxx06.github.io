@@ -1,56 +1,101 @@
 (function () {
   'use strict';
 
-  const ASK_TIMEOUT_MS = 12000;
+  const ASK_TIMEOUT_MS = 20000;
+
+  const STATUS_COPY = {
+    answered: { state: 'answered', status: 'Qwen · approved public source' },
+    refused: { state: 'locked', status: 'Boundary · request declined' },
+    insufficient: { state: 'insufficient', status: 'Knowledge base · not published' },
+    rate_limited: { state: 'locked', status: 'Boundary · request limit reached' },
+    upstream_error: { state: 'offline', status: 'Qwen · knowledge router offline' }
+  };
 
   function askEndpoint(widget) {
     return (widget.getAttribute('data-placement-ask-endpoint') || '').trim();
   }
 
+  function setInteractive(widget, busy) {
+    const input = widget.querySelector('[data-placement-ask-input]');
+    const submit = widget.querySelector('[data-placement-ask-submit]');
+    const suggestions = widget.querySelectorAll('[data-placement-suggestion]');
+    input.disabled = busy;
+    submit.disabled = busy;
+    suggestions.forEach(function (button) { button.disabled = busy; });
+    widget.setAttribute('aria-busy', busy ? 'true' : 'false');
+  }
+
   function writeAskResult(widget, commandText, outputText, statusText, state) {
     widget.setAttribute('data-placement-knowledge-state', state);
+    widget.querySelector('[data-placement-ask-state]').setAttribute('data-placement-ask-state', state);
     widget.querySelector('[data-placement-terminal-command]').textContent = commandText;
     widget.querySelector('[data-placement-terminal-output]').textContent = outputText;
     widget.querySelector('[data-placement-ask-status]').textContent = statusText;
   }
 
-  function approvedAnswerText(payload) {
+  function sourceLabels(payload) {
+    if (!payload || !Array.isArray(payload.sources)) return [];
+    return payload.sources
+      .map(function (source) { return source && (source.label || source.id); })
+      .filter(Boolean)
+      .filter(function (label, index, labels) { return labels.indexOf(label) === index; });
+  }
+
+  function resultText(payload) {
     const answer = payload && typeof payload.answer === 'string' ? payload.answer.trim() : '';
-    const sources = payload && Array.isArray(payload.sources)
-      ? payload.sources.map(function (source) { return source && (source.label || source.id); }).filter(Boolean)
-      : [];
-    if (!answer || sources.length === 0) return '';
-    return answer + '\n\nSources → ' + sources.join(' · ');
+    const status = payload && typeof payload.status === 'string' ? payload.status : '';
+    const sources = sourceLabels(payload);
+    if (!answer) return '';
+    if (status === 'answered') {
+      if (sources.length === 0) return '';
+      return 'answer → ' + answer + '\n\nSources → ' + sources.join(' · ');
+    }
+    if (STATUS_COPY[status]) return answer;
+    return '';
+  }
+
+  async function readPayload(response) {
+    try {
+      return await response.json();
+    } catch (error) {
+      return null;
+    }
   }
 
   async function submitAsk(form) {
     const widget = form.closest('[data-placement-widget="terminal"]');
+    if (!widget) return;
+
     const input = form.querySelector('[data-placement-ask-input]');
-    const submit = form.querySelector('[data-placement-ask-submit]');
+    const restoreFocus = widget.contains(document.activeElement);
     const question = input.value.trim();
-    if (!widget || !question) {
+    if (!question) {
       input.focus();
       return;
     }
 
     const commandText = 'ask "' + question + '"';
     const endpoint = askEndpoint(widget);
-    submit.disabled = true;
     input.value = '';
-    writeAskResult(widget, commandText, 'retrieving approved knowledge…', 'GPT · checking the personal knowledge base', 'retrieving');
+    setInteractive(widget, true);
+    writeAskResult(
+      widget,
+      commandText,
+      'routing inside the approved profile…',
+      'Qwen · checking the public knowledge boundary',
+      'retrieving'
+    );
 
     if (!endpoint) {
-      window.setTimeout(function () {
-        writeAskResult(
-          widget,
-          commandText,
-          'knowledge base · draft\nNo approved answer is connected yet.\nThis question is ready for the personal knowledge base you add later.',
-          'Knowledge source: waiting for your approved content.',
-          'draft'
-        );
-        submit.disabled = false;
-        input.focus();
-      }, 260);
+      writeAskResult(
+        widget,
+        commandText,
+        'configuration pending\nThe public knowledge endpoint has not been connected.',
+        'Qwen · endpoint not configured',
+        'offline'
+      );
+      setInteractive(widget, false);
+      if (restoreFocus && (document.activeElement === document.body || widget.contains(document.activeElement))) input.focus();
       return;
     }
 
@@ -63,22 +108,31 @@
         body: JSON.stringify({ query: question, locale: document.documentElement.lang || 'en' }),
         signal: controller.signal
       });
-      if (!response.ok) throw new Error('ask endpoint returned ' + response.status);
-      const answer = approvedAnswerText(await response.json());
-      if (!answer) {
-        writeAskResult(widget, commandText, 'evidence missing\nChen has not published enough approved material to answer that yet.', 'GPT · no approved evidence', 'insufficient');
-      } else {
-        writeAskResult(widget, commandText, answer, 'GPT · grounded in the personal knowledge base', 'answered');
+      const payload = await readPayload(response);
+      const output = resultText(payload);
+      if (!output) {
+        if (!response.ok) throw new Error('ask endpoint returned ' + response.status);
+        writeAskResult(
+          widget,
+          commandText,
+          'evidence missing\nThis topic is not in Chen\'s approved public profile.',
+          'Knowledge base · no approved evidence',
+          'insufficient'
+        );
+        return;
       }
+
+      const copy = STATUS_COPY[payload.status] || STATUS_COPY.insufficient;
+      writeAskResult(widget, commandText, output, copy.status, copy.state);
     } catch (error) {
-      const copy = error && error.name === 'AbortError'
-        ? 'timeout\nThe personal knowledge base did not respond within 12 seconds.'
-        : 'offline\nThe personal knowledge base is not reachable right now.';
-      writeAskResult(widget, commandText, copy, 'GPT · knowledge service offline', 'offline');
+      const output = error && error.name === 'AbortError'
+        ? 'timeout\nThe public knowledge router did not respond within 20 seconds.'
+        : 'offline\nThe public knowledge router is not reachable right now.';
+      writeAskResult(widget, commandText, output, 'Qwen · knowledge router offline', 'offline');
     } finally {
       window.clearTimeout(timeout);
-      submit.disabled = false;
-      input.focus();
+      setInteractive(widget, false);
+      if (restoreFocus && (document.activeElement === document.body || widget.contains(document.activeElement))) input.focus();
     }
   }
 
@@ -90,6 +144,19 @@
   });
 
   document.addEventListener('click', function (event) {
+    const suggestion = event.target.closest('[data-placement-suggestion]');
+    if (suggestion) {
+      const widget = suggestion.closest('[data-placement-widget="terminal"]');
+      const form = widget && widget.querySelector('[data-placement-ask-form]');
+      const input = form && form.querySelector('[data-placement-ask-input]');
+      if (form && input && !suggestion.disabled) {
+        input.value = suggestion.getAttribute('data-question') || suggestion.textContent.trim();
+        if (typeof form.requestSubmit === 'function') form.requestSubmit();
+        else form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+      }
+      return;
+    }
+
     const terminalBody = event.target.closest('[data-placement-terminal-focus]');
     if (terminalBody && !event.target.closest('input, button, a')) {
       terminalBody.querySelector('[data-placement-ask-input]').focus();

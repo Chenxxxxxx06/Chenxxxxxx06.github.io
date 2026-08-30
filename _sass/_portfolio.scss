@@ -448,6 +448,132 @@
   }
 }
 
+/* ── LabVLA: a protocol card that turns lab instructions into motion ── */
+.portfolio-card__media--labvla {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 17% 19%, rgba(97, 169, 109, 0.2), transparent 24%),
+    radial-gradient(circle at 88% 82%, rgba(19, 72, 99, 0.14), transparent 28%),
+    linear-gradient(145deg, #f5fbf6 0%, #e8f0ed 100%);
+
+  &::before {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(20, 64, 77, 0.065) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(20, 64, 77, 0.065) 1px, transparent 1px);
+    background-size: 24px 24px;
+    mask-image: linear-gradient(150deg, #000 0%, rgba(0, 0, 0, 0.52) 56%, transparent 90%);
+    content: '';
+  }
+
+  &::after {
+    position: absolute;
+    z-index: 0;
+    top: 34px;
+    right: 25px;
+    width: 78px;
+    height: 78px;
+    border: 1px dashed rgba(20, 64, 77, 0.22);
+    border-radius: 50%;
+    content: '';
+  }
+}
+
+.portfolio-media-badge--labvla {
+  color: #17435a;
+  background: rgba(247, 252, 248, 0.88);
+  border-color: rgba(23, 67, 90, 0.14);
+}
+
+.portfolio-labvla__symbol {
+  position: absolute;
+  z-index: 2;
+  top: 31px;
+  right: 22px;
+  width: 132px;
+  height: auto;
+  margin: 0;
+  box-shadow: none !important;
+  filter: drop-shadow(0 15px 18px rgba(19, 70, 87, 0.16));
+  transform: rotate(1.5deg);
+  transition: transform 500ms cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  .portfolio-card:hover & {
+    transform: translateY(-4px) rotate(0deg) scale(1.025);
+  }
+}
+
+.portfolio-labvla__wordmark {
+  position: absolute;
+  z-index: 3;
+  top: 71px;
+  left: 23px;
+  width: 137px;
+  height: auto;
+  margin: 0;
+  box-shadow: none !important;
+}
+
+.portfolio-labvla__pipeline {
+  position: absolute;
+  z-index: 4;
+  right: 14px;
+  bottom: 14px;
+  left: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 10px;
+  color: #35584e;
+  background: rgba(247, 252, 248, 0.78);
+  border: 1px solid rgba(23, 67, 90, 0.13);
+  border-radius: 8px;
+  box-shadow: 0 8px 22px rgba(18, 65, 79, 0.08);
+  font-family: $monospace;
+  font-size: 0.49em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+
+  b {
+    color: #54a260;
+    font-weight: 500;
+  }
+}
+
+.portfolio-labvla__bubble {
+  position: absolute;
+  z-index: 1;
+  border: 1px solid rgba(81, 158, 92, 0.36);
+  border-radius: 50%;
+  background: rgba(116, 190, 126, 0.16);
+  transition: transform 500ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.portfolio-labvla__bubble--one {
+  top: 42px;
+  left: 44%;
+  width: 12px;
+  height: 12px;
+
+  .portfolio-card:hover & { transform: translateY(-7px); }
+}
+
+.portfolio-labvla__bubble--two {
+  top: 25px;
+  left: 52%;
+  width: 7px;
+  height: 7px;
+
+  .portfolio-card:hover & { transform: translate(3px, -5px); }
+}
+
 /* ── MiniMax-H3: generated frame plus benchmark HUD ── */
 .portfolio-card__media--h3 {
   background: #070d16;
@@ -706,6 +832,8 @@
   .portfolio-card__image,
   .portfolio-card__argus-logo,
   .portfolio-card__pet,
+  .portfolio-labvla__symbol,
+  .portfolio-labvla__bubble,
   .portfolio-card__open,
   .portfolio-progress span,
   .portfolio-arrow {

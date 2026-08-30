@@ -8,7 +8,7 @@ redirect_from:
   - /about.html
 ---
 
-<link rel="stylesheet" href="{{ '/assets/placement-demo/placement-demo.css?v=20260827-8' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/placement-demo/placement-demo.css?v=20260830-ask-ai-connected' | relative_url }}">
 
 <span class='anchor' id='about-me'></span>
 {% include_relative includes/intro.md %}
@@ -31,4 +31,4 @@ redirect_from:
 
 <span class='anchor' id='end-page'></span>
 
-<script src="{{ '/assets/placement-demo/placement-demo.js?v=20260827-8' | relative_url }}" defer></script>
+<script src="{{ '/assets/placement-demo/placement-demo.js?v=20260830-ask-ai-connected' | relative_url }}" defer></script>

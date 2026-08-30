@@ -1,5 +1,5 @@
 <span class="anchor" id="placement-terminal"></span>
-<section class="placement-widget placement-widget--terminal" data-placement-widget="terminal" data-placement-ask-endpoint="" data-placement-knowledge-state="draft" aria-labelledby="placement-terminal-title">
+<section class="placement-widget placement-widget--terminal" data-placement-widget="terminal" data-placement-ask-endpoint="{{ site.ask_chen.endpoint | escape }}" data-placement-knowledge-state="ready" aria-labelledby="placement-terminal-title">
   <header class="placement-widget__header">
     <span class="placement-widget__number" aria-hidden="true">01</span>
     <div class="placement-widget__heading">
@@ -14,18 +14,18 @@
     <div class="placement-terminal__bar" aria-hidden="true">
       <span></span><span></span><span></span>
       <em>chen@gpt / ask</em>
-      <b>PERSONAL KNOWLEDGE BASE · DRAFT</b>
+      <b>PERSONAL KNOWLEDGE BASE · READY</b>
     </div>
-    <div class="placement-terminal__body" data-placement-ask-state="draft" data-placement-terminal-focus="">
-      <p class="placement-terminal__command"><i aria-hidden="true">$</i> <code data-placement-terminal-command>gpt connect --knowledge-base personal</code></p>
+    <div class="placement-terminal__body" data-placement-ask-state="ready" data-placement-terminal-focus="">
+      <p class="placement-terminal__command"><i aria-hidden="true">$</i> <code data-placement-terminal-command>qwen connect --knowledge-base personal</code></p>
       <pre data-placement-terminal-output aria-live="polite">ready — type a question at the cursor and press Enter.</pre>
-      <form class="placement-terminal__prompt" data-placement-ask-form action="#placement-terminal" method="get" aria-label="Ask Chen">
+      <form class="placement-terminal__prompt" data-placement-ask-form action="/api/ask" method="post" aria-label="Ask Chen">
         <label class="screen-reader-text" for="placement-ask-input">Ask Chen a question</label>
         <input id="placement-ask-input" class="placement-terminal__prompt-input" data-placement-ask-input name="question" type="text" maxlength="240" autocomplete="off" placeholder=" " aria-describedby="placement-ask-status">
         <span class="placement-terminal__cursor" aria-hidden="true"></span>
         <button class="screen-reader-text" data-placement-ask-submit type="submit">Submit question</button>
       </form>
-      <span id="placement-ask-status" class="screen-reader-text" data-placement-ask-status>Knowledge source: waiting for your approved content.</span>
+      <span id="placement-ask-status" class="screen-reader-text" data-placement-ask-status>Knowledge source: Qwen3.8-Flash connected to the approved public profile.</span>
     </div>
   </div>
 </section>

@@ -7,6 +7,11 @@ __pycache__/
 *.pyc
 assets/images/mascot/*.png
 
+# Server-only Ask Chen secrets
+.env
+.env.*
+!.env.example
+
 # Never upload personal CV / resume
 pdfs/
 *.pdf

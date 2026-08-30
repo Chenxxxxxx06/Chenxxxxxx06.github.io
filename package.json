@@ -1,0 +1,10 @@
+{
+  "name": "chenxi-homepage",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "preview": "node scripts/ask-preview-server.mjs",
+    "sync:preview": "node scripts/sync-preview.mjs"
+  }
+}
