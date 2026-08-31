@@ -25,8 +25,6 @@ sitemap: false
 
 {% include_relative includes/honors.md %}
 
-{% include_relative includes/placement-demo-atlas.html %}
-
 <span class='anchor' id='end-page'></span>
 
 <script src="{{ '/assets/placement-demo/placement-demo.js?v=20260830-ask-ai-connected' | relative_url }}" defer></script>

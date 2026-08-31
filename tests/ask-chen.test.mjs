@@ -256,6 +256,10 @@ test('homepage keeps the original terminal shape while connecting it and enlargi
     assert.match(versioned, /20260830-ask-ai-connected/);
     assert.doesNotMatch(versioned, /20260830-ask-answer/);
   }
+  for (const page of [aboutPage, placementPage]) {
+    assert.doesNotMatch(page, /placement-demo-atlas\.html/);
+  }
+  assert.equal(existsSync(resolve(root, '_pages/includes/placement-demo-atlas.html')), false);
   assert.ok(existsSync(resolve(root, 'assets/portfolio/labvla-symbol.png')));
   assert.ok(existsSync(resolve(root, 'assets/portfolio/labvla-wordmark.png')));
 });
