@@ -10,8 +10,10 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sqlite3
 import subprocess
+import urllib.request
 from collections import defaultdict
 from datetime import date, datetime, time, timedelta, timezone
 from pathlib import Path
@@ -135,6 +137,56 @@ def read_cc_switch(db_path: Path, start: date, end: date) -> dict[str, Any]:
     }
 
 
+def github_result(login: str, start: date, end: date, counts: dict[str, int]) -> dict[str, Any]:
+    days = []
+    current = start
+    while current <= end:
+        key = current.isoformat()
+        days.append({"date": key, "count": counts.get(key, 0)})
+        current += timedelta(days=1)
+
+    return {
+        "login": login,
+        "total_contributions": sum(item["count"] for item in days),
+        "days": days,
+    }
+
+
+def run_github_public_query(login: str, start: date, end: date) -> dict[str, Any]:
+    """Read the public contribution calendar without requiring GitHub CLI auth."""
+    counts: dict[str, int] = {}
+    for year in range(start.year, end.year + 1):
+        url = (
+            f"https://github.com/users/{login}/contributions"
+            f"?from={year}-01-01&to={year}-12-31"
+        )
+        request = urllib.request.Request(
+            url, headers={"User-Agent": "ChenXiHomepageActivity/1.0"}
+        )
+        with urllib.request.urlopen(request, timeout=30) as response:
+            html = response.read().decode("utf-8")
+
+        id_to_date: dict[str, str] = {}
+        for tag in re.findall(r"<td\b[^>]*ContributionCalendar-day[^>]*>", html):
+            date_match = re.search(r'data-date="(\d{4}-\d{2}-\d{2})"', tag)
+            id_match = re.search(r'id="([^"]+)"', tag)
+            if date_match and id_match:
+                id_to_date[id_match.group(1)] = date_match.group(1)
+
+        for cell_id, text in re.findall(
+            r'<tool-tip\b[^>]*for="([^"]+)"[^>]*>([^<]+)</tool-tip>', html
+        ):
+            day = id_to_date.get(cell_id)
+            if not day:
+                continue
+            count_match = re.match(r"([\d,]+) contributions?\b", text.strip())
+            counts[day] = int(count_match.group(1).replace(",", "")) if count_match else 0
+
+    if not counts:
+        raise RuntimeError(f"No public GitHub contribution data found for: {login}")
+    return github_result(login, start, end, counts)
+
+
 def run_github_query(login: str, start: date, end: date) -> dict[str, Any]:
     query = """
     query($login:String!, $from:DateTime!, $to:DateTime!) {
@@ -169,18 +221,7 @@ def run_github_query(login: str, start: date, end: date) -> dict[str, Any]:
         for item in week.get("contributionDays", []):
             counts[item["date"]] = int(item["contributionCount"])
 
-    current = start
-    days = []
-    while current <= end:
-        key = current.isoformat()
-        days.append({"date": key, "count": counts.get(key, 0)})
-        current += timedelta(days=1)
-
-    return {
-        "login": login,
-        "total_contributions": sum(item["count"] for item in days),
-        "days": days,
-    }
+    return github_result(login, start, end, counts)
 
 
 def read_previous(paths: list[Path]) -> dict[str, Any] | None:
@@ -203,12 +244,18 @@ def main() -> int:
     ai = read_cc_switch(args.db, start, today)
     try:
         github = run_github_query(args.github_user, start, today)
-    except (OSError, subprocess.SubprocessError, json.JSONDecodeError, RuntimeError) as error:
-        if previous and previous.get("github"):
-            github = previous["github"]
-            warnings.append(f"GitHub refresh used cached data: {error}")
-        else:
-            raise
+    except (OSError, subprocess.SubprocessError, json.JSONDecodeError, RuntimeError) as cli_error:
+        try:
+            github = run_github_public_query(args.github_user, start, today)
+            warnings.append(f"GitHub CLI unavailable; refreshed public contributions over HTTPS: {cli_error}")
+        except (OSError, RuntimeError) as public_error:
+            if previous and previous.get("github"):
+                github = previous["github"]
+                warnings.append(
+                    f"GitHub refresh used cached data: CLI={cli_error}; HTTPS={public_error}"
+                )
+            else:
+                raise
 
     payload = {
         "generated_at": datetime.now(CHINA_TZ).isoformat(timespec="seconds"),

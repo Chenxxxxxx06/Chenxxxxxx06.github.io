@@ -1,6 +1,6 @@
 # <i class="fas fa-chart-area section-icon"></i> Activity
 
-<div class="activity-grid" id="activityGrid" data-source="https://gist.githubusercontent.com/Chenxxxxxx06/41447c85e5c65340d896376b11aa9161/raw/activity.json">
+<div class="activity-grid" id="activityGrid" data-source="{{ '/assets/data/activity.json' | relative_url }}">
   <section class="activity-card activity-card--github" aria-labelledby="githubActivityTitle">
     <header class="activity-card__header">
       <div>
