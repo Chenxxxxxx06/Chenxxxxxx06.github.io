@@ -78,6 +78,7 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     canvas = document.createElement('canvas');
+    canvas.id = 'ambient-grid';
     canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;' +
                            'z-index:0;pointer-events:none;will-change:transform;' +
                            '-webkit-backface-visibility:hidden;backface-visibility:hidden;';
@@ -591,17 +592,12 @@ document.addEventListener('DOMContentLoaded', function() {
     var updated = document.getElementById('activityUpdated');
     if (!updated) return;
     if (!lastActivityPayload) {
-      updated.textContent = 'Activity data is unavailable. Try reloading later.';
+      updated.textContent = 'Activity unavailable.';
+      updated.hidden = false;
       return;
     }
-    var generated = new Date(lastActivityPayload.generated_at);
-    var stale = Date.now() - generated.getTime() > REFRESH_MS;
-    var message = 'Published snapshot: ' + generated.toLocaleString('en-US', {
-      year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
-    }) + '.';
-    if (stale) message += ' Snapshot is older than 6 hours.';
-    if (refreshFailed) message += ' Refresh unavailable; showing the last loaded snapshot.';
-    updated.textContent = message;
+    updated.textContent = refreshFailed ? 'Using saved activity.' : '';
+    updated.hidden = !refreshFailed;
   }
 
   function compact(value) {
@@ -732,19 +728,25 @@ document.addEventListener('DOMContentLoaded', function() {
       showActivityStatus(false);
       return;
     }
-    var period = payload.period;
+    var period = payload.github.period || payload.period;
     var periodLabel = period && validDate(period.start) && validDate(period.end) && period.start <= period.end
       ? period.start + ' to ' + period.end : 'published period';
+    var aiPeriod = payload.ai.period || payload.period;
+    var aiPeriodLabel = aiPeriod && validDate(aiPeriod.start) && validDate(aiPeriod.end) && aiPeriod.start <= aiPeriod.end
+      ? aiPeriod.start + ' to ' + aiPeriod.end : 'published period';
 
     githubMetric.textContent = Number(payload.github.total_contributions || 0).toLocaleString('en-US');
-    githubMetric.title = githubMetric.textContent + ' contributions';
+    githubMetric.title = githubMetric.textContent + ' contributions · ' + periodLabel;
     tokenMetric.textContent = compact(periodTokens);
-    tokenMetric.title = periodTokens.toLocaleString('en-US') + ' tokens · ' + periodLabel;
-    if (requestCount) requestCount.textContent = compact(periodRequests) + ' requests · ' + periodLabel;
+    tokenMetric.title = periodTokens.toLocaleString('en-US') + ' tokens · ' + aiPeriodLabel;
+    if (requestCount) {
+      requestCount.textContent = compact(periodRequests) + ' requests';
+      requestCount.title = aiPeriodLabel;
+    }
     var githubTitle = document.getElementById('githubActivityTitle');
     var tokenTitle = document.getElementById('tokenActivityTitle');
-    if (githubTitle) githubTitle.textContent = 'contributions · ' + periodLabel;
-    if (tokenTitle) tokenTitle.textContent = 'tokens · ' + periodLabel;
+    if (githubTitle) { githubTitle.textContent = 'contributions in 6 months'; githubTitle.title = periodLabel; }
+    if (tokenTitle) { tokenTitle.textContent = 'tokens tracked'; tokenTitle.title = aiPeriodLabel; }
 
     renderHeatmap(document.getElementById('githubHeatmap'), payload.github.days, 'count', 'contributions');
     renderHeatmap(document.getElementById('tokenHeatmap'), payload.ai.days, 'tokens', 'tokens');

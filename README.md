@@ -9,13 +9,13 @@ Built with Jekyll and a customized Minimal Mistakes layout. The design is adapte
 ## Features
 
 - Four persistent colour themes and responsive navigation.
-- Five-project portfolio with mouse, touch, and keyboard navigation.
-- Published GitHub/AI activity snapshots, with actual dates and stale/offline status.
+- Five-project responsive gallery with directly accessible repository links.
+- Published GitHub/AI activity snapshots, with per-source recorded dates and a quiet fallback state.
 - Ask Chen: a closed-set public-profile question service with visible submission, suggested questions, source links, and retryable errors.
 - A time-aware mascot with an accessible email card.
 - Search/share metadata, site icons, and legacy `/about/` and `/about.html` redirects.
 
-Ask Chen requires a separately deployed Node API. The repository currently leaves its public endpoint empty, so GitHub Pages displays the unavailable state with profile/contact links. See [api/README.md](api/README.md) before connecting it.
+Ask Chen works on GitHub Pages using approved public notes, without sending visitor questions to an external service. Its JSON is generated from the same catalog used by the optional Node API. After changing the catalog or policy, run `node scripts/export-public-knowledge.mjs`; `node scripts/export-public-knowledge.mjs --check` verifies it is current. See [api/README.md](api/README.md) for connecting a model-backed intent router.
 
 ## Local development
 
@@ -56,10 +56,14 @@ If npm is unavailable, `node --test tests/*.test.mjs` runs the same tests. Tests
 | `_pages/includes/` | Introduction, projects, activity, news, experience, honors |
 | `_sass/_config.scss` | Type and size settings |
 | `assets/css/custom-overrides.css` | Activity, experience, mascot styles |
+| `assets/css/profile-refresh.css` | Project gallery, publication list, timeline and type hierarchy |
 | `assets/js/custom-scripts.js` | Themes, navigation, portfolio, activity, mascot |
 | `assets/placement-demo/` | Ask Chen interface |
 | `api/_lib/catalog.mjs` | Approved public answers and source links |
 | `scripts/export_activity.py` | Activity snapshot generation |
+| `scripts/export-public-knowledge.mjs` | Generate the approved browser-side knowledge catalog |
+
+The Peking University emblem is the original transparent PNG from the university's [official identity downloads](https://vim.pku.edu.cn/xzzq/). The NPU mark uses the existing circular emblem with a circular container. LabVLA links to [arXiv:2606.13578](https://arxiv.org/abs/2606.13578); Argus links to [arXiv:2608.05144](https://arxiv.org/abs/2608.05144).
 
 Activity data is a published snapshot, not live access to personal tools. The browser periodically checks for a newer JSON snapshot; this does not guarantee the publisher has generated one. This repository currently contains no GitHub Actions workflow for Scholar or activity updates.
 

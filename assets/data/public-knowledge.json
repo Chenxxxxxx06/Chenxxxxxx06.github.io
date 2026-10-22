@@ -1,0 +1,464 @@
+{
+  "schemaVersion": 1,
+  "catalog": {
+    "profile.summary": {
+      "answer": {
+        "zh": "陈曦是西北工业大学软件工程专业本科生，最初学习数学与统计，后来转向计算机。主要关注视觉语言模型、视觉语言动作模型与自主智能体，预计 2027 年前往北京大学计算机学院攻读博士学位。",
+        "en": "Chen Xi is an undergraduate in Software Engineering at Northwestern Polytechnical University, originally from Mathematics and Statistics. He works on VLMs, VLAs, and autonomous agents, and expects to begin a PhD at Peking University’s School of Computer Science in 2027."
+      },
+      "sources": [
+        {
+          "id": "about",
+          "label": "About Me",
+          "url": "/#-about-me"
+        }
+      ]
+    },
+    "profile.interests": {
+      "answer": {
+        "zh": "陈曦目前公开的研究兴趣包括多模态异常检测、具身智能，以及面向数据分析的智能体框架。他尤其关注 VLM、VLA 与能长期规划、执行和复盘的自主智能体。",
+        "en": "Chen currently publishes three main research interests: multimodal anomaly detection, embodied AI, and agent frameworks for data analysis. His broader focus is on VLMs, VLAs, and autonomous agents that can plan, execute, and review longer-running work."
+      },
+      "sources": [
+        {
+          "id": "exploring",
+          "label": "About Me · What I’m Exploring",
+          "url": "/#-about-me"
+        }
+      ]
+    },
+    "education.summary": {
+      "answer": {
+        "zh": "陈曦在西北工业大学学习软件工程，最初的专业方向是数学与统计。2026 年 9 月推免结束，预计 2027 年进入北京大学计算机学院攻读博士学位。比起证明定理，他更喜欢把想法做成能运行的东西。",
+        "en": "Chen studies Software Engineering at Northwestern Polytechnical University after starting in Mathematics and Statistics. His graduate admissions process wrapped up in September 2026, and he expects to start a PhD at Peking University’s School of Computer Science in 2027. Building things turned out to be more his thing than proving theorems."
+      },
+      "sources": [
+        {
+          "id": "education",
+          "label": "About Me · Education",
+          "url": "/#-about-me"
+        }
+      ]
+    },
+    "experience.summary": {
+      "answer": {
+        "zh": "公开经历按开始时间排列：2025—2026 年，在西北工业大学空天地海一体化系统实验室随吴鹏教授开展研究；2026 年 1—6 月，在浙江大学 ZJUNLP 随张宁豫老师担任 RA；2026 年 3—4 月，在清华大学某非计算机学院担任 RA；预计 2027 年进入北京大学计算机学院攻读博士学位。",
+        "en": "In chronological order: research at NPU’s Air-Space-Ground-Sea Integrated Systems Laboratory with Prof. Peng Wu in 2025–2026; an RA at ZJUNLP, Zhejiang University, with Prof. Ningyu Zhang from January to June 2026; an RA at a non-CS school at Tsinghua University from March to April 2026; and an expected PhD start at Peking University’s School of Computer Science in 2027."
+      },
+      "sources": [
+        {
+          "id": "experience",
+          "label": "Experience",
+          "url": "/#-experience"
+        }
+      ]
+    },
+    "opportunity.internship": {
+      "answer": {
+        "zh": "陈曦目前公开表示正在寻找科研或工程方向的实习，尤其关注能够把有用想法落地为工作系统的岗位。",
+        "en": "Chen is currently looking for research or engineering internships, especially roles where useful ideas can become working systems."
+      },
+      "sources": [
+        {
+          "id": "lately",
+          "label": "Life Lately · Internships",
+          "url": "/#more-to-come"
+        }
+      ]
+    },
+    "opportunity.graduate": {
+      "answer": {
+        "zh": "2026 年 9 月推免结束啦！陈曦预计 2027 年前往北京大学计算机学院攻读博士学位。关于未来导师，他想公开说的就是：我超爱我的导师！！！",
+        "en": "Graduate admissions wrapped up in September 2026! Chen expects to start a PhD at Peking University’s School of Computer Science in 2027. His public message about his future advisor: “I absolutely love my advisor!”"
+      },
+      "sources": [
+        {
+          "id": "graduate-goal",
+          "label": "Experience · What’s Next",
+          "url": "/#-experience"
+        }
+      ]
+    },
+    "education.advisor": {
+      "answer": {
+        "zh": "北京大学的导师姓名暂不公开，但有一句话必须说：我超爱我的导师！！！",
+        "en": "Chen is keeping his Peking University advisor’s name private for now. But this part is very public: “I absolutely love my advisor!”"
+      },
+      "sources": [
+        {
+          "id": "advisor",
+          "label": "Experience · Peking University",
+          "url": "/#-experience"
+        }
+      ]
+    },
+    "profile.now": {
+      "answer": {
+        "zh": "最近在尝试做自媒体，幻想成为 vlogger，也在找实习、折腾各种有意思的东西。简历还在迭代优化，欢迎来找我玩！",
+        "en": "Lately: making content, daydreaming about becoming a vlogger, looking for internships, and trying all sorts of fun things. The résumé is still a work in progress. Come say hi — I’m always up for something interesting!"
+      },
+      "sources": [
+        {
+          "id": "lately",
+          "label": "Life Lately",
+          "url": "/#more-to-come"
+        }
+      ]
+    },
+    "news.summary": {
+      "answer": {
+        "zh": "最近两条动态：2026 年 9 月，推免结束，预计 2027 年前往北京大学计算机学院攻读博士学位；2026 年 10 月，获得国家奖学金。",
+        "en": "Two recent updates: graduate admissions wrapped up in September 2026, with an expected PhD start at Peking University’s School of Computer Science in 2027; in October 2026, Chen received the National Scholarship."
+      },
+      "sources": [
+        {
+          "id": "news",
+          "label": "News",
+          "url": "/#-news"
+        }
+      ]
+    },
+    "portfolio.list": {
+      "answer": {
+        "zh": "公开 Portfolio 目前包含五个项目：Argus、LabVLA、MiniMax-H3 Desktop Edition、IronRock Desktop Pet，以及风电预测性维护项目“风调预顺”。",
+        "en": "The public portfolio currently contains five projects: Argus, LabVLA, MiniMax-H3 Desktop Edition, IronRock Desktop Pet, and the “风调预顺” wind-turbine predictive-maintenance project."
+      },
+      "sources": [
+        {
+          "id": "portfolio",
+          "label": "Portfolio",
+          "url": "/#-portfolio"
+        }
+      ]
+    },
+    "project.argus": {
+      "answer": {
+        "zh": "Argus 是陈曦参与的自主智能体项目，关注长任务中的规划、执行、审查与恢复。他在公开介绍中将自己的工作概括为同时参与研究与工程。",
+        "en": "Argus is an autonomous-agent project Chen contributes to, focused on planning, execution, review, and resumption across long-running tasks. His public description says he works across both research and engineering."
+      },
+      "sources": [
+        {
+          "id": "argus",
+          "label": "Portfolio · Argus",
+          "url": "https://github.com/lbx154/Argus"
+        }
+      ]
+    },
+    "project.labvla": {
+      "answer": {
+        "zh": "LabVLA 是陈曦参与的科学实验室 VLA 项目。它以 Qwen3-VL 为视觉语言骨干，并结合 DiT flow-matching 动作专家，把实验协议、视觉观测与机器人状态连接到连续动作。",
+        "en": "LabVLA is a scientific-laboratory VLA project Chen worked on. It pairs a Qwen3-VL vision-language backbone with a DiT flow-matching action expert to connect lab protocols, visual observations, and robot state to continuous actions."
+      },
+      "sources": [
+        {
+          "id": "labvla",
+          "label": "Portfolio · LabVLA",
+          "url": "https://github.com/zjunlp/LabVLA"
+        }
+      ]
+    },
+    "project.minimax": {
+      "answer": {
+        "zh": "MiniMax-H3 Desktop Edition 是一个单 GPU 推理优化项目，目标是在一张 48 GB RTX A6000 上运行完整的音视频生成，并持续优化速度与显存占用。",
+        "en": "MiniMax-H3 Desktop Edition is a single-GPU inference-optimization project. Its public goal is to run full audio-video generation on one 48 GB RTX A6000 while improving speed and memory use."
+      },
+      "sources": [
+        {
+          "id": "minimax",
+          "label": "Portfolio · MiniMax-H3",
+          "url": "https://github.com/Argus-AiTeam/minimax-h3-desktop"
+        }
+      ]
+    },
+    "project.ironrock": {
+      "answer": {
+        "zh": "IronRock Desktop Pet 是一个 PyQt6 桌面助手项目，可接收 PDF、笔记或日志，整理本地实验室知识库并进行问答。它最初来自一次黑客松。",
+        "en": "IronRock Desktop Pet is a PyQt6 desktop assistant that accepts PDFs, notes, or logs, organizes a local lab knowledge base, and chats over it. It began as a hackathon project."
+      },
+      "sources": [
+        {
+          "id": "ironrock",
+          "label": "Portfolio · IronRock",
+          "url": "https://github.com/bclz19/IronRock"
+        }
+      ]
+    },
+    "project.feng": {
+      "answer": {
+        "zh": "“风调预顺”是一个风力发电机预测性维护课程项目，把监控、故障诊断、剩余寿命预测与工单流程整合在一个全栈系统中。",
+        "en": "“风调预顺” is a course project for wind-turbine predictive maintenance, combining monitoring, fault diagnosis, remaining-useful-life prediction, and work-order flows in one full-stack system."
+      },
+      "sources": [
+        {
+          "id": "feng",
+          "label": "Portfolio · 风调预顺",
+          "url": "https://github.com/Chenxxxxxx06/feng"
+        }
+      ]
+    },
+    "honors.summary": {
+      "answer": {
+        "zh": "陈曦在 2025 年、2026 年 10 月获得国家奖学金。",
+        "en": "Chen received the National Scholarship in 2025 and again in October 2026."
+      },
+      "sources": [
+        {
+          "id": "honors",
+          "label": "Honors",
+          "url": "/#-honors"
+        }
+      ]
+    },
+    "publications.status": {
+      "answer": {
+        "zh": "主页列出五项工作：基于歧义区域感知与检索增强生成的弱监督视频异常检测方法；LabVLA: Grounding Vision-Language-Action Models in Scientific Laboratories；Argus: A General-Purpose Agentic Reasoning Runtime for Long-Horizon Tasks；What Should a Data Agent Remember About Its Own Results?；LongInterSQL: Benchmarking Inter-Session Artifact Reuse in Interactive Text-to-SQL。",
+        "en": "Five works are listed: 基于歧义区域感知与检索增强生成的弱监督视频异常检测方法; LabVLA: Grounding Vision-Language-Action Models in Scientific Laboratories; Argus: A General-Purpose Agentic Reasoning Runtime for Long-Horizon Tasks; What Should a Data Agent Remember About Its Own Results?; and LongInterSQL: Benchmarking Inter-Session Artifact Reuse in Interactive Text-to-SQL."
+      },
+      "sources": [
+        {
+          "id": "publications",
+          "label": "Publications",
+          "url": "/#-publications"
+        }
+      ]
+    },
+    "contact.summary": {
+      "answer": {
+        "zh": "欢迎来找陈曦聊聊！可以使用主页侧栏的公开邮箱或 GitHub 链接。",
+        "en": "Come say hi! You can reach Chen through the public email or GitHub links in the profile sidebar."
+      },
+      "sources": [
+        {
+          "id": "contact",
+          "label": "Profile · Contact Links",
+          "url": "/"
+        }
+      ]
+    }
+  },
+  "topics": [
+    [
+      "news.summary",
+      "^(?:(?:(?:what(?:['’]s| is| are)|tell me(?: about)?) )?(?:your|chen(?: xi)?['’]s) (?:latest |recent )?(?:news|updates?)|(?:(?:what(?:['’]s| is) )?(?:the )?(?:latest |recent )?(?:news|updates?) (?:about|from) chen(?: xi)?)|what(?:['’]s| is) new with (?:you|chen(?: xi)?)|(?:请(?:介绍|说说)|介绍|说说)?(?:你|陈曦)(?:的)?(?:最新|最近|近期)(?:的)?(?:动态|消息|新闻|更新)(?:是什么|有哪些|有什么)?)[.?!。？！]*$"
+    ],
+    [
+      "experience.summary",
+      "^(?=.*(?:advisor|supervisor|导师))(?=.*(?:zjunlp|zhejiang|tsinghua|npu|northwestern polytechnical|浙江|清华|西工大|西北工业|张宁豫|吴鹏))(?!.*(?:peking|pku|北京大学|北大|future|未来)).*$"
+    ],
+    [
+      "education.advisor",
+      "advisor|supervisor|导师"
+    ],
+    [
+      "opportunity.graduate",
+      "graduate|ph\\.?d|博士|推免|保研|北大|北京大学|peking|pku"
+    ],
+    [
+      "profile.now",
+      "lately|these days|up to|content creat|vlog|résumé|resume|自媒体|近况|最近|简历"
+    ],
+    [
+      "opportunity.internship",
+      "internship|实习"
+    ],
+    [
+      "project.argus",
+      "\\bargus\\b"
+    ],
+    [
+      "project.labvla",
+      "\\blabvla\\b"
+    ],
+    [
+      "project.minimax",
+      "minimax|\\bh3\\b"
+    ],
+    [
+      "project.ironrock",
+      "ironrock|desktop pet|桌宠"
+    ],
+    [
+      "project.feng",
+      "风调预顺|wind.turbine|\\bfeng\\b"
+    ],
+    [
+      "publications.status",
+      "publication|paper|论文|发表|longintersql|data agent|歧义区域"
+    ],
+    [
+      "honors.summary",
+      "honou?r|award|scholarship|奖|荣誉"
+    ],
+    [
+      "experience.summary",
+      "experience|\\bra\\b|zjunlp|zhejiang|tsinghua|经历|浙江|清华|张宁豫|研究助理"
+    ],
+    [
+      "education.summary",
+      "education|university|school|major|undergrad|npu|mathematics|statistics|大学|学校|专业|西工大|西北工业|本科|数学|统计"
+    ],
+    [
+      "portfolio.list",
+      "project|portfolio|building|built|worked on|highlight|项目|作品|做过|亮点"
+    ],
+    [
+      "profile.interests",
+      "research|interest|focus|explor|研究|兴趣|方向|擅长|会什么"
+    ],
+    [
+      "contact.summary",
+      "contact|email|e-mail|github|say hi|联系|邮箱|找你|找他"
+    ],
+    [
+      "profile.summary",
+      "who (?:is|are)|about (?:chen|you)|introduc|hello|^hi[!.? ]*$|你是谁|介绍|了解你|了解陈|你好|身份"
+    ]
+  ],
+  "newsQuery": "^(?:(?:(?:what(?:['’]s| is| are)|tell me(?: about)?) )?(?:your|chen(?: xi)?['’]s) (?:latest |recent )?(?:news|updates?)|(?:(?:what(?:['’]s| is) )?(?:the )?(?:latest |recent )?(?:news|updates?) (?:about|from) chen(?: xi)?)|what(?:['’]s| is) new with (?:you|chen(?: xi)?)|(?:请(?:介绍|说说)|介绍|说说)?(?:你|陈曦)(?:的)?(?:最新|最近|近期)(?:的)?(?:动态|消息|新闻|更新)(?:是什么|有哪些|有什么)?)[.?!。？！]*$",
+  "responses": {
+    "sensitive": {
+      "zh": "这部分是私人信息。可以聊聊我的公开研究、项目或经历。",
+      "en": "That part stays private. Happy to share my public research, projects, or experience."
+    },
+    "out_of_scope": {
+      "zh": "这里只聊陈曦的公开资料。试试问研究、项目或最近在忙什么？",
+      "en": "I only cover Chen’s public notes here. Try research, projects, or life lately?"
+    },
+    "injection": {
+      "zh": "这里只分享陈曦选择公开的内容。",
+      "en": "I only share what Chen has chosen to make public."
+    },
+    "insufficient": {
+      "zh": "这条还没写进公开笔记。试试上面的小问题，或者直接来找我聊聊。",
+      "en": "That’s not in my public notes yet. Try a question above, or come ask me directly."
+    },
+    "unavailable": {
+      "zh": "暂时没能连接。问题已经保留，可以再试一次。",
+      "en": "Couldn’t connect just now. Your question is saved — please try again."
+    },
+    "rate_limited": {
+      "zh": "请求有些密集。请稍等片刻，再继续询问陈曦的公开资料。",
+      "en": "Requests are arriving too quickly. Wait a moment, then continue with Chen’s public profile."
+    }
+  },
+  "policy": {
+    "sensitive": [
+      {
+        "source": "排名|名次|第\\s*几(?:名)?|百分位|保研位次|年级前\\s*\\d+",
+        "flags": "i"
+      },
+      {
+        "source": "绩点|成绩|分数|考分|每门课|逐门|考试结果|高考|四六级",
+        "flags": "i"
+      },
+      {
+        "source": "\\b(?:rank(?:ing)?|percentile|g\\s*[._-]?\\s*p\\s*[._-]?\\s*a|grade|score|transcript)\\b",
+        "flags": "i"
+      },
+      {
+        "source": "身份证|护照号|手机号|电话号码|私人邮箱|住址|家庭住址|宿舍|生日|出生日期|年龄|(?:他|陈曦|你)(?:今年)?多大|(?:他|陈曦|你)(?:住哪|住在)|(?:他|陈曦|你)(?:的)?微信",
+        "flags": "i"
+      },
+      {
+        "source": "身高|体重|鞋码|衣服尺码|血型|星座|籍贯|家乡",
+        "flags": "i"
+      },
+      {
+        "source": "收入|工资|银行卡|账户|密码|密钥|api\\s*key|实时位置|当前位置|行程|日程",
+        "flags": "i"
+      },
+      {
+        "source": "父母|家人|恋爱|女朋友|男朋友|私生活|健康状况|医疗",
+        "flags": "i"
+      },
+      {
+        "source": "未公开|保密|内部资料|私人资料|完整简历|简历原文|所有细节|全部细节|全部数字",
+        "flags": "i"
+      },
+      {
+        "source": "具体(?:做了|负责|贡献|实现).*(?:模块|代码|部分)|哪(?:些|一)行代码",
+        "flags": "i"
+      },
+      {
+        "source": "private\\s+(?:code|document|resume|detail)|specific(?:ally)?\\s+(?:implemented|contribution|module|code)",
+        "flags": "i"
+      },
+      {
+        "source": "phone\\s*(?:number)?|mobile\\s*(?:number)?|private\\s+email|home\\s+address|birthday|date\\s+of\\s+birth|shoe\\s+size|blood\\s+type|height|weight|hometown|(?:his|chen'?s|your)\\s+(?:wechat|weixin)",
+        "flags": "i"
+      },
+      {
+        "source": "推断|猜测|反推|估算.*(?:排名|成绩|绩点)|infer.*(?:rank|grade|score)",
+        "flags": "i"
+      }
+    ],
+    "injection": [
+      {
+        "source": "ignore\\s+(?:all\\s+)?(?:previous|prior|above)\\s+(?:instructions?|rules?)",
+        "flags": "i"
+      },
+      {
+        "source": "forget\\s+(?:the\\s+)?(?:previous|prior|above)\\s+(?:instructions?|rules?)",
+        "flags": "i"
+      },
+      {
+        "source": "system\\s+prompt|developer\\s+message|hidden\\s+prompt|reveal\\s+.*instructions?",
+        "flags": "i"
+      },
+      {
+        "source": "jailbreak|\\bDAN\\b|role\\s*play.*(?:unrestricted|no\\s+rules)|act\\s+as\\s+.*administrator",
+        "flags": "i"
+      },
+      {
+        "source": "忽略.*(?:规则|指令|限制)|忘记.*(?:规则|指令)|输出.*(?:系统提示词|隐藏提示词)",
+        "flags": "i"
+      },
+      {
+        "source": "(?:显示|发给我|复述|透露).*(?:系统提示词|隐藏提示词|提示词|开发者消息|内部指令)|(?:系统提示词|隐藏提示词|提示词|开发者消息|内部指令).*(?:显示|发给我|复述|透露)|扮演.*(?:管理员|无限制|无规则)|假装.*(?:没有|不存在).*(?:限制|规则)|越狱",
+        "flags": "i"
+      },
+      {
+        "source": "base\\s*64|rot\\s*13|编码.*(?:隐藏|规则|提示词)|translate.*(?:system prompt|hidden prompt)",
+        "flags": "i"
+      }
+    ],
+    "outOfScope": [
+      {
+        "source": "天气|气温|新闻|热搜|股价|股票|基金|比特币|加密货币|汇率|彩票",
+        "flags": "i"
+      },
+      {
+        "source": "写(?:一段|一个|份)?(?:代码|程序|作文|邮件)|编程题|数学题|计算.*(?:等于|结果)|证明(?:题|一下)|解方程",
+        "flags": "i"
+      },
+      {
+        "source": "翻译(?:这|以下|成)|做饭|菜谱|旅游攻略|订票|路线规划|政治|选举|总统",
+        "flags": "i"
+      },
+      {
+        "source": "写(?:一首|首|个|段)?诗|作诗|讲(?:个|一个)?笑话|编(?:个|一个)?故事|续写|改写",
+        "flags": "i"
+      },
+      {
+        "source": "weather|forecast|latest\\s+news|stock\\s+price|bitcoin|exchange\\s+rate|lottery",
+        "flags": "i"
+      },
+      {
+        "source": "write\\s+(?:me\\s+)?(?:code|a\\s+program|an\\s+essay|an\\s+email)|solve\\s+(?:this\\s+)?(?:math|equation)|translate\\s+(?:this|the)",
+        "flags": "i"
+      },
+      {
+        "source": "write\\s+(?:me\\s+)?(?:a\\s+)?(?:poem|story|joke)|tell\\s+(?:me\\s+)?(?:a\\s+)?joke",
+        "flags": "i"
+      },
+      {
+        "source": "capital\\s+of\\b|首都",
+        "flags": "i"
+      },
+      {
+        "source": "compare.*(?:qwen|deepseek|gpt|model)|模型.*(?:对比|比较)|通用知识|百科",
+        "flags": "i"
+      }
+    ]
+  }
+}

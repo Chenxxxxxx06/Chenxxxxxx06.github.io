@@ -22,7 +22,7 @@
       <div>
         <p class="activity-card__eyebrow"><i class="fas fa-bolt" aria-hidden="true"></i> AI Tools</p>
         <p class="activity-card__metric" id="tokenActivityMetric" data-exact-tokens="{{ site.data.activity.ai.period_tokens }}">{{ site.data.activity.ai.period_tokens | default: 'Loading' }}</p>
-        <p class="activity-card__label" id="tokenActivityTitle">tokens in the last 6 months</p>
+        <p class="activity-card__label" id="tokenActivityTitle" title="{{ site.data.activity.ai.period.start }} to {{ site.data.activity.ai.period.end }}">tokens tracked</p>
       </div>
       <span class="activity-card__spark" aria-hidden="true">∿</span>
     </header>
@@ -34,6 +34,6 @@
   </section>
 </div>
 
-<p class="activity-updated" id="activityUpdated" aria-live="polite">Loading the latest published activity snapshot.</p>
+<p class="activity-updated" id="activityUpdated" aria-live="polite" hidden></p>
 
 <script type="application/json" id="activityFallbackData">{{ site.data.activity | jsonify }}</script>

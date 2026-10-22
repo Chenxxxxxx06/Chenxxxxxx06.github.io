@@ -108,7 +108,7 @@ test('returns only the approved catalog answer for an allowed route', async () =
   assert.equal(outsideCalls, 1);
   assert.equal(unknownOutside.body.status, 'refused');
   assert.equal(unknownOutside.body.reason, 'out_of_scope');
-  assert.equal(unknownOutside.body.answer, 'scope_locked');
+  assert.equal(unknownOutside.body.answer, POLICY_RESPONSES.out_of_scope.zh);
 
   const routedNaturalQueries = [
     ['陈曦有什么亮点？', 'portfolio.list', 'portfolio'],
@@ -221,36 +221,26 @@ test('request guards enforce rate, origin, and parsed-body limits', async () => 
   assert.equal(JSON.parse(missingOriginResponse.body).reason, 'origin_required');
 });
 
-test('homepage terminal exposes accessible controls and an honest offline fallback', () => {
+test('homepage Ask card exposes accessible controls and public-note fallback', () => {
   const terminal = readFileSync(resolve(root, '_pages/includes/placement-demo-terminal.html'), 'utf8');
-  const portfolio = readFileSync(resolve(root, '_pages/includes/portfolio.md'), 'utf8');
   const aboutPage = readFileSync(resolve(root, '_pages/about.md'), 'utf8');
   const placementPage = readFileSync(resolve(root, '_pages/placement-demo.md'), 'utf8');
   const css = readFileSync(resolve(root, 'assets/placement-demo/placement-demo.css'), 'utf8');
   const js = readFileSync(resolve(root, 'assets/placement-demo/placement-demo.js'), 'utf8');
-  const cards = (portfolio.match(/<article class="portfolio-card /g) || []).length;
 
   assert.match(terminal, /site\.ask_chen\.endpoint/);
-  assert.match(terminal, /data-placement-knowledge-state="offline"/);
-  assert.match(terminal, /data-placement-ask-badge>OFFLINE/);
+  assert.match(terminal, /data-placement-knowledge-url=.*public-knowledge\.json/);
+  assert.match(terminal, /data-placement-ask-badge>Public notes/);
   assert.match(terminal, /data-placement-ask-input[^>]*disabled/);
   assert.match(terminal, /class="placement-terminal__submit"[^>]*data-placement-ask-submit/);
   assert.match(terminal, /data-placement-ask-sources[^>]*aria-label="Answer sources"/);
   assert.match(terminal, /data-placement-terminal-output[^>]*tabindex="0"/);
   assert.match(terminal, /mailto:/);
-  assert.match(terminal, /Read my profile/);
+  assert.match(terminal, /<noscript>.*read my profile/);
   assert.match(terminal, /method="post"/);
-  assert.match(terminal, /placement-terminal__cursor/);
-  assert.equal(cards, 5);
-  assert.match(portfolio, /<span>05<\/span>/);
-  assert.ok(portfolio.indexOf('portfolio-card--argus') < portfolio.indexOf('portfolio-card--labvla'));
-  assert.ok(portfolio.indexOf('portfolio-card--labvla') < portfolio.indexOf('portfolio-card--h3'));
-  assert.match(portfolio, /https:\/\/github\.com\/zjunlp\/LabVLA\.git/);
-  assert.match(css, /\.placement-terminal__body pre\s*\{[^}]*overflow-y:\s*auto;/);
-  assert.match(css, /\.placement-terminal__command\s*\{[^}]*text-overflow:\s*ellipsis;/);
+  assert.doesNotMatch(terminal, /qwen|ask --public-profile|placement-widget__number|AFTER PORTFOLIO|Profile → answer/);
+  assert.match(css, /\.placement-terminal__output\s*\{[^}]*overflow-y:\s*auto;/);
   assert.match(css, /\.placement-terminal__prompt-input:focus-visible/);
-  assert.match(css, /data-placement-ask-state="answered"/);
-  assert.match(js, /return 'answer → ' \+ answer/);
   assert.match(js, /ASK_TIMEOUT_MS = 20000/);
   for (const versioned of [aboutPage, placementPage]) {
     assert.match(versioned, /placement-demo\.js\?v=/);
@@ -277,7 +267,29 @@ test('policy classifier keeps hard boundaries before the closed-set AI router', 
   assert.equal(evaluatePolicy('LabVLA 模型多大？').decision, 'allowed');
   assert.equal(evaluatePolicy('做过微信小程序吗？').decision, 'allowed');
   assert.equal(evaluatePolicy('陈曦研究提示词工程吗？').decision, 'allowed');
-  assert.equal(POLICY_RESPONSES.out_of_scope.zh, 'scope_locked');
-  assert.equal(POLICY_RESPONSES.out_of_scope.en, 'scope_locked');
+  assert.match(POLICY_RESPONSES.out_of_scope.zh, /公开资料/);
+  assert.match(POLICY_RESPONSES.out_of_scope.en, /public notes/);
   assert.doesNotMatch(readFileSync(resolve(root, 'api/_lib/catalog.mjs'), 'utf8'), /scope locked ·/);
+});
+
+test('allows only narrowly scoped personal news without opening general or mixed news requests', async () => {
+  for (const query of [
+    'What is your latest news?', 'What are your recent updates?',
+    'Tell me about Chen’s latest news.', 'Latest news about Chen',
+    '你的最新动态是什么？', '陈曦的最新消息'
+  ]) {
+    assert.equal(evaluatePolicy(query).decision, 'allowed', query);
+    const result = await processAsk({ query, locale: 'en' }, { router: async () => 'news.summary' });
+    assert.equal(result.body.status, 'answered');
+    assert.equal(result.body.sources[0].id, 'news');
+  }
+  for (const query of [
+    'What is the latest news?', 'Latest news about Beijing',
+    'What is your latest news and today’s weather?',
+    'Tell me Chen’s latest news and stock prices', '陈曦最新消息以及今天的新闻',
+    '你的最新动态，顺便告诉我今天的天气'
+  ]) {
+    assert.equal(evaluatePolicy(query).decision, 'out_of_scope', query);
+  }
+  assert.equal(evaluatePolicy('你的最新动态和绩点').decision, 'sensitive');
 });

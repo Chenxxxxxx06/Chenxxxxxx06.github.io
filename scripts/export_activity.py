@@ -13,6 +13,7 @@ import os
 import re
 import sqlite3
 import subprocess
+import sys
 import urllib.request
 from collections import defaultdict
 from datetime import date, datetime, time, timedelta, timezone
@@ -75,6 +76,9 @@ def read_cc_switch(db_path: Path, start: date, end: date) -> dict[str, Any]:
     connection.row_factory = sqlite3.Row
     connection.execute("PRAGMA query_only = ON")
     connection.execute("PRAGMA busy_timeout = 10000")
+    # Keep the rollups and remaining raw rows in the same read-only snapshot.
+    # CC Switch can move older raw rows into rollups while it is running.
+    connection.execute("BEGIN")
 
     totals = {"tokens": 0, "requests": 0}
     by_day: dict[str, dict[str, int]] = defaultdict(lambda: {"tokens": 0, "requests": 0})
@@ -123,12 +127,22 @@ def read_cc_switch(db_path: Path, start: date, end: date) -> dict[str, Any]:
     finally:
         connection.close()
 
-    period = empty_days(start, end)
+    recorded_days = sorted(day for day, values in by_day.items() if values["requests"] > 0)
+    if not recorded_days:
+        raise RuntimeError("No recorded AI usage is available")
+    coverage_start = max(start, date.fromisoformat(recorded_days[0]))
+    coverage_end = min(end, date.fromisoformat(recorded_days[-1]))
+    if coverage_start > coverage_end:
+        raise RuntimeError("No recorded AI usage is available in the requested period")
+    # A database that has not synced recently does not establish zero usage for
+    # the days after its latest record. Expose the actual recorded date range.
+    period = empty_days(coverage_start, coverage_end)
     for day, values in by_day.items():
         if day in period:
             period[day] = values
 
     return {
+        "period": {"start": coverage_start.isoformat(), "end": coverage_end.isoformat()},
         "total_tokens": totals["tokens"],
         "total_requests": totals["requests"],
         "period_tokens": sum(item["tokens"] for item in period.values()),
@@ -147,6 +161,7 @@ def github_result(login: str, start: date, end: date, counts: dict[str, int]) ->
 
     return {
         "login": login,
+        "period": {"start": start.isoformat(), "end": end.isoformat()},
         "total_contributions": sum(item["count"] for item in days),
         "days": days,
     }
@@ -180,10 +195,17 @@ def run_github_public_query(login: str, start: date, end: date) -> dict[str, Any
             if not day:
                 continue
             count_match = re.match(r"([\d,]+) contributions?\b", text.strip())
-            counts[day] = int(count_match.group(1).replace(",", "")) if count_match else 0
+            if count_match:
+                counts[day] = int(count_match.group(1).replace(",", ""))
+            elif text.strip().startswith("No contributions"):
+                counts[day] = 0
+            else:
+                raise RuntimeError("Unrecognized public GitHub contribution count")
 
     if not counts:
         raise RuntimeError(f"No public GitHub contribution data found for: {login}")
+    if any(day not in counts for day in empty_days(start, end)):
+        raise RuntimeError("The public GitHub contribution calendar is incomplete")
     return github_result(login, start, end, counts)
 
 
@@ -221,6 +243,8 @@ def run_github_query(login: str, start: date, end: date) -> dict[str, Any]:
         for item in week.get("contributionDays", []):
             counts[item["date"]] = int(item["contributionCount"])
 
+    if any(day not in counts for day in empty_days(start, end)):
+        raise RuntimeError("The GitHub contribution calendar is incomplete")
     return github_result(login, start, end, counts)
 
 
@@ -244,16 +268,22 @@ def main() -> int:
     ai = read_cc_switch(args.db, start, today)
     try:
         github = run_github_query(args.github_user, start, today)
-    except (OSError, subprocess.SubprocessError, json.JSONDecodeError, RuntimeError) as cli_error:
+    except (OSError, subprocess.SubprocessError, json.JSONDecodeError, RuntimeError):
         try:
             github = run_github_public_query(args.github_user, start, today)
-            warnings.append(f"GitHub CLI unavailable; refreshed public contributions over HTTPS: {cli_error}")
-        except (OSError, RuntimeError) as public_error:
+            print("GitHub CLI unavailable; refreshed public contributions over HTTPS.", file=sys.stderr)
+        except (OSError, RuntimeError):
             if previous and previous.get("github"):
-                github = previous["github"]
-                warnings.append(
-                    f"GitHub refresh used cached data: CLI={cli_error}; HTTPS={public_error}"
+                cached = previous["github"]
+                cached_days = {item["date"]: item["count"] for item in cached["days"]}
+                github = github_result(
+                    cached.get("login", args.github_user),
+                    date.fromisoformat(min(cached_days)),
+                    date.fromisoformat(max(cached_days)),
+                    cached_days,
                 )
+                warnings.append("GitHub uses the last saved snapshot.")
+                print("GitHub refresh unavailable; preserving the last saved snapshot.", file=sys.stderr)
             else:
                 raise
 

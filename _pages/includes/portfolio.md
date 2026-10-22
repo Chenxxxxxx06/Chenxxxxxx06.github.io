@@ -1,176 +1,35 @@
 # <i class="fas fa-folder-open section-icon"></i> Portfolio
 
-<div class="portfolio-showcase" data-portfolio>
-  <div class="portfolio-showcase__header">
-    <p class="portfolio-showcase__intro">A few things I’ve helped build, benchmark, and occasionally keep alive past midnight.</p>
-
-    <div class="portfolio-controls" aria-label="Portfolio navigation">
-      <span class="portfolio-counter" aria-live="polite">
-        <span data-portfolio-current>01</span><span class="portfolio-counter__divider">/</span><span>05</span>
-      </span>
-      <button class="portfolio-arrow" type="button" data-portfolio-prev aria-label="Previous project">
-        <span aria-hidden="true">←</span>
-      </button>
-      <button class="portfolio-arrow" type="button" data-portfolio-next aria-label="Next project">
-        <span aria-hidden="true">→</span>
-      </button>
-    </div>
-  </div>
-
-  <div class="portfolio-progress" aria-hidden="true">
-    <span data-portfolio-progress></span>
-  </div>
-
-  <div class="portfolio-track" data-portfolio-track tabindex="0" aria-label="Selected projects">
-    <article class="portfolio-card portfolio-card--argus">
-      <a class="portfolio-card__link" href="https://github.com/lbx154/Argus" target="_blank" rel="noopener noreferrer" aria-label="Open the Argus repository on GitHub">
-        <div class="portfolio-card__media portfolio-card__media--argus">
-          <span class="portfolio-media-badge portfolio-media-badge--dark">classified-ish</span>
-          <span class="portfolio-orbit portfolio-orbit--one" aria-hidden="true"></span>
-          <span class="portfolio-orbit portfolio-orbit--two" aria-hidden="true"></span>
-          <img class="portfolio-card__argus-logo" src="{{ '/assets/portfolio/argus-logo.svg' | relative_url }}" alt="Argus" width="280" height="96">
-          <div class="portfolio-role-chain" aria-hidden="true">
-            <span>Manager</span><b>→</b><span>Planner</span><b>→</b><span>Engineer</span><b>⇄</b><span>Reviewer</span>
-          </div>
-        </div>
-        <div class="portfolio-card__body">
-          <div class="portfolio-card__topline">
-            <span class="portfolio-card__number">01</span>
-            <span class="portfolio-card__role">Participant · Agent Systems</span>
-          </div>
-          <h3 class="portfolio-card__title">Argus</h3>
-          <p class="portfolio-card__desc">Pulled into a tiny “black room” to help with the fun questions: how can long-running agents plan, execute, review, and resume without losing the plot? I contribute across research and engineering.</p>
-          <ul class="portfolio-card__tags" aria-label="Argus topics">
-            <li>Autonomous Agents</li>
-            <li>Research</li>
-          </ul>
-          <div class="portfolio-card__footer">
-            <span>Persistent, reviewed autonomy</span>
-            <span class="portfolio-card__open">View repo&nbsp; ↗</span>
-          </div>
-        </div>
-      </a>
-    </article>
-
-    <article class="portfolio-card portfolio-card--labvla">
-      <a class="portfolio-card__link" href="https://github.com/zjunlp/LabVLA.git" target="_blank" rel="noopener noreferrer" aria-label="Open the LabVLA repository on GitHub">
-        <div class="portfolio-card__media portfolio-card__media--labvla">
-          <span class="portfolio-media-badge portfolio-media-badge--labvla">research code</span>
-          <img class="portfolio-labvla__symbol" src="{{ '/assets/portfolio/labvla-symbol.png' | relative_url }}" alt="" width="512" height="344" loading="lazy">
-          <img class="portfolio-labvla__wordmark" src="{{ '/assets/portfolio/labvla-wordmark.png' | relative_url }}" alt="LabVLA" width="281" height="64" loading="lazy">
-          <div class="portfolio-labvla__pipeline" aria-hidden="true">
-            <span>protocol</span><b>→</b><span>perception</span><b>→</b><span>action</span>
-          </div>
-          <span class="portfolio-labvla__bubble portfolio-labvla__bubble--one" aria-hidden="true"></span>
-          <span class="portfolio-labvla__bubble portfolio-labvla__bubble--two" aria-hidden="true"></span>
-        </div>
-        <div class="portfolio-card__body">
-          <div class="portfolio-card__topline">
-            <span class="portfolio-card__number">02</span>
-            <span class="portfolio-card__role">Research · Vision-Language-Action</span>
-          </div>
-          <h3 class="portfolio-card__title">LabVLA</h3>
-          <p class="portfolio-card__desc">A project I worked on for grounding vision-language-action models in scientific laboratories—pairing a Qwen3-VL backbone with a DiT action expert for protocol-aware robot control.</p>
-          <ul class="portfolio-card__tags" aria-label="LabVLA topics">
-            <li>Vision-Language-Action</li>
-            <li>Scientific Robotics</li>
-          </ul>
-          <div class="portfolio-card__footer">
-            <span>Protocols into robot actions</span>
-            <span class="portfolio-card__open">View repo&nbsp; ↗</span>
-          </div>
-        </div>
-      </a>
-    </article>
-
-    <article class="portfolio-card portfolio-card--h3">
-      <a class="portfolio-card__link" href="https://github.com/Argus-AiTeam/minimax-h3-desktop" target="_blank" rel="noopener noreferrer" aria-label="Open the MiniMax-H3 desktop optimization repository on GitHub">
-        <div class="portfolio-card__media portfolio-card__media--h3">
-          <img class="portfolio-card__image" src="{{ '/assets/portfolio/minimax-h3-orbital.webp' | relative_url }}" alt="A generated spacecraft launching through an orbital shipyard" width="896" height="486" loading="lazy">
-          <span class="portfolio-media-badge portfolio-media-badge--live"><i aria-hidden="true"></i> optimizing</span>
-          <div class="portfolio-metrics" aria-hidden="true">
-            <span><b>1×</b> RTX A6000</span>
-            <span><b>1344×768</b> + audio</span>
-          </div>
-        </div>
-        <div class="portfolio-card__body">
-          <div class="portfolio-card__topline">
-            <span class="portfolio-card__number">03</span>
-            <span class="portfolio-card__role portfolio-card__role--live">Work in progress · GPU Systems</span>
-          </div>
-          <h3 class="portfolio-card__title">MiniMax-H3, Desktop Edition</h3>
-          <p class="portfolio-card__desc">Making full audio-video generation fit—and move faster—on a single 48 GB RTX A6000. Currently deep in the optimize → benchmark → doubt → optimize loop.</p>
-          <ul class="portfolio-card__tags" aria-label="MiniMax-H3 desktop topics">
-            <li>Inference</li>
-            <li>Optimization</li>
-          </ul>
-          <div class="portfolio-card__footer">
-            <span>Single-GPU A/V generation</span>
-            <span class="portfolio-card__open">View repo&nbsp; ↗</span>
-          </div>
-        </div>
-      </a>
-    </article>
-
-    <article class="portfolio-card portfolio-card--ironrock">
-      <a class="portfolio-card__link" href="https://github.com/bclz19/IronRock" target="_blank" rel="noopener noreferrer" aria-label="Open the IronRock desktop pet repository on GitHub">
-        <div class="portfolio-card__media portfolio-card__media--ironrock">
-          <span class="portfolio-media-badge">hackathon build</span>
-          <span class="portfolio-file-chip portfolio-file-chip--pdf" aria-hidden="true">PDF</span>
-          <span class="portfolio-file-chip portfolio-file-chip--md" aria-hidden="true">MD</span>
-          <span class="portfolio-file-chip portfolio-file-chip--csv" aria-hidden="true">CSV</span>
-          <img class="portfolio-card__pet" src="{{ '/assets/portfolio/ironrock-pet.webp' | relative_url }}" alt="The IronRock lab desktop pet holding a notebook" width="512" height="512" loading="lazy">
-          <span class="portfolio-pet-bubble" aria-hidden="true">Knowledge filed. ✓</span>
-        </div>
-        <div class="portfolio-card__body">
-          <div class="portfolio-card__topline">
-            <span class="portfolio-card__number">04</span>
-            <span class="portfolio-card__role">Hackathon · Desktop AI</span>
-          </div>
-          <h3 class="portfolio-card__title">IronRock Desktop Pet</h3>
-          <p class="portfolio-card__desc">A hackathon detour turned PyQt6 desktop companion: feed it PDFs, notes, or logs; it organizes a local lab knowledge base and chats back. Surprisingly useful. Mildly distracting.</p>
-          <ul class="portfolio-card__tags" aria-label="IronRock topics">
-            <li>PyQt6</li>
-            <li>Local Knowledge Base</li>
-          </ul>
-          <div class="portfolio-card__footer">
-            <span>Files in, lab memory out</span>
-            <span class="portfolio-card__open">View repo&nbsp; ↗</span>
-          </div>
-        </div>
-      </a>
-    </article>
-
-    <article class="portfolio-card portfolio-card--feng">
-      <a class="portfolio-card__link" href="https://github.com/Chenxxxxxx06/feng" target="_blank" rel="noopener noreferrer" aria-label="Open the Feng wind-turbine PHM repository on GitHub">
-        <div class="portfolio-card__media portfolio-card__media--feng">
-          <img class="portfolio-card__image" src="{{ '/assets/portfolio/feng-phm.webp' | relative_url }}" alt="Dark wind-farm monitoring dashboard with three sites on a map" width="1200" height="787" loading="lazy">
-          <span class="portfolio-media-badge portfolio-media-badge--blue">coursework</span>
-          <div class="portfolio-dashboard-strip" aria-hidden="true">
-            <span><i></i> Monitor</span>
-            <span><i></i> Diagnose</span>
-            <span><i></i> Predict</span>
-          </div>
-        </div>
-        <div class="portfolio-card__body">
-          <div class="portfolio-card__topline">
-            <span class="portfolio-card__number">05</span>
-            <span class="portfolio-card__role">Course Project · Full-stack PHM</span>
-          </div>
-          <h3 class="portfolio-card__title">风调预顺</h3>
-          <p class="portfolio-card__desc">A course project for wind-turbine predictive maintenance: monitoring, fault diagnosis, remaining-useful-life prediction, and work-order flows in one full-stack dashboard.</p>
-          <ul class="portfolio-card__tags" aria-label="Feng project technologies">
-            <li>React</li>
-            <li>FastAPI</li>
-          </ul>
-          <div class="portfolio-card__footer">
-            <span>Wind-energy health management</span>
-            <span class="portfolio-card__open">View repo&nbsp; ↗</span>
-          </div>
-        </div>
-      </a>
-    </article>
-  </div>
-
-  <p class="portfolio-scroll-hint"><i class="fas fa-arrows-alt-h" aria-hidden="true"></i> Swipe or use the arrows — each card opens its repository.</p>
+<p class="projects-intro">A few things I've helped bring to life. Usually with too many tabs open.</p>
+<div class="project-gallery">
+  <article class="project-tile project-tile--featured">
+    <a href="https://github.com/lbx154/Argus" target="_blank" rel="noopener noreferrer" aria-label="Argus — view repository">
+      <div class="project-art project-art--argus"><span class="project-art__label">01 / Agent systems</span><img src="{{ '/assets/portfolio/argus-logo.svg' | relative_url }}" alt="Argus" width="280" height="96"><span class="project-art__caption">Think. Build. Review. Repeat.</span></div>
+      <div class="project-copy"><h3>Argus <span aria-hidden="true">↗</span></h3><p>Long-running agents that plan, build, and pick up where they left off. Keeping the plot is half the fun.</p><span class="project-meta">Autonomous agents · Research &amp; engineering</span></div>
+    </a>
+  </article>
+  <article class="project-tile project-tile--featured">
+    <a href="https://github.com/zjunlp/LabVLA" target="_blank" rel="noopener noreferrer" aria-label="LabVLA — view repository">
+      <div class="project-art project-art--labvla"><span class="project-art__label">02 / Scientific robotics</span><img class="project-art__lab-symbol" src="{{ '/assets/portfolio/labvla-symbol.png' | relative_url }}" alt="" width="512" height="344" loading="lazy"><img class="project-art__lab-wordmark" src="{{ '/assets/portfolio/labvla-wordmark.png' | relative_url }}" alt="LabVLA" width="281" height="64" loading="lazy"><span class="project-art__caption">From lab protocols to robot actions.</span></div>
+      <div class="project-copy"><h3>LabVLA <span aria-hidden="true">↗</span></h3><p>Helping vision-language-action models find their feet — and grippers — in scientific laboratories.</p><span class="project-meta">Vision-language-action · Embodied AI</span></div>
+    </a>
+  </article>
+  <article class="project-tile">
+    <a href="https://github.com/Argus-AiTeam/minimax-h3-desktop" target="_blank" rel="noopener noreferrer" aria-label="MiniMax-H3 Desktop — view repository">
+      <div class="project-art"><img class="project-art__cover" src="{{ '/assets/portfolio/minimax-h3-orbital.webp' | relative_url }}" alt="A spacecraft launching through an orbital shipyard" width="896" height="486" loading="lazy"></div>
+      <div class="project-copy"><span class="project-kicker">03 / GPU systems</span><h3>MiniMax-H3 Desktop <span aria-hidden="true">↗</span></h3><p>Audio-video generation on one GPU. Optimize, benchmark, question everything, repeat.</p><span class="project-meta">Inference · Optimization</span></div>
+    </a>
+  </article>
+  <article class="project-tile">
+    <a href="https://github.com/bclz19/IronRock" target="_blank" rel="noopener noreferrer" aria-label="IronRock — view repository">
+      <div class="project-art project-art--pet"><img src="{{ '/assets/portfolio/ironrock-pet.webp' | relative_url }}" alt="IronRock desktop pet with a notebook" width="512" height="512" loading="lazy"></div>
+      <div class="project-copy"><span class="project-kicker">04 / A hackathon detour</span><h3>IronRock <span aria-hidden="true">↗</span></h3><p>A desktop pet with a lab notebook. Surprisingly useful. Mildly distracting.</p><span class="project-meta">Desktop AI · Local knowledge</span></div>
+    </a>
+  </article>
+  <article class="project-tile">
+    <a href="https://github.com/Chenxxxxxx06/feng" target="_blank" rel="noopener noreferrer" aria-label="风调预顺 — view repository">
+      <div class="project-art"><img class="project-art__cover" src="{{ '/assets/portfolio/feng-phm.webp' | relative_url }}" alt="Wind-farm monitoring dashboard" width="1200" height="787" loading="lazy"></div>
+      <div class="project-copy"><span class="project-kicker">05 / Built for class</span><h3>风调预顺 <span aria-hidden="true">↗</span></h3><p>Keeping wind turbines in good spirits: monitor, diagnose, and predict.</p><span class="project-meta">React · FastAPI · PHM</span></div>
+    </a>
+  </article>
 </div>

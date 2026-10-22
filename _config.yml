@@ -1,7 +1,7 @@
 # Site Settings
 title                    : "Chen Xi"
 description              : "Really getting it?"
-seo_description          : "Chen Xi — Software Engineering at Northwestern Polytechnical University. Projects and research in vision-language models, embodied AI, autonomous agents, and inference optimization."
+seo_description          : "Chen Xi — Software Engineering at NPU, incoming PhD student at Peking University's School of Computer Science (expected 2027). Research, projects, and a few fun detours."
 direction                : "NPU SE · VLM · VLA · Agent"
 repository               : "Chenxxxxxx06/Chenxxxxxx06.github.io"
 url                      : "https://chenxxxxxx06.github.io"
@@ -56,6 +56,20 @@ exclude:
   - scripts
   - tmp
   - vendor
+  - 3wei
+  - output
+  - 'AI_Tools展示_透明底.png'
+  - 'AI_Tools展示_透明底_高清.png'
+  - 'GitHub展示_透明底.png'
+  - 'GitHub展示_透明底_高清.png'
+  - 'image.png'
+  - 'image copy.png'
+  - 'image copy 2.png'
+  - '微信图片_20260918004147_3017_5.png'
+  - '*.pdf'
+  - pdfs
+  - ui-lab.html
+  - '部署和自定义指南.md'
 keep_files:
   - .git
   - .svn

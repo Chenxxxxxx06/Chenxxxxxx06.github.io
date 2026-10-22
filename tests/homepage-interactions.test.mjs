@@ -37,6 +37,7 @@ function environment(ids = []) {
     removeAttribute(name) { this.attrs.delete(name); }
     hasAttribute(name) { return this.attrs.has(name); }
     appendChild(child) { this.children.push(child); return child; }
+    replaceChildren(...children) { this.children = children; }
     contains(child) { return child === this || this.children.some((node) => node.contains(child)); }
     focus() { document.activeElement = this; }
     click() { this.emit('click'); }
@@ -48,6 +49,11 @@ function environment(ids = []) {
   document.visibilityState = 'visible';
   document.getElementById = (id) => nodes.get(id) || null;
   document.createElement = () => new Element();
+  document.createElementNS = (_namespace, name) => {
+    const element = new Element();
+    element.tagName = name;
+    return element;
+  };
   document.querySelectorAll = (selector) => selector === '.theme-dot'
     ? document.body.children.flatMap((group) => group.children) : [];
   for (const id of ids) nodes.set(id, new Element());
@@ -84,7 +90,8 @@ function snapshot(generated = '2026-10-22T09:00:00Z') {
     generated_at: generated,
     period: { start: '2026-04-22', end: '2026-10-22' },
     github: { total_contributions: 42, days: [{ date: '2026-10-22', count: 42 }] },
-    ai: { period_tokens: 0, total_tokens: 999, period_requests: 0, total_requests: 99,
+    ai: { period: { start: '2026-05-02', end: '2026-10-19' },
+      period_tokens: 0, total_tokens: 999, period_requests: 0, total_requests: 99,
       days: [{ date: '2026-10-22', tokens: 0 }] }
   };
 }
@@ -92,7 +99,7 @@ function snapshot(generated = '2026-10-22T09:00:00Z') {
 function activity(fallback) {
   const env = environment(['activityGrid', 'activityFallbackData', 'activityUpdated',
     'githubActivityMetric', 'tokenActivityMetric', 'tokenRequestCount',
-    'githubActivityTitle', 'tokenActivityTitle']);
+    'githubActivityTitle', 'tokenActivityTitle', 'githubHeatmap', 'tokenHeatmap']);
   env.nodes.get('activityGrid').setAttribute('data-source', '/activity.json');
   env.nodes.get('activityFallbackData').textContent = JSON.stringify(fallback || {});
   env.start = () => env.run('// Activity heatmaps.', '// Time-aware mascot.');
@@ -101,15 +108,18 @@ function activity(fallback) {
 
 const settle = () => new Promise(setImmediate);
 
-test('activity keeps valid zero period totals and reports the actual snapshot period', async () => {
+test('activity keeps zero totals and uses each source\'s actual recorded period', async () => {
   const env = activity(snapshot('2026-09-18T00:00:00Z'));
   env.start();
   await settle();
   assert.equal(env.nodes.get('tokenActivityMetric').textContent, '0');
-  assert.match(env.nodes.get('tokenRequestCount').textContent, /^0 requests/);
-  assert.match(env.nodes.get('githubActivityTitle').textContent, /2026-04-22 to 2026-10-22/);
-  assert.match(env.nodes.get('activityUpdated').textContent, /older than 6 hours/);
-  assert.match(env.nodes.get('activityUpdated').textContent, /Refresh unavailable; showing the last loaded snapshot/);
+  assert.equal(env.nodes.get('tokenRequestCount').textContent, '0 requests');
+  assert.equal(env.nodes.get('githubActivityTitle').textContent, 'contributions in 6 months');
+  assert.equal(env.nodes.get('tokenActivityTitle').textContent, 'tokens tracked');
+  assert.match(env.nodes.get('githubActivityTitle').title, /2026-04-22 to 2026-10-22/);
+  assert.match(env.nodes.get('tokenActivityTitle').title, /2026-05-02 to 2026-10-19/);
+  assert.equal(env.nodes.get('activityUpdated').textContent, 'Using saved activity.');
+  assert.equal(env.nodes.get('activityUpdated').hidden, false);
 });
 
 test('invalid activity response preserves the prior good snapshot', async () => {
@@ -121,14 +131,15 @@ test('invalid activity response preserves the prior good snapshot', async () => 
   env.start();
   await settle();
   assert.equal(env.nodes.get('githubActivityMetric').textContent, '42');
-  assert.match(env.nodes.get('activityUpdated').textContent, /Refresh unavailable/);
+  assert.equal(env.nodes.get('activityUpdated').textContent, 'Using saved activity.');
 });
 
 test('failed activity fetch without usable fallback does not claim a snapshot is displayed', async () => {
   const env = activity();
   env.start();
   await settle();
-  assert.equal(env.nodes.get('activityUpdated').textContent, 'Activity data is unavailable. Try reloading later.');
+  assert.equal(env.nodes.get('activityUpdated').textContent, 'Activity unavailable.');
+  assert.equal(env.nodes.get('activityUpdated').hidden, false);
 });
 
 test('activity retries without overlapping requests and preserves the newest snapshot', async () => {
@@ -153,6 +164,31 @@ test('activity retries without overlapping requests and preserves the newest sna
   assert.equal(calls, 2);
   resolveRequest({ ok: true, json: async () => snapshot() });
   await settle();
+  assert.equal(env.nodes.get('activityUpdated').hidden, true);
+  assert.equal(env.nodes.get('activityUpdated').textContent, '');
+});
+
+test('activity renders a sized heatmap cell for every recorded day', async () => {
+  const payload = snapshot();
+  payload.github.days.push({ date: '2026-10-21', count: 0 });
+  payload.ai.days = [{ date: '2026-10-19', tokens: 17 }];
+  const env = activity(payload);
+  env.context.fetch = async () => ({ ok: true, json: async () => payload });
+  env.start();
+  await settle();
+  for (const [id, expected] of [['githubHeatmap', 2], ['tokenHeatmap', 1]]) {
+    const svg = env.nodes.get(id).children[0];
+    assert.equal(svg.tagName, 'svg');
+    const cells = svg.children.filter((node) => node.tagName === 'rect');
+    assert.equal(cells.length, expected);
+    for (const cell of cells) {
+      assert.ok(Number(cell.getAttribute('width')) > 0);
+      assert.ok(Number(cell.getAttribute('height')) > 0);
+      assert.match(cell.getAttribute('class'), /^activity-cell level-[0-4]$/);
+      assert.ok(cell.children[0].textContent.length > 0);
+    }
+  }
+  assert.equal(env.nodes.get('activityUpdated').hidden, true);
 });
 
 test('activity aborts a stuck request and allows the next refresh', async () => {
@@ -165,7 +201,7 @@ test('activity aborts a stuck request and allows the next refresh', async () => 
   env.start();
   [...env.timers.values()].find((timer) => timer.delay === 10000).callback();
   await settle();
-  assert.match(env.nodes.get('activityUpdated').textContent, /Refresh unavailable/);
+  assert.equal(env.nodes.get('activityUpdated').textContent, 'Using saved activity.');
   env.advance(61_000);
   env.window.emit('focus');
   assert.equal(calls, 2);

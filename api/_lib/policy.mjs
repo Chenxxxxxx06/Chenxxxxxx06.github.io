@@ -1,3 +1,5 @@
+import { PUBLIC_NEWS_QUERY } from './catalog.mjs';
+
 const ZERO_WIDTH = /[\u200B-\u200D\u2060\uFEFF]/g;
 const CONTROL_CHAR = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/;
 const URL_LIKE = /(?:https?:\/\/|www\.)/i;
@@ -101,7 +103,7 @@ export function evaluatePolicy(query) {
     return Object.freeze({ decision: 'injection', query: normalized });
   }
 
-  const external = matchesAny(normalized, OUT_OF_SCOPE_PATTERNS);
+  const external = matchesAny(normalized, OUT_OF_SCOPE_PATTERNS) && !new RegExp(PUBLIC_NEWS_QUERY, 'i').test(normalized);
   if (external) {
     return Object.freeze({ decision: 'out_of_scope', query: normalized });
   }

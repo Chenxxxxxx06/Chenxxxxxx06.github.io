@@ -2,13 +2,13 @@
   'use strict';
 
   const ASK_TIMEOUT_MS = 20000;
-
+  const knowledgeCache = new WeakMap();
   const STATUS_COPY = {
-    answered: { state: 'answered', status: 'Qwen · approved public source' },
-    refused: { state: 'locked', status: 'Boundary · request declined' },
-    insufficient: { state: 'insufficient', status: 'Knowledge base · not published' },
-    rate_limited: { state: 'locked', status: 'Boundary · request limit reached' },
-    upstream_error: { state: 'offline', status: 'Qwen · knowledge router offline' }
+    answered: { state: 'answered', status: 'From my public notes' },
+    refused: { state: 'locked', status: 'Public notes only' },
+    insufficient: { state: 'insufficient', status: 'Not in the notes yet' },
+    rate_limited: { state: 'locked', status: 'Try again in a moment' },
+    upstream_error: { state: 'offline', status: 'Please try again' }
   };
 
   function askEndpoint(widget) {
@@ -16,24 +16,24 @@
   }
 
   function setInteractive(widget, busy) {
-    const input = widget.querySelector('[data-placement-ask-input]');
+    widget.querySelector('[data-placement-ask-input]').disabled = busy;
     const submit = widget.querySelector('[data-placement-ask-submit]');
-    const suggestions = widget.querySelectorAll('[data-placement-suggestion]');
-    const unavailable = !askEndpoint(widget);
-    input.disabled = busy || unavailable;
-    submit.disabled = busy || unavailable;
-    submit.textContent = unavailable ? 'Offline' : busy ? 'Asking…' : 'Ask →';
-    suggestions.forEach(function (button) { button.disabled = busy || unavailable; });
+    submit.disabled = busy;
+    submit.textContent = busy ? 'One sec…' : 'Ask ↗';
+    widget.querySelectorAll('[data-placement-suggestion]').forEach(function (button) { button.disabled = busy; });
     widget.setAttribute('aria-busy', busy ? 'true' : 'false');
   }
 
-  function writeAskResult(widget, commandText, outputText, statusText, state) {
+  function writeAskResult(widget, question, output, status, state) {
     widget.setAttribute('data-placement-knowledge-state', state);
     widget.querySelector('[data-placement-ask-state]').setAttribute('data-placement-ask-state', state);
-    widget.querySelector('[data-placement-terminal-command]').textContent = commandText;
-    widget.querySelector('[data-placement-terminal-output]').textContent = outputText;
-    widget.querySelector('[data-placement-ask-status]').textContent = statusText;
-    widget.querySelector('[data-placement-ask-badge]').textContent = state === 'retrieving' ? 'CHECKING' : state.toUpperCase();
+    const questionNode = widget.querySelector('[data-placement-ask-question]');
+    questionNode.textContent = question;
+    questionNode.hidden = !question;
+    widget.querySelector('[data-placement-ask-answer]').hidden = !output;
+    widget.querySelector('[data-placement-terminal-output]').textContent = output;
+    widget.querySelector('[data-placement-ask-status]').textContent = status;
+    widget.querySelector('[data-placement-ask-badge]').textContent = askEndpoint(widget) ? 'Public profile' : 'Public notes';
     const sources = widget.querySelector('[data-placement-ask-sources]');
     sources.replaceChildren();
     sources.hidden = true;
@@ -60,7 +60,7 @@
     const container = widget.querySelector('[data-placement-ask-sources]');
     approvedSources(payload).forEach(function (source) {
       const link = document.createElement('a');
-      link.textContent = source.label;
+      link.textContent = source.label + ' ↗';
       link.href = source.url;
       if (new URL(source.url).origin !== new URL(document.baseURI).origin) {
         link.target = '_blank';
@@ -74,71 +74,95 @@
   function resultText(payload) {
     const answer = payload && typeof payload.answer === 'string' ? payload.answer.trim() : '';
     const status = payload && typeof payload.status === 'string' ? payload.status : '';
-    const sources = approvedSources(payload);
-    if (!answer) return '';
-    if (status === 'answered') {
-      if (sources.length === 0) return '';
-      return 'answer → ' + answer;
-    }
-    if (STATUS_COPY[status]) return answer;
-    return '';
+    if (!answer || !STATUS_COPY[status]) return '';
+    if (status === 'answered' && approvedSources(payload).length === 0) return '';
+    return answer;
   }
 
-  async function readPayload(response) {
-    // A body-read abort or malformed JSON is a transport failure, not an
-    // evidence-free answer. Preserve the error for submitAsk's error state.
-    return response.json();
+  async function loadKnowledge(widget, signal) {
+    if (knowledgeCache.has(widget)) return knowledgeCache.get(widget);
+    const url = widget.getAttribute('data-placement-knowledge-url');
+    if (!url) throw new Error('No public notes configured');
+    const response = await fetch(url, { signal: signal, credentials: 'same-origin' });
+    if (!response.ok) throw new Error('Public notes unavailable');
+    const data = await response.json();
+    if (!data || data.schemaVersion !== 1 || !data.catalog || !data.responses || !data.policy || !Array.isArray(data.topics)) {
+      throw new Error('Invalid public notes');
+    }
+    knowledgeCache.set(widget, data);
+    return data;
+  }
+
+  function answerFromNotes(data, question) {
+    const query = question.normalize('NFKC').replace(/[\u200B-\u200D\u2060\uFEFF]/g, '').replace(/\s+/g, ' ').trim();
+    const locale = /[\u3400-\u9fff]/.test(query) || (document.documentElement.lang || '').toLowerCase().startsWith('zh') ? 'zh' : 'en';
+    function decline(reason, status) {
+      return { status: status || 'refused', answer: data.responses[reason][locale], sources: [] };
+    }
+    if (!query || Array.from(query).length > 240 || /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/.test(query)) {
+      return decline('insufficient', 'insufficient');
+    }
+    const compact = query.toLowerCase().replace(/[\s._:/\\-]+/g, '');
+    function matchesPolicy(name) {
+      return (data.policy[name] || []).some(function (pattern) {
+        const expression = new RegExp(pattern.source, pattern.flags);
+        return expression.test(query) || expression.test(compact);
+      });
+    }
+    if (matchesPolicy('sensitive')) return decline('sensitive');
+    if (matchesPolicy('injection')) return decline('injection');
+    const publicNews = typeof data.newsQuery === 'string' && new RegExp(data.newsQuery, 'i').test(query);
+    if ((matchesPolicy('outOfScope') && !publicNews) || /https?:\/\/|www\.|[A-Za-z0-9+/=_-]{96,}/i.test(query)) return decline('out_of_scope');
+    // Specific unpublished details cannot be inferred from a broad topic match.
+    if (/how (?:many|much)|which (?:dataset|module)|具体|多少|参数|超参|数据集|模型多大/i.test(query)) return decline('insufficient', 'insufficient');
+    const topic = data.topics.find(function (rule) { return new RegExp(rule[1], 'i').test(query); });
+    const entry = topic && data.catalog[topic[0]];
+    if (!entry) return decline('insufficient', 'insufficient');
+    return { status: 'answered', answer: entry.answer[locale], sources: entry.sources };
   }
 
   async function submitAsk(form) {
     const widget = form.closest('[data-placement-widget="terminal"]');
-    if (!widget || widget.getAttribute('aria-busy') === 'true' || !askEndpoint(widget)) return;
-
+    if (!widget || widget.getAttribute('aria-busy') === 'true') return;
     const input = form.querySelector('[data-placement-ask-input]');
     const restoreFocus = widget.contains(document.activeElement);
     const question = input.value.trim();
-    if (!question) {
-      input.focus();
-      return;
-    }
-
-    const commandText = 'ask "' + question + '"';
-    const endpoint = askEndpoint(widget);
+    if (!question) { input.focus(); return; }
     input.value = '';
     setInteractive(widget, true);
-    writeAskResult(
-      widget,
-      commandText,
-      'routing inside the approved profile…',
-      'Qwen · checking the public knowledge boundary',
-      'retrieving'
-    );
-
+    writeAskResult(widget, question, 'One moment…', 'Finding a note', 'retrieving');
     const controller = new AbortController();
     const timeout = window.setTimeout(function () { controller.abort(); }, ASK_TIMEOUT_MS);
     try {
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: question, locale: document.documentElement.lang || 'en' }),
-        signal: controller.signal
-      });
-      const payload = await readPayload(response);
+      const endpoint = askEndpoint(widget);
+      let payload;
+      let statusCode = 200;
+      if (endpoint) {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: question, locale: document.documentElement.lang || 'en' }),
+          signal: controller.signal
+        });
+        payload = await response.json();
+        statusCode = response.status;
+        if (!response.ok && statusCode !== 429) throw new Error('Ask request failed');
+      } else {
+        const data = await loadKnowledge(widget, controller.signal);
+        payload = answerFromNotes(data, question);
+      }
       const output = resultText(payload);
-      if (!output) throw new Error('ask endpoint returned an invalid response');
-      if (!response.ok && response.status !== 429) throw new Error('ask endpoint returned ' + response.status);
-      if (payload.status === 'upstream_error') throw new Error('ask endpoint is unavailable');
-      if (response.status === 429 || payload.status === 'rate_limited') input.value = question;
-
-      const copy = response.status === 429 ? STATUS_COPY.rate_limited : STATUS_COPY[payload.status];
-      writeAskResult(widget, commandText, output, copy.status, copy.state);
-      if (response.ok && payload.status === 'answered') renderSources(widget, payload);
+      if (!output || payload.status === 'upstream_error') throw new Error('Invalid Ask response');
+      if (statusCode === 429 || payload.status === 'rate_limited') input.value = question;
+      const copy = statusCode === 429 ? STATUS_COPY.rate_limited : STATUS_COPY[payload.status];
+      writeAskResult(widget, question, output, copy.status, copy.state);
+      if (statusCode !== 429 && payload.status === 'answered') renderSources(widget, payload);
     } catch (error) {
       input.value = question;
       const output = error && error.name === 'AbortError'
-        ? 'timeout\nNo response within 20 seconds. Your question is saved; please try again.'
-        : 'offline\nThe service could not complete this request. Your question is saved; please try again.';
-      writeAskResult(widget, commandText, output, 'Qwen · knowledge router offline', 'offline');
+        ? 'No response within 20 seconds. Your question is saved — try again?'
+        : 'Couldn’t load an answer just now. Your question is saved — please try again.';
+      writeAskResult(widget, question, output, 'Please try again', 'offline');
     } finally {
       window.clearTimeout(timeout);
       setInteractive(widget, false);
@@ -147,19 +171,24 @@
   }
 
   function initializeTerminals() {
-    document.querySelectorAll('[data-placement-widget="terminal"]').forEach(function (widget) {
-      const configured = Boolean(askEndpoint(widget));
-      writeAskResult(
-        widget,
-        'ask --public-profile',
-        configured
-          ? 'ready — ask about my projects, research, or experience.'
-          : 'currently unavailable — browse my profile or contact me using the links below.',
-        configured ? 'Answers use only Chen’s approved public profile.' : 'Ask Chen is not connected yet.',
-        configured ? 'ready' : 'offline'
-      );
-      widget.querySelector('[data-placement-ask-examples]').hidden = !configured;
-      setInteractive(widget, false);
+    document.querySelectorAll('[data-placement-widget="terminal"]').forEach(async function (widget) {
+      if (askEndpoint(widget)) {
+        writeAskResult(widget, '', '', 'Just the parts I’ve made public', 'ready');
+        setInteractive(widget, false);
+        return;
+      }
+      setInteractive(widget, true);
+      const controller = new AbortController();
+      const timeout = window.setTimeout(function () { controller.abort(); }, ASK_TIMEOUT_MS);
+      try {
+        await loadKnowledge(widget, controller.signal);
+        writeAskResult(widget, '', '', 'A few things about me', 'ready');
+      } catch (error) {
+        writeAskResult(widget, '', 'Couldn’t load my public notes. Ask a question to retry.', 'Please try again', 'offline');
+      } finally {
+        window.clearTimeout(timeout);
+        setInteractive(widget, false);
+      }
     });
   }
 
@@ -175,21 +204,13 @@
 
   document.addEventListener('click', function (event) {
     const suggestion = event.target.closest('[data-placement-suggestion]');
-    if (suggestion) {
-      const widget = suggestion.closest('[data-placement-widget="terminal"]');
-      const form = widget && widget.querySelector('[data-placement-ask-form]');
-      const input = form && form.querySelector('[data-placement-ask-input]');
-      if (form && input && !suggestion.disabled) {
-        input.value = suggestion.getAttribute('data-question') || suggestion.textContent.trim();
-        if (typeof form.requestSubmit === 'function') form.requestSubmit();
-        else form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
-      }
-      return;
-    }
-
-    const terminalBody = event.target.closest('[data-placement-terminal-focus]');
-    if (terminalBody && !event.target.closest('input, button, a, [tabindex]')) {
-      terminalBody.querySelector('[data-placement-ask-input]').focus();
-    }
+    if (!suggestion || suggestion.disabled) return;
+    const widget = suggestion.closest('[data-placement-widget="terminal"]');
+    const form = widget && widget.querySelector('[data-placement-ask-form]');
+    const input = form && form.querySelector('[data-placement-ask-input]');
+    if (!form || !input) return;
+    input.value = suggestion.getAttribute('data-question') || suggestion.textContent.trim();
+    if (typeof form.requestSubmit === 'function') form.requestSubmit();
+    else form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
   });
 })();

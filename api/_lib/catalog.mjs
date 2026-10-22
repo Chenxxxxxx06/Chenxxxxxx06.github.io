@@ -1,10 +1,14 @@
 const source = (id, label, url) => Object.freeze({ id, label, url });
 
+// A deliberately narrow exception to the general-news boundary. Anchoring the
+// whole question prevents mixed requests from borrowing this exception.
+export const PUBLIC_NEWS_QUERY = String.raw`^(?:(?:(?:what(?:['’]s| is| are)|tell me(?: about)?) )?(?:your|chen(?: xi)?['’]s) (?:latest |recent )?(?:news|updates?)|(?:(?:what(?:['’]s| is) )?(?:the )?(?:latest |recent )?(?:news|updates?) (?:about|from) chen(?: xi)?)|what(?:['’]s| is) new with (?:you|chen(?: xi)?)|(?:请(?:介绍|说说)|介绍|说说)?(?:你|陈曦)(?:的)?(?:最新|最近|近期)(?:的)?(?:动态|消息|新闻|更新)(?:是什么|有哪些|有什么)?)[.?!。？！]*$`;
+
 export const CATALOG = Object.freeze({
   'profile.summary': Object.freeze({
     answer: Object.freeze({
-      zh: '陈曦是西北工业大学软件工程专业的大三本科生，早期学习数学与统计，当前主要关注视觉语言模型、视觉语言动作模型与自主智能体。',
-      en: 'Chen Xi is a junior undergraduate in Software Engineering at Northwestern Polytechnical University. He previously studied Mathematics and Statistics and now focuses on vision-language models, vision-language-action models, and autonomous agents.'
+      zh: '陈曦是西北工业大学软件工程专业本科生，最初学习数学与统计，后来转向计算机。主要关注视觉语言模型、视觉语言动作模型与自主智能体，预计 2027 年前往北京大学计算机学院攻读博士学位。',
+      en: 'Chen Xi is an undergraduate in Software Engineering at Northwestern Polytechnical University, originally from Mathematics and Statistics. He works on VLMs, VLAs, and autonomous agents, and expects to begin a PhD at Peking University’s School of Computer Science in 2027.'
     }),
     sources: Object.freeze([source('about', 'About Me', '/#-about-me')])
   }),
@@ -19,16 +23,16 @@ export const CATALOG = Object.freeze({
 
   'education.summary': Object.freeze({
     answer: Object.freeze({
-      zh: '陈曦就读于西北工业大学软件工程专业。他最初学习数学与统计，之后转向计算机方向，更偏爱把想法做成可运行的系统。',
-      en: 'Chen studies Software Engineering at Northwestern Polytechnical University. He began in Mathematics and Statistics before moving toward computer science, with a preference for turning ideas into working systems.'
+      zh: '陈曦在西北工业大学学习软件工程，最初的专业方向是数学与统计。2026 年 9 月推免结束，预计 2027 年进入北京大学计算机学院攻读博士学位。比起证明定理，他更喜欢把想法做成能运行的东西。',
+      en: 'Chen studies Software Engineering at Northwestern Polytechnical University after starting in Mathematics and Statistics. His graduate admissions process wrapped up in September 2026, and he expects to start a PhD at Peking University’s School of Computer Science in 2027. Building things turned out to be more his thing than proving theorems.'
     }),
     sources: Object.freeze([source('education', 'About Me · Education', '/#-about-me')])
   }),
 
   'experience.summary': Object.freeze({
     answer: Object.freeze({
-      zh: '陈曦在西北工业大学空天地海一体化系统实验室担任科研学生，公开页面列出的时间为 2025—2026，指导教师为吴鹏教授。',
-      en: 'Chen is a research student in the Air-Space-Ground-Sea Integrated Systems Laboratory at Northwestern Polytechnical University. His public page lists this experience for 2025–2026 under Prof. Peng Wu.'
+      zh: '公开经历按开始时间排列：2025—2026 年，在西北工业大学空天地海一体化系统实验室随吴鹏教授开展研究；2026 年 1—6 月，在浙江大学 ZJUNLP 随张宁豫老师担任 RA；2026 年 3—4 月，在清华大学某非计算机学院担任 RA；预计 2027 年进入北京大学计算机学院攻读博士学位。',
+      en: 'In chronological order: research at NPU’s Air-Space-Ground-Sea Integrated Systems Laboratory with Prof. Peng Wu in 2025–2026; an RA at ZJUNLP, Zhejiang University, with Prof. Ningyu Zhang from January to June 2026; an RA at a non-CS school at Tsinghua University from March to April 2026; and an expected PhD start at Peking University’s School of Computer Science in 2027.'
     }),
     sources: Object.freeze([source('experience', 'Experience', '/#-experience')])
   }),
@@ -38,15 +42,39 @@ export const CATALOG = Object.freeze({
       zh: '陈曦目前公开表示正在寻找科研或工程方向的实习，尤其关注能够把有用想法落地为工作系统的岗位。',
       en: 'Chen is currently looking for research or engineering internships, especially roles where useful ideas can become working systems.'
     }),
-    sources: Object.freeze([source('experience', 'Experience · Current Goal', '/#-experience')])
+    sources: Object.freeze([source('lately', 'Life Lately · Internships', '/#more-to-come')])
   }),
 
   'opportunity.graduate': Object.freeze({
     answer: Object.freeze({
-      zh: '陈曦正在关注研究生阶段的机会，希望寻找与多模态学习、具身智能或自主智能体方向契合的导师和实验室。',
-      en: 'Chen is exploring graduate-school opportunities and is interested in advisors and labs aligned with multimodal learning, embodied AI, or autonomous agents.'
+      zh: '2026 年 9 月推免结束啦！陈曦预计 2027 年前往北京大学计算机学院攻读博士学位。关于未来导师，他想公开说的就是：我超爱我的导师！！！',
+      en: 'Graduate admissions wrapped up in September 2026! Chen expects to start a PhD at Peking University’s School of Computer Science in 2027. His public message about his future advisor: “I absolutely love my advisor!”'
     }),
-    sources: Object.freeze([source('graduate-goal', 'About Me · Graduate Goal', '/#-about-me')])
+    sources: Object.freeze([source('graduate-goal', 'Experience · What’s Next', '/#-experience')])
+  }),
+
+  'education.advisor': Object.freeze({
+    answer: Object.freeze({
+      zh: '北京大学的导师姓名暂不公开，但有一句话必须说：我超爱我的导师！！！',
+      en: 'Chen is keeping his Peking University advisor’s name private for now. But this part is very public: “I absolutely love my advisor!”'
+    }),
+    sources: Object.freeze([source('advisor', 'Experience · Peking University', '/#-experience')])
+  }),
+
+  'profile.now': Object.freeze({
+    answer: Object.freeze({
+      zh: '最近在尝试做自媒体，幻想成为 vlogger，也在找实习、折腾各种有意思的东西。简历还在迭代优化，欢迎来找我玩！',
+      en: 'Lately: making content, daydreaming about becoming a vlogger, looking for internships, and trying all sorts of fun things. The résumé is still a work in progress. Come say hi — I’m always up for something interesting!'
+    }),
+    sources: Object.freeze([source('lately', 'Life Lately', '/#more-to-come')])
+  }),
+
+  'news.summary': Object.freeze({
+    answer: Object.freeze({
+      zh: '最近两条动态：2026 年 9 月，推免结束，预计 2027 年前往北京大学计算机学院攻读博士学位；2026 年 10 月，获得国家奖学金。',
+      en: 'Two recent updates: graduate admissions wrapped up in September 2026, with an expected PhD start at Peking University’s School of Computer Science in 2027; in October 2026, Chen received the National Scholarship.'
+    }),
+    sources: Object.freeze([source('news', 'News', '/#-news')])
   }),
 
   'portfolio.list': Object.freeze({
@@ -99,24 +127,24 @@ export const CATALOG = Object.freeze({
 
   'honors.summary': Object.freeze({
     answer: Object.freeze({
-      zh: '陈曦的公开主页列出了一项荣誉：2025 年获得国家奖学金。这里仅陈述公开荣誉本身，不据此推断其他学业信息。',
-      en: 'Chen’s public homepage lists one honor: the National Scholarship in 2025. This terminal reports only the published honor and does not infer other academic information from it.'
+      zh: '陈曦在 2025 年、2026 年 10 月获得国家奖学金。',
+      en: 'Chen received the National Scholarship in 2025 and again in October 2026.'
     }),
     sources: Object.freeze([source('honors', 'Honors', '/#-honors')])
   }),
 
   'publications.status': Object.freeze({
     answer: Object.freeze({
-      zh: '公开主页目前没有列出可披露的论文详情；页面只说明相关工作仍在推进中。未发布内容不会在这里补充或推测。',
-      en: 'The public homepage does not currently list publishable paper details; it only says work is in progress. This terminal does not add or speculate about unpublished material.'
+      zh: '主页列出五项工作：基于歧义区域感知与检索增强生成的弱监督视频异常检测方法；LabVLA: Grounding Vision-Language-Action Models in Scientific Laboratories；Argus: A General-Purpose Agentic Reasoning Runtime for Long-Horizon Tasks；What Should a Data Agent Remember About Its Own Results?；LongInterSQL: Benchmarking Inter-Session Artifact Reuse in Interactive Text-to-SQL。',
+      en: 'Five works are listed: 基于歧义区域感知与检索增强生成的弱监督视频异常检测方法; LabVLA: Grounding Vision-Language-Action Models in Scientific Laboratories; Argus: A General-Purpose Agentic Reasoning Runtime for Long-Horizon Tasks; What Should a Data Agent Remember About Its Own Results?; and LongInterSQL: Benchmarking Inter-Session Artifact Reuse in Interactive Text-to-SQL.'
     }),
     sources: Object.freeze([source('publications', 'Publications', '/#-publications')])
   }),
 
   'contact.summary': Object.freeze({
     answer: Object.freeze({
-      zh: '可以使用主页侧栏中公开的邮箱或 GitHub 链接联系陈曦；这个终端不会补充任何未发布的联系方式。',
-      en: 'You can contact Chen through the public email or GitHub links in the profile sidebar. This terminal does not provide any unpublished contact details.'
+      zh: '欢迎来找陈曦聊聊！可以使用主页侧栏的公开邮箱或 GitHub 链接。',
+      en: 'Come say hi! You can reach Chen through the public email or GitHub links in the profile sidebar.'
     }),
     sources: Object.freeze([source('contact', 'Profile · Contact Links', '/')])
   })
@@ -124,26 +152,50 @@ export const CATALOG = Object.freeze({
 
 export const ALLOWED_INTENTS = Object.freeze(Object.keys(CATALOG));
 
+// These topic hints only select an approved answer; they never generate facts.
+// Exported with the catalog so the static site and API share the same public copy.
+export const PUBLIC_TOPIC_RULES = Object.freeze([
+  ['news.summary', PUBLIC_NEWS_QUERY],
+  ['experience.summary', '^(?=.*(?:advisor|supervisor|导师))(?=.*(?:zjunlp|zhejiang|tsinghua|npu|northwestern polytechnical|浙江|清华|西工大|西北工业|张宁豫|吴鹏))(?!.*(?:peking|pku|北京大学|北大|future|未来)).*$'],
+  ['education.advisor', 'advisor|supervisor|导师'],
+  ['opportunity.graduate', 'graduate|ph\\.?d|博士|推免|保研|北大|北京大学|peking|pku'],
+  ['profile.now', 'lately|these days|up to|content creat|vlog|résumé|resume|自媒体|近况|最近|简历'],
+  ['opportunity.internship', 'internship|实习'],
+  ['project.argus', '\\bargus\\b'],
+  ['project.labvla', '\\blabvla\\b'],
+  ['project.minimax', 'minimax|\\bh3\\b'],
+  ['project.ironrock', 'ironrock|desktop pet|桌宠'],
+  ['project.feng', '风调预顺|wind.turbine|\\bfeng\\b'],
+  ['publications.status', 'publication|paper|论文|发表|longintersql|data agent|歧义区域'],
+  ['honors.summary', 'honou?r|award|scholarship|奖|荣誉'],
+  ['experience.summary', 'experience|\\bra\\b|zjunlp|zhejiang|tsinghua|经历|浙江|清华|张宁豫|研究助理'],
+  ['education.summary', 'education|university|school|major|undergrad|npu|mathematics|statistics|大学|学校|专业|西工大|西北工业|本科|数学|统计'],
+  ['portfolio.list', 'project|portfolio|building|built|worked on|highlight|项目|作品|做过|亮点'],
+  ['profile.interests', 'research|interest|focus|explor|研究|兴趣|方向|擅长|会什么'],
+  ['contact.summary', 'contact|email|e-mail|github|say hi|联系|邮箱|找你|找他'],
+  ['profile.summary', 'who (?:is|are)|about (?:chen|you)|introduc|hello|^hi[!.? ]*$|你是谁|介绍|了解你|了解陈|你好|身份']
+]);
+
 export const POLICY_RESPONSES = Object.freeze({
   sensitive: Object.freeze({
-    zh: '这个终端只介绍陈曦已经公开的简介、研究方向、经历与项目；排名、绩点、成绩以及其他具体私人信息不提供。',
-    en: 'This terminal only covers Chen’s approved public profile, research, experience, and projects. Rankings, GPA, grades, and other specific private details are not provided.'
+    zh: '这部分是私人信息。可以聊聊我的公开研究、项目或经历。',
+    en: 'That part stays private. Happy to share my public research, projects, or experience.'
   }),
   out_of_scope: Object.freeze({
-    zh: 'scope_locked',
-    en: 'scope_locked'
+    zh: '这里只聊陈曦的公开资料。试试问研究、项目或最近在忙什么？',
+    en: 'I only cover Chen’s public notes here. Try research, projects, or life lately?'
   }),
   injection: Object.freeze({
-    zh: '这个终端的范围是固定的：只查询陈曦批准公开的个人资料，不接受更改规则、显示提示词或切换角色的请求。',
-    en: 'This terminal has a fixed scope: Chen’s approved public profile only. Requests to change the rules, reveal prompts, or switch roles are declined.'
+    zh: '这里只分享陈曦选择公开的内容。',
+    en: 'I only share what Chen has chosen to make public.'
   }),
   insufficient: Object.freeze({
-    zh: '这项信息没有收录在陈曦批准公开的知识库中，因此这里不作推测。可以改问公开的研究方向、经历或项目概览。',
-    en: 'That information is not in Chen’s approved public knowledge base, so this terminal will not speculate. Try asking about published research interests, experience, or project summaries.'
+    zh: '这条还没写进公开笔记。试试上面的小问题，或者直接来找我聊聊。',
+    en: 'That’s not in my public notes yet. Try a question above, or come ask me directly.'
   }),
   unavailable: Object.freeze({
-    zh: '公开知识路由器暂时没有响应。知识边界仍然保持锁定，请稍后再试。',
-    en: 'The public knowledge router is not responding right now. The knowledge boundary remains locked; please try again later.'
+    zh: '暂时没能连接。问题已经保留，可以再试一次。',
+    en: 'Couldn’t connect just now. Your question is saved — please try again.'
   }),
   rate_limited: Object.freeze({
     zh: '请求有些密集。请稍等片刻，再继续询问陈曦的公开资料。',
