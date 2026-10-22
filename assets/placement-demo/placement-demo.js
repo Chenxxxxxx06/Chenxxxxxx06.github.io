@@ -19,7 +19,7 @@
     widget.querySelector('[data-placement-ask-input]').disabled = busy;
     const submit = widget.querySelector('[data-placement-ask-submit]');
     submit.disabled = busy;
-    submit.textContent = busy ? 'One sec…' : 'Ask ↗';
+    submit.textContent = busy ? 'One sec…' : 'Ask ↵';
     widget.querySelectorAll('[data-placement-suggestion]').forEach(function (button) { button.disabled = busy; });
     widget.setAttribute('aria-busy', busy ? 'true' : 'false');
   }

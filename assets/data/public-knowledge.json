@@ -121,7 +121,7 @@
     "portfolio.list": {
       "answer": {
         "zh": "公开 Portfolio 目前包含五个项目：Argus、LabVLA、MiniMax-H3 Desktop Edition、IronRock Desktop Pet，以及风电预测性维护项目“风调预顺”。",
-        "en": "The public portfolio currently contains five projects: Argus, LabVLA, MiniMax-H3 Desktop Edition, IronRock Desktop Pet, and the “风调预顺” wind-turbine predictive-maintenance project."
+        "en": "The public portfolio currently contains five projects: Argus, LabVLA, MiniMax-H3 Desktop Edition, IronRock Desktop Pet, and Feng (Wind-Turbine Predictive Maintenance)."
       },
       "sources": [
         {
@@ -186,12 +186,12 @@
     "project.feng": {
       "answer": {
         "zh": "“风调预顺”是一个风力发电机预测性维护课程项目，把监控、故障诊断、剩余寿命预测与工单流程整合在一个全栈系统中。",
-        "en": "“风调预顺” is a course project for wind-turbine predictive maintenance, combining monitoring, fault diagnosis, remaining-useful-life prediction, and work-order flows in one full-stack system."
+        "en": "Feng (Wind-Turbine Predictive Maintenance) is a course project combining monitoring, fault diagnosis, remaining-useful-life prediction, and work-order flows in one full-stack system."
       },
       "sources": [
         {
           "id": "feng",
-          "label": "Portfolio · 风调预顺",
+          "label": "Portfolio · Feng · Wind-Turbine Predictive Maintenance",
           "url": "https://github.com/Chenxxxxxx06/feng"
         }
       ]
@@ -211,8 +211,8 @@
     },
     "publications.status": {
       "answer": {
-        "zh": "主页列出五项工作：基于歧义区域感知与检索增强生成的弱监督视频异常检测方法；LabVLA: Grounding Vision-Language-Action Models in Scientific Laboratories；Argus: A General-Purpose Agentic Reasoning Runtime for Long-Horizon Tasks；What Should a Data Agent Remember About Its Own Results?；LongInterSQL: Benchmarking Inter-Session Artifact Reuse in Interactive Text-to-SQL。",
-        "en": "Five works are listed: 基于歧义区域感知与检索增强生成的弱监督视频异常检测方法; LabVLA: Grounding Vision-Language-Action Models in Scientific Laboratories; Argus: A General-Purpose Agentic Reasoning Runtime for Long-Horizon Tasks; What Should a Data Agent Remember About Its Own Results?; and LongInterSQL: Benchmarking Inter-Session Artifact Reuse in Interactive Text-to-SQL."
+        "zh": "主页列出四项工作：Weakly Supervised Video Anomaly Detection via Ambiguous Region Awareness and Retrieval-Augmented Generation；LabVLA: Grounding Vision-Language-Action Models in Scientific Laboratories；Argus: A General-Purpose Agentic Reasoning Runtime for Long-Horizon Tasks；What Should a Data Agent Remember About Its Own Results? LongInterSQL: Benchmarking Inter-Session Artifact Reuse in Interactive Text-to-SQL。",
+        "en": "Four works are listed: Weakly Supervised Video Anomaly Detection via Ambiguous Region Awareness and Retrieval-Augmented Generation; LabVLA: Grounding Vision-Language-Action Models in Scientific Laboratories; Argus: A General-Purpose Agentic Reasoning Runtime for Long-Horizon Tasks; and What Should a Data Agent Remember About Its Own Results? LongInterSQL: Benchmarking Inter-Session Artifact Reuse in Interactive Text-to-SQL."
       },
       "sources": [
         {
@@ -283,7 +283,7 @@
     ],
     [
       "publications.status",
-      "publication|paper|论文|发表|longintersql|data agent|歧义区域"
+      "publication|paper|论文|发表|longintersql|data agent|歧义区域|ambiguous region|weakly supervised"
     ],
     [
       "honors.summary",

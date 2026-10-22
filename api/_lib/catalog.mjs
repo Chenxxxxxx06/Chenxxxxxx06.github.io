@@ -80,7 +80,7 @@ export const CATALOG = Object.freeze({
   'portfolio.list': Object.freeze({
     answer: Object.freeze({
       zh: '公开 Portfolio 目前包含五个项目：Argus、LabVLA、MiniMax-H3 Desktop Edition、IronRock Desktop Pet，以及风电预测性维护项目“风调预顺”。',
-      en: 'The public portfolio currently contains five projects: Argus, LabVLA, MiniMax-H3 Desktop Edition, IronRock Desktop Pet, and the “风调预顺” wind-turbine predictive-maintenance project.'
+      en: 'The public portfolio currently contains five projects: Argus, LabVLA, MiniMax-H3 Desktop Edition, IronRock Desktop Pet, and Feng (Wind-Turbine Predictive Maintenance).'
     }),
     sources: Object.freeze([source('portfolio', 'Portfolio', '/#-portfolio')])
   }),
@@ -120,9 +120,9 @@ export const CATALOG = Object.freeze({
   'project.feng': Object.freeze({
     answer: Object.freeze({
       zh: '“风调预顺”是一个风力发电机预测性维护课程项目，把监控、故障诊断、剩余寿命预测与工单流程整合在一个全栈系统中。',
-      en: '“风调预顺” is a course project for wind-turbine predictive maintenance, combining monitoring, fault diagnosis, remaining-useful-life prediction, and work-order flows in one full-stack system.'
+      en: 'Feng (Wind-Turbine Predictive Maintenance) is a course project combining monitoring, fault diagnosis, remaining-useful-life prediction, and work-order flows in one full-stack system.'
     }),
-    sources: Object.freeze([source('feng', 'Portfolio · 风调预顺', 'https://github.com/Chenxxxxxx06/feng')])
+    sources: Object.freeze([source('feng', 'Portfolio · Feng · Wind-Turbine Predictive Maintenance', 'https://github.com/Chenxxxxxx06/feng')])
   }),
 
   'honors.summary': Object.freeze({
@@ -135,8 +135,8 @@ export const CATALOG = Object.freeze({
 
   'publications.status': Object.freeze({
     answer: Object.freeze({
-      zh: '主页列出五项工作：基于歧义区域感知与检索增强生成的弱监督视频异常检测方法；LabVLA: Grounding Vision-Language-Action Models in Scientific Laboratories；Argus: A General-Purpose Agentic Reasoning Runtime for Long-Horizon Tasks；What Should a Data Agent Remember About Its Own Results?；LongInterSQL: Benchmarking Inter-Session Artifact Reuse in Interactive Text-to-SQL。',
-      en: 'Five works are listed: 基于歧义区域感知与检索增强生成的弱监督视频异常检测方法; LabVLA: Grounding Vision-Language-Action Models in Scientific Laboratories; Argus: A General-Purpose Agentic Reasoning Runtime for Long-Horizon Tasks; What Should a Data Agent Remember About Its Own Results?; and LongInterSQL: Benchmarking Inter-Session Artifact Reuse in Interactive Text-to-SQL.'
+      zh: '主页列出四项工作：Weakly Supervised Video Anomaly Detection via Ambiguous Region Awareness and Retrieval-Augmented Generation；LabVLA: Grounding Vision-Language-Action Models in Scientific Laboratories；Argus: A General-Purpose Agentic Reasoning Runtime for Long-Horizon Tasks；What Should a Data Agent Remember About Its Own Results? LongInterSQL: Benchmarking Inter-Session Artifact Reuse in Interactive Text-to-SQL。',
+      en: 'Four works are listed: Weakly Supervised Video Anomaly Detection via Ambiguous Region Awareness and Retrieval-Augmented Generation; LabVLA: Grounding Vision-Language-Action Models in Scientific Laboratories; Argus: A General-Purpose Agentic Reasoning Runtime for Long-Horizon Tasks; and What Should a Data Agent Remember About Its Own Results? LongInterSQL: Benchmarking Inter-Session Artifact Reuse in Interactive Text-to-SQL.'
     }),
     sources: Object.freeze([source('publications', 'Publications', '/#-publications')])
   }),
@@ -166,7 +166,7 @@ export const PUBLIC_TOPIC_RULES = Object.freeze([
   ['project.minimax', 'minimax|\\bh3\\b'],
   ['project.ironrock', 'ironrock|desktop pet|桌宠'],
   ['project.feng', '风调预顺|wind.turbine|\\bfeng\\b'],
-  ['publications.status', 'publication|paper|论文|发表|longintersql|data agent|歧义区域'],
+  ['publications.status', 'publication|paper|论文|发表|longintersql|data agent|歧义区域|ambiguous region|weakly supervised'],
   ['honors.summary', 'honou?r|award|scholarship|奖|荣誉'],
   ['experience.summary', 'experience|\\bra\\b|zjunlp|zhejiang|tsinghua|经历|浙江|清华|张宁豫|研究助理'],
   ['education.summary', 'education|university|school|major|undergrad|npu|mathematics|statistics|大学|学校|专业|西工大|西北工业|本科|数学|统计'],

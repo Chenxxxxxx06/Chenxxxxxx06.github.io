@@ -56,14 +56,16 @@ If npm is unavailable, `node --test tests/*.test.mjs` runs the same tests. Tests
 | `_pages/includes/` | Introduction, projects, activity, news, experience, honors |
 | `_sass/_config.scss` | Type and size settings |
 | `assets/css/custom-overrides.css` | Activity, experience, mascot styles |
-| `assets/css/profile-refresh.css` | Project gallery, publication list, timeline and type hierarchy |
+| `assets/css/profile-refresh.css` | Scoped circular emblem and generated-cover additions; original theme retained |
 | `assets/js/custom-scripts.js` | Themes, navigation, portfolio, activity, mascot |
 | `assets/placement-demo/` | Ask Chen interface |
 | `api/_lib/catalog.mjs` | Approved public answers and source links |
 | `scripts/export_activity.py` | Activity snapshot generation |
 | `scripts/export-public-knowledge.mjs` | Generate the approved browser-side knowledge catalog |
 
-The Peking University emblem is the original transparent PNG from the university's [official identity downloads](https://vim.pku.edu.cn/xzzq/). The NPU mark uses the existing circular emblem with a circular container. LabVLA links to [arXiv:2606.13578](https://arxiv.org/abs/2606.13578); Argus links to [arXiv:2608.05144](https://arxiv.org/abs/2608.05144).
+The Peking University emblem is the original transparent PNG from the university's [official identity downloads](https://vim.pku.edu.cn/xzzq/). The NPU mark uses the existing circular emblem with a circular container. Zhejiang and Tsinghua emblems come from their [official ZJU identity page](https://www.zju.edu.cn/514/listm.htm) and [official Tsinghua identity page](https://vi.tsinghua.edu.cn/gk/xxbz/xh.htm). LabVLA links to [arXiv:2606.13578](https://arxiv.org/abs/2606.13578); Argus links to [arXiv:2608.05144](https://arxiv.org/abs/2608.05144).
+
+The original horizontal portfolio carousel, typography, experience timeline, and honors list are retained. Five conceptual project covers were generated using the built-in image generation tool; their prompts and repository references are in `assets/portfolio/generated/prompts.json`. WebP copies are served on the site; full-size PNG originals remain local.
 
 Activity data is a published snapshot, not live access to personal tools. The browser periodically checks for a newer JSON snapshot; this does not guarantee the publisher has generated one. This repository currently contains no GitHub Actions workflow for Scholar or activity updates.
 

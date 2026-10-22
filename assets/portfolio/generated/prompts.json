@@ -1,0 +1,36 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-10-22",
+  "assets": [
+    {
+      "id": "argus",
+      "prompt": "Use case: stylized-concept. Asset: a horizontal 16:9 project cover for a personal academic website carousel. Elegant restrained soft 3D editorial illustration, ivory/light-gray background, muted forest green and sage accents, subtle realistic materials, precise clean detail, soft daylight, generous breathing room. Center the subject with safe margin for carousel cropping. No words, letters, logos, numbers, watermark, border or decorative frame. This is a conceptual cover, not a product screenshot. Subject: an autonomous research and engineering workbench: four distinct compact computational modules connected in a flowing loop, a planning board of blank cards, code-like structured strokes on a tiny monitor, a verification/check instrument, and an orderly persistent archive of files. Visualize work being planned, built, reviewed, paused and continued. Emphasize the continuous connected workflow, not humanoid robots. Refined small architectural diorama from a slightly elevated front angle.",
+      "source": "https://github.com/lbx154/Argus",
+      "file": "argus.webp"
+    },
+    {
+      "id": "ironrock",
+      "prompt": "Use case: stylized-concept. Asset: a horizontal 16:9 project cover for a personal academic website carousel. Elegant restrained soft 3D editorial illustration, ivory/light-gray background, muted forest green and sage accents, subtle realistic materials, precise clean detail, soft daylight, generous breathing room. Center the subject with safe margin for carousel cropping. No words, letters, logos, numbers, watermark, border or decorative frame. This is a conceptual cover, not a product screenshot. Subject: a charming little smooth pebble-like desktop companion with bright tiny eyes and short limbs sitting beside a miniature laptop and open lab notebook. The companion organizes a few floating paper documents into a tidy compact archive, thin subtle lines linking documents to a knowledge structure. Warm approachable desk scene. It represents a desktop pet that accepts PDFs, notes and experimental logs, organizes a local lab knowledge base and answers questions. Keep it simple and polished, no actual UI text.",
+      "source": "https://github.com/bclz19/IronRock",
+      "file": "ironrock.webp"
+    },
+    {
+      "id": "feng",
+      "prompt": "Use case: stylized-concept. Asset: a horizontal 16:9 project cover for a personal academic website carousel. Elegant restrained soft 3D editorial illustration, ivory/light-gray background, muted forest green and sage accents, subtle realistic materials, precise clean detail, soft daylight, generous breathing room. Center the subject with safe margin for carousel cropping. No words, letters, logos, numbers, watermark, border or decorative frame. This is a conceptual cover, not a product screenshot. Subject: three realistic white three-bladed wind turbines on gently rolling green terrain, with a small transparent glass-like diagnostic display in foreground showing clean abstract vibration curves and a turbine component silhouette, connected by subtle telemetry lines. Convey monitoring turbine health, diagnosing faults and predicting maintenance. Emphasize turbines and engineering, not a generic futuristic city. A polished miniature landscape diorama from a slightly elevated angle; no invented numerical measurements.",
+      "source": "https://github.com/Chenxxxxxx06/feng",
+      "file": "feng.webp"
+    },
+    {
+      "id": "labvla",
+      "prompt": "Use case: stylized-concept. Asset type: 16:9 landscape cover image for a research portfolio carousel, designed to remain clear at small card size. Primary request: a refined editorial illustration of a scientific laboratory robot understanding an experiment and carefully manipulating laboratory equipment. Subject: one compact precise articulated laboratory robot arm with a two-finger gripper carefully holding a clear glass beaker over a clean laboratory bench; a small test tube rack and a second flask form a balanced scientific still life. Behind the arm, a modest translucent protocol panel has only a few abstract diagram shapes and connected dots, absolutely no lettering. Show physically plausible gripper contact, real glassware shapes, and purposeful robot geometry. Style/medium: elegant soft 3D editorial illustration with restrained precise details, smooth ceramic and brushed metal surfaces, delicate glass reflections, warm diffuse studio light and gentle ambient shadows. Color palette: ivory and very light gray background, muted forest green and sage accents, neutral charcoal details. Composition/framing: wide 16:9 composition, subject group centered with generous margin on every side, a cohesive single scene with a quiet background. The image should communicate scientific robotics at a glance and look sophisticated rather than toy-like. Constraints: no text, letters, numbers, logos, watermark, decorative frame, badges, ribbons, or decorative border. No humanoid, no face, no clutter, no neon lighting. Opaque ivory background.",
+      "source": "https://github.com/zjunlp/LabVLA",
+      "file": "labvla.webp"
+    },
+    {
+      "id": "minimax-h3",
+      "prompt": "Use case: stylized-concept. Asset type: 16:9 landscape cover image for a research portfolio carousel, designed to remain clear at small card size. Primary request: a refined editorial illustration of one powerful desktop GPU generating synchronized video and audio. Subject: one recognizable premium graphics card as the primary object, resting at a subtle three-quarter angle; its compact dark forest-green circuit board and brushed metal heatsink are carefully rendered, with a single visible cooling fan. Above and behind this one GPU, three restrained floating cinematic image panels depict successive moments of a calm mountain-and-lake landscape, accompanied by one elegant curved stereo waveform sculpted from sage-colored material. The image panels have no user interface, captions, or play icons. Visually connect the GPU with its audiovisual output through a subtle clean composition, not a technical flowchart. Style/medium: elegant soft 3D editorial illustration with restrained precise details, smooth matte surfaces, brushed metal, warm diffuse studio light and gentle ambient shadows. Color palette: ivory and very light gray background, muted forest green and sage accents, neutral charcoal details. Composition/framing: wide 16:9 composition, the single GPU and its output grouped centrally with generous margin on all sides, a quiet sophisticated computing still life. Constraints: no text, letters, numbers, logos, watermark, decorative frame, badges, ribbons, or decorative border. Show exactly one graphics card. No server racks, no humans, no clutter, no neon lighting. Opaque ivory background.",
+      "source": "https://github.com/Argus-AiTeam/minimax-h3-desktop",
+      "file": "minimax-h3.webp"
+    }
+  ]
+}

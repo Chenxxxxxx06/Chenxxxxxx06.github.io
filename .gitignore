@@ -19,3 +19,6 @@ pdfs/
 # Local package cache used for validation
 .pnpm-store/
 node_modules/
+
+# Local full-size originals; generated WebP covers are published.
+assets/portfolio/generated/*.png

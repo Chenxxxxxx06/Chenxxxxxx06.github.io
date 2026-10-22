@@ -1,20 +1,90 @@
 # <i class="fas fa-briefcase section-icon"></i> Experience
 
-<div class="journey" aria-label="Experience, from earliest to latest">
-  <article class="journey-item">
-    <div class="journey-item__mark journey-item__mark--nwpu"><img src="{{ '/assets/images/brand/nwpu-emblem-white.png' | relative_url }}" alt="Northwestern Polytechnical University emblem" width="56" height="56" loading="lazy"></div>
-    <div class="journey-item__copy"><time datetime="2025">2025 — 2026</time><h3>Northwestern Polytechnical University</h3><p class="journey-item__role">Research Student</p><p class="journey-item__detail">Air-Space-Ground-Sea Integrated Systems Laboratory · Prof. Peng Wu</p></div>
+<div class="experience-intro">
+  <span class="experience-intro__mark" aria-hidden="true"></span>
+  <div>
+    <strong>Currently looking for an internship.</strong>
+    <p>Open to research and engineering roles where useful ideas become working systems.</p>
+  </div>
+</div>
+
+<div class="experience-timeline" aria-label="Experience timeline, from earliest to latest">
+  <article class="experience-item experience-item--nwpu">
+    <div class="experience-item__node" aria-hidden="true"><span></span></div>
+    <div class="experience-item__content">
+      <span class="experience-item__logo" aria-hidden="true">
+        <img src="{{ '/assets/images/brand/nwpu-emblem-white.png' | relative_url }}" alt="">
+      </span>
+      <div class="experience-item__copy">
+        <time class="experience-item__date" datetime="2025">2025 — 2026</time>
+        <p class="experience-item__role">
+          <span>Research Student</span>
+          <span class="experience-item__at">@</span>
+          <strong>Air-Space-Ground-Sea Integrated Systems Laboratory</strong>
+        </p>
+        <p class="experience-item__place">Northwestern Polytechnical University</p>
+        <p class="experience-item__detail">
+          <span>Supervisor:</span>
+          <strong>Prof. Peng Wu</strong>
+        </p>
+      </div>
+    </div>
   </article>
-  <article class="journey-item">
-    <div class="journey-item__mark journey-item__mark--zju" aria-hidden="true">浙</div>
-    <div class="journey-item__copy"><time datetime="2026-01">2026.01 — 2026.06</time><h3>ZJUNLP · Zhejiang University</h3><p class="journey-item__role">Research Assistant</p><p class="journey-item__detail">Working with Prof. Ningyu Zhang</p></div>
+  <article class="experience-item experience-item--zju">
+    <div class="experience-item__node" aria-hidden="true"><span></span></div>
+    <div class="experience-item__content">
+      <span class="experience-item__logo" aria-hidden="true">
+        <img src="{{ '/assets/images/brand/zju-emblem.png' | relative_url }}" alt="" loading="lazy">
+      </span>
+      <div class="experience-item__copy">
+        <time class="experience-item__date" datetime="2026-01">2026.01 — 2026.06</time>
+        <p class="experience-item__role">
+          <span>Research Assistant</span>
+          <span class="experience-item__at">@</span>
+          <strong>ZJUNLP</strong>
+        </p>
+        <p class="experience-item__place">Zhejiang University</p>
+        <p class="experience-item__detail">
+          <span>Supervisor:</span>
+          <strong>Prof. Ningyu Zhang</strong>
+        </p>
+      </div>
+    </div>
   </article>
-  <article class="journey-item">
-    <div class="journey-item__mark journey-item__mark--thu" aria-hidden="true">清</div>
-    <div class="journey-item__copy"><time datetime="2026-03">2026.03 — 2026.04</time><h3>Tsinghua University</h3><p class="journey-item__role">Research Assistant</p><p class="journey-item__detail">A non-CS school. A fun little detour.</p></div>
+  <article class="experience-item experience-item--thu">
+    <div class="experience-item__node" aria-hidden="true"><span></span></div>
+    <div class="experience-item__content">
+      <span class="experience-item__logo" aria-hidden="true">
+        <img src="{{ '/assets/images/brand/thu-emblem.png' | relative_url }}" alt="" loading="lazy">
+      </span>
+      <div class="experience-item__copy">
+        <time class="experience-item__date" datetime="2026-03">2026.03 — 2026.04</time>
+        <p class="experience-item__role">
+          <span>Research Assistant</span>
+          <span class="experience-item__at">@</span>
+          <strong>A non-CS school</strong>
+        </p>
+        <p class="experience-item__place">Tsinghua University</p>
+        <p class="experience-item__detail">A fun little detour.</p>
+      </div>
+    </div>
   </article>
-  <article class="journey-item journey-item--next">
-    <div class="journey-item__mark"><img src="{{ '/assets/images/brand/pku-emblem.png' | relative_url }}" alt="Peking University emblem" width="56" height="56" loading="lazy"></div>
-    <div class="journey-item__copy"><time datetime="2027">2027 · Expected</time><h3>Peking University <span class="journey-item__tag">Next chapter</span></h3><p class="journey-item__role">Incoming PhD Student · School of Computer Science</p><p class="journey-item__detail">I absolutely love my advisor!!! ❤️</p></div>
+  <article class="experience-item experience-item--pku">
+    <div class="experience-item__node" aria-hidden="true"><span></span></div>
+    <div class="experience-item__content">
+      <span class="experience-item__logo" aria-hidden="true">
+        <img src="{{ '/assets/images/brand/pku-emblem.png' | relative_url }}" alt="" loading="lazy">
+      </span>
+      <div class="experience-item__copy">
+        <time class="experience-item__date" datetime="2027">2027 · Expected</time>
+        <p class="experience-item__role">
+          <span>Incoming PhD Student</span>
+          <span class="experience-item__at">@</span>
+          <strong>School of Computer Science</strong>
+        </p>
+        <p class="experience-item__place">Peking University</p>
+        <p class="experience-item__detail">I absolutely love my advisor!!! ❤️</p>
+      </div>
+    </div>
   </article>
 </div>

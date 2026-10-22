@@ -5,7 +5,7 @@ excerpt: ""
 author_profile: true
 ---
 
-<link rel="stylesheet" href="{{ '/assets/placement-demo/placement-demo.css?v=20261022-profile-refresh' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/placement-demo/placement-demo.css?v=20261023-terminal' | relative_url }}">
 
 <span class='anchor' id='about-me'></span>
 {% include_relative includes/intro.md %}
@@ -26,4 +26,4 @@ author_profile: true
 
 <span class='anchor' id='end-page'></span>
 
-<script src="{{ '/assets/placement-demo/placement-demo.js?v=20261022-profile-refresh' | relative_url }}" defer></script>
+<script src="{{ '/assets/placement-demo/placement-demo.js?v=20261023-terminal' | relative_url }}" defer></script>

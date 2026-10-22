@@ -1,21 +1,18 @@
 <span class="anchor" id="placement-terminal"></span>
-<section class="placement-widget placement-widget--terminal" data-placement-widget="terminal" data-placement-ask-endpoint="{{ site.ask_chen.endpoint | escape }}" data-placement-knowledge-url="{{ '/assets/data/public-knowledge.json?v=20261022' | relative_url }}" data-placement-knowledge-state="loading" aria-labelledby="placement-terminal-title">
+<section class="placement-widget placement-widget--terminal" data-placement-widget="terminal" data-placement-ask-endpoint="{{ site.ask_chen.endpoint | escape }}" data-placement-knowledge-url="{{ '/assets/data/public-knowledge.json?v=20261023' | relative_url }}" data-placement-knowledge-state="loading" aria-labelledby="placement-terminal-title">
   <div class="placement-terminal">
     <header class="placement-terminal__header">
       <div class="placement-terminal__identity">
-        <span class="placement-terminal__mark" aria-hidden="true">c<span>✳</span></span>
-        <div>
-          <h2 id="placement-terminal-title">Ask Chen</h2>
-          <p>A little curious? So am I.</p>
-        </div>
+        <span class="placement-terminal__tab" aria-hidden="true">Terminal</span>
+        <h2 id="placement-terminal-title"><span aria-hidden="true">›_</span> Ask Chen</h2>
       </div>
       <span class="placement-terminal__badge" data-placement-ask-badge>Public notes</span>
     </header>
     <div class="placement-terminal__body" data-placement-ask-state="loading">
       <div class="placement-terminal__examples" data-placement-ask-examples>
-        <button type="button" data-placement-suggestion data-question="What are Chen’s research interests?" disabled>Research interests <span aria-hidden="true">↗</span></button>
-        <button type="button" data-placement-suggestion data-question="What projects has Chen worked on?" disabled>What I’m building <span aria-hidden="true">↗</span></button>
-        <button type="button" data-placement-suggestion data-question="What is Chen up to lately?" disabled>Life lately <span aria-hidden="true">↗</span></button>
+        <button type="button" data-placement-suggestion data-question="What are Chen’s research interests?" disabled>research</button>
+        <button type="button" data-placement-suggestion data-question="What projects has Chen worked on?" disabled>projects</button>
+        <button type="button" data-placement-suggestion data-question="What is Chen up to lately?" disabled>life lately</button>
       </div>
       <div class="placement-terminal__answer" data-placement-ask-answer hidden>
         <p class="placement-terminal__question" data-placement-ask-question hidden></p>
@@ -24,8 +21,9 @@
       </div>
       <form class="placement-terminal__prompt" data-placement-ask-form action="/api/ask" method="post" aria-label="Ask Chen">
         <label class="screen-reader-text" for="placement-ask-input">Ask about Chen’s public profile</label>
+        <span class="placement-terminal__prompt-symbol" aria-hidden="true">&gt;</span>
         <input id="placement-ask-input" class="placement-terminal__prompt-input" data-placement-ask-input name="question" type="text" maxlength="240" autocomplete="off" placeholder="Ask me something…" aria-describedby="placement-ask-status" disabled>
-        <button class="placement-terminal__submit" data-placement-ask-submit type="submit" disabled>Ask ↗</button>
+        <button class="placement-terminal__submit" data-placement-ask-submit type="submit" disabled>Ask ↵</button>
       </form>
       <footer class="placement-terminal__footer">
         <span id="placement-ask-status" class="placement-terminal__status" data-placement-ask-status>Loading public notes…</span>

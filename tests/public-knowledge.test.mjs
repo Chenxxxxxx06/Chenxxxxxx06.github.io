@@ -24,3 +24,16 @@ test('updated public facts include the expected PhD and keep unpublished details
   assert.match(CATALOG['publications.status'].answer.en, /LongInterSQL/);
   assert.doesNotMatch(JSON.stringify(CATALOG), /\.pdf|api[_-]?key|DASHSCOPE/i);
 });
+
+test('four publication entries keep the Data Agent question and LongInterSQL together', () => {
+  const publications = readFileSync(new URL('../_pages/includes/pub.md', import.meta.url), 'utf8');
+  const entries = publications.match(/^- .+$/gm);
+  assert.equal(entries.length, 4);
+  assert.match(entries[3], /What Should a Data Agent Remember About Its Own Results\? LongInterSQL:/);
+  assert.match(CATALOG['publications.status'].answer.en, /^Four works are listed:/);
+  assert.match(CATALOG['publications.status'].answer.zh, /^主页列出四项工作/);
+  assert.doesNotMatch(publications, /\p{Script=Han}/u);
+  for (const entry of Object.values(CATALOG)) {
+    assert.doesNotMatch(entry.answer.en, /\p{Script=Han}/u);
+  }
+});
