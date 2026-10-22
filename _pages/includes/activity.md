@@ -34,6 +34,6 @@
   </section>
 </div>
 
-<p class="activity-updated" id="activityUpdated" aria-live="polite">Reading private local aggregates. No prompts or API keys leave this computer.</p>
+<p class="activity-updated" id="activityUpdated" aria-live="polite">Loading the latest published activity snapshot.</p>
 
 <script type="application/json" id="activityFallbackData">{{ site.data.activity | jsonify }}</script>

@@ -1,10 +1,10 @@
 <aside class="mascot-widget" id="mascotWidget" aria-label="Chen Xi's current status">
   <div class="mascot-bubble" id="mascotBubble" role="status" aria-live="polite"></div>
-  <section class="mascot-contact" id="mascotContact" aria-hidden="true" aria-label="Contact Chen Xi">
+  <section class="mascot-contact" id="mascotContact" aria-hidden="true" aria-label="Contact Chen Xi" inert>
     <button class="mascot-contact__close" id="mascotContactClose" type="button" aria-label="Close email card">×</button>
     <a class="mascot-contact__send" id="mascotEmailSend" href="mailto:{{ site.author.email }}?subject=Hi%20Chen%20Xi%2C%20let%27s%20chat" target="_self">Let’s talk</a>
   </section>
-  <button class="mascot-button" id="mascotButton" type="button" aria-label="Talk to Chen Xi">
+  <button class="mascot-button" id="mascotButton" type="button" aria-label="Talk to Chen Xi" aria-controls="mascotContact" aria-expanded="false">
     <img
       class="mascot-image"
       id="mascotImage"

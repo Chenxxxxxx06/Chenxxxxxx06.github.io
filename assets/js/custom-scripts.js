@@ -101,6 +101,7 @@
   var LABELS = { white: 'Pure White', yellow: 'Warm Yellow', blue: 'Cool Blue', dark: 'Dark' };
 
   function applyTheme(theme) {
+    if (THEMES.indexOf(theme) === -1) theme = 'white';
     if (theme === 'white') {
       document.documentElement.removeAttribute('data-theme');
     } else {
@@ -108,7 +109,9 @@
     }
     try { localStorage.setItem('site-theme', theme); } catch(e) {}
     document.querySelectorAll('.theme-dot').forEach(function (dot) {
-      dot.classList.toggle('active', dot.dataset.theme === theme);
+      var selected = dot.dataset.theme === theme;
+      dot.classList.toggle('active', selected);
+      dot.setAttribute('aria-pressed', String(selected));
     });
   }
 
@@ -120,9 +123,11 @@
   document.addEventListener('DOMContentLoaded', function () {
     var switcher = document.createElement('div');
     switcher.id = 'theme-switcher';
+    switcher.setAttribute('role', 'group');
     switcher.setAttribute('aria-label', 'Choose colour theme');
     THEMES.forEach(function (t) {
       var btn = document.createElement('button');
+      btn.type = 'button';
       btn.className = 'theme-dot';
       btn.dataset.theme = t;
       btn.title = LABELS[t];
@@ -229,10 +234,14 @@
 
     function setActive(link) {
       if (current === link) return;
-      links.forEach(function (l) { l.classList.remove('nav-active'); });
+      links.forEach(function (l) {
+        l.classList.remove('nav-active');
+        l.removeAttribute('aria-current');
+      });
       current = link;
       if (current) {
         current.classList.add('nav-active');
+        current.setAttribute('aria-current', 'location');
         scrollNavToLink(current);
       }
     }
@@ -559,6 +568,41 @@ document.addEventListener('DOMContentLoaded', function() {
   var REFRESH_MS = 6 * 60 * 60 * 1000;
   var ACTIVE_REFRESH_COOLDOWN_MS = 60 * 1000;
   var lastRemoteRequestAt = 0;
+  var activityRequestPending = false;
+  var lastActivityPayload = null;
+
+  function validDate(value) {
+    return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value) &&
+      !isNaN(Date.parse(value + 'T00:00:00Z')) &&
+      new Date(value + 'T00:00:00Z').toISOString().slice(0, 10) === value;
+  }
+
+  function validCount(value) {
+    return typeof value === 'number' && isFinite(value) && value >= 0;
+  }
+
+  function validDays(days, valueKey) {
+    return Array.isArray(days) && days.every(function (day) {
+      return day && validDate(day.date) && validCount(day[valueKey]);
+    });
+  }
+
+  function showActivityStatus(refreshFailed) {
+    var updated = document.getElementById('activityUpdated');
+    if (!updated) return;
+    if (!lastActivityPayload) {
+      updated.textContent = 'Activity data is unavailable. Try reloading later.';
+      return;
+    }
+    var generated = new Date(lastActivityPayload.generated_at);
+    var stale = Date.now() - generated.getTime() > REFRESH_MS;
+    var message = 'Published snapshot: ' + generated.toLocaleString('en-US', {
+      year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+    }) + '.';
+    if (stale) message += ' Snapshot is older than 6 hours.';
+    if (refreshFailed) message += ' Refresh unavailable; showing the last loaded snapshot.';
+    updated.textContent = message;
+  }
 
   function compact(value) {
     var number = Number(value || 0);
@@ -666,45 +710,74 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function updateActivity(payload) {
+    // Validate before changing the page so a broken response cannot replace a
+    // working snapshot with partial metrics or an invalid heatmap.
+    if (!payload || !payload.github || !payload.ai ||
+        typeof payload.generated_at !== 'string' || isNaN(Date.parse(payload.generated_at)) ||
+        !validCount(payload.github.total_contributions) ||
+        !validDays(payload.github.days, 'count') || !validDays(payload.ai.days, 'tokens')) {
+      throw new Error('Invalid activity snapshot');
+    }
+    var periodTokens = payload.ai.period_tokens == null ? payload.ai.total_tokens : payload.ai.period_tokens;
+    var periodRequests = payload.ai.period_requests == null ? payload.ai.total_requests : payload.ai.period_requests;
+    if (!validCount(periodTokens) || !validCount(periodRequests)) throw new Error('Invalid activity totals');
+
     var githubMetric = document.getElementById('githubActivityMetric');
     var tokenMetric = document.getElementById('tokenActivityMetric');
     var requestCount = document.getElementById('tokenRequestCount');
-    var updated = document.getElementById('activityUpdated');
     if (!githubMetric || !tokenMetric) return;
+
+    // Keep a newer built-in snapshot if an edge cache returns an older file.
+    if (lastActivityPayload && Date.parse(payload.generated_at) < Date.parse(lastActivityPayload.generated_at)) {
+      showActivityStatus(false);
+      return;
+    }
+    var period = payload.period;
+    var periodLabel = period && validDate(period.start) && validDate(period.end) && period.start <= period.end
+      ? period.start + ' to ' + period.end : 'published period';
 
     githubMetric.textContent = Number(payload.github.total_contributions || 0).toLocaleString('en-US');
     githubMetric.title = githubMetric.textContent + ' contributions';
-    var periodTokens = Number(payload.ai.period_tokens || payload.ai.total_tokens || 0);
-    var periodRequests = Number(payload.ai.period_requests || payload.ai.total_requests || 0);
     tokenMetric.textContent = compact(periodTokens);
-    tokenMetric.title = periodTokens.toLocaleString('en-US') + ' tokens in the last 6 months';
-    requestCount.textContent = compact(periodRequests) + ' requests · last 6 months';
+    tokenMetric.title = periodTokens.toLocaleString('en-US') + ' tokens · ' + periodLabel;
+    if (requestCount) requestCount.textContent = compact(periodRequests) + ' requests · ' + periodLabel;
+    var githubTitle = document.getElementById('githubActivityTitle');
+    var tokenTitle = document.getElementById('tokenActivityTitle');
+    if (githubTitle) githubTitle.textContent = 'contributions · ' + periodLabel;
+    if (tokenTitle) tokenTitle.textContent = 'tokens · ' + periodLabel;
 
     renderHeatmap(document.getElementById('githubHeatmap'), payload.github.days, 'count', 'contributions');
     renderHeatmap(document.getElementById('tokenHeatmap'), payload.ai.days, 'tokens', 'tokens');
 
-    var generated = new Date(payload.generated_at);
-    updated.textContent = 'Local aggregates updated ' + generated.toLocaleString('en-US', {
-      month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
-    }) + '. Next refresh within 6 hours.';
+    lastActivityPayload = payload;
+    showActivityStatus(false);
   }
 
   function loadActivity(force) {
     var grid = document.getElementById('activityGrid');
     if (!grid) return;
     var now = Date.now();
-    if (!force && now - lastRemoteRequestAt < ACTIVE_REFRESH_COOLDOWN_MS) return;
+    if (activityRequestPending || (!force && now - lastRemoteRequestAt < ACTIVE_REFRESH_COOLDOWN_MS)) return;
     lastRemoteRequestAt = now;
     var source = grid.getAttribute('data-source');
-    fetch(source + '?v=' + now, { cache: 'no-store' })
+    if (!source) { showActivityStatus(true); return; }
+    activityRequestPending = true;
+    var controller = new AbortController();
+    var timeout = window.setTimeout(function () { controller.abort(); }, 10000);
+    fetch(source + (source.indexOf('?') === -1 ? '?' : '&') + 'v=' + now, {
+      cache: 'no-store', signal: controller.signal
+    })
       .then(function (response) {
         if (!response.ok) throw new Error('Activity data unavailable');
         return response.json();
       })
       .then(updateActivity)
       .catch(function () {
-        var updated = document.getElementById('activityUpdated');
-        if (updated) updated.textContent = 'Showing the built-in activity snapshot. The next 6-hour refresh will retry.';
+        showActivityStatus(true);
+      })
+      .finally(function () {
+        window.clearTimeout(timeout);
+        activityRequestPending = false;
       });
   }
 
@@ -792,11 +865,15 @@ document.addEventListener('DOMContentLoaded', function() {
       if (resetStep !== false && !contactOpen) interactionStep = 0;
     }
 
-    function closeContact() {
+    function closeContact(restoreFocus) {
+      var focusWasInside = contact.contains(document.activeElement);
       contact.classList.remove('is-visible');
       contact.setAttribute('aria-hidden', 'true');
+      contact.setAttribute('inert', '');
+      button.setAttribute('aria-expanded', 'false');
       contactOpen = false;
       interactionStep = 0;
+      if (restoreFocus !== false && focusWasInside) button.focus({ preventScroll: true });
     }
 
     function openContact() {
@@ -804,6 +881,8 @@ document.addEventListener('DOMContentLoaded', function() {
       closeBubble(false);
       contact.classList.add('is-visible');
       contact.setAttribute('aria-hidden', 'false');
+      contact.removeAttribute('inert');
+      button.setAttribute('aria-expanded', 'true');
       contactOpen = true;
       interactionStep = 2;
       if (emailSend) emailSend.focus({ preventScroll: true });
@@ -863,6 +942,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     if (contactClose) contactClose.addEventListener('click', closeContact);
+    document.addEventListener('keydown', function (event) {
+      if (event.key !== 'Escape' || (!contactOpen && interactionStep !== 1)) return;
+      event.preventDefault();
+      window.clearTimeout(bubbleTimer);
+      closeBubble();
+      closeContact();
+    });
 
     syncState(true);
     window.setInterval(function () { syncState(false); }, 60 * 1000);

@@ -1,6 +1,7 @@
 # Site Settings
 title                    : "Chen Xi"
 description              : "Really getting it?"
+seo_description          : "Chen Xi — Software Engineering at Northwestern Polytechnical University. Projects and research in vision-language models, embodied AI, autonomous agents, and inference optimization."
 direction                : "NPU SE · VLM · VLA · Agent"
 repository               : "Chenxxxxxx06/Chenxxxxxx06.github.io"
 url                      : "https://chenxxxxxx06.github.io"

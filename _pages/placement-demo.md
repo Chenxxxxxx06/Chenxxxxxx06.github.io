@@ -6,7 +6,7 @@ author_profile: true
 sitemap: false
 ---
 
-<link rel="stylesheet" href="{{ '/assets/placement-demo/placement-demo.css?v=20260830-ask-ai-connected' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/placement-demo/placement-demo.css?v=20261022-function-fixes' | relative_url }}">
 
 <span class='anchor' id='about-me'></span>
 {% include_relative includes/intro.md %}
@@ -27,4 +27,4 @@ sitemap: false
 
 <span class='anchor' id='end-page'></span>
 
-<script src="{{ '/assets/placement-demo/placement-demo.js?v=20260830-ask-ai-connected' | relative_url }}" defer></script>
+<script src="{{ '/assets/placement-demo/placement-demo.js?v=20261022-function-fixes' | relative_url }}" defer></script>

@@ -165,7 +165,7 @@
   white-space: nowrap;
 }
 
-/* Ask Chen keeps its original geometry; only its type is one step larger. */
+/* Ask Chen keeps the existing terminal design and grows with its controls. */
 .page__content .placement-widget--terminal .placement-widget__eyebrow {
   font-size: 0.72rem !important;
 }
@@ -229,7 +229,6 @@
 }
 
 .placement-terminal__body {
-  height: 214px;
   min-height: 214px;
   padding: 28px 34px 22px;
   overflow: hidden;
@@ -241,6 +240,9 @@
   color: #eef2ed !important;
   font-size: 0.95rem !important;
   line-height: 1.55;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .placement-terminal__command i {
@@ -258,8 +260,8 @@
 }
 
 .placement-terminal__body pre {
-  height: 56px;
   min-height: 56px;
+  max-height: 168px;
   margin: 0;
   overflow-y: auto;
   color: #9da69d;
@@ -269,6 +271,7 @@
   font-size: 0.9rem;
   line-height: 1.75;
   white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 .placement-terminal__body[data-placement-ask-state="answered"] pre {
@@ -277,15 +280,17 @@
 
 .placement-terminal__prompt {
   position: relative;
-  display: block;
-  height: 34px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
   margin-top: 22px;
 }
 
 .placement-terminal__prompt-input {
   width: 100%;
-  height: 34px;
-  padding: 0;
+  min-width: 0;
+  height: 44px;
+  padding: 0 0 0 14px;
   color: #edf2ec;
   background: transparent;
   border: 0;
@@ -294,11 +299,65 @@
   font: 0.9rem/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
-.placement-terminal__prompt-input::placeholder { color: transparent; }
+.placement-terminal__prompt-input::placeholder { color: #9da69d; opacity: 1; }
+
+.placement-terminal__submit,
+.placement-terminal__examples button {
+  flex: 0 0 auto;
+  min-height: 44px;
+  padding: 8px 12px;
+  color: #d8dfd6;
+  background: #222c24;
+  border: 1px solid #5f8669;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.placement-terminal__submit:disabled,
+.placement-terminal__examples button:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.placement-terminal__submit:focus-visible,
+.placement-terminal__prompt-input:focus-visible,
+.placement-terminal__examples button:focus-visible,
+.placement-terminal__body pre:focus-visible {
+  outline: 2px solid #9bc7a6;
+  outline-offset: 3px;
+}
+
+.placement-terminal__sources,
+.placement-terminal__examples,
+.placement-terminal__fallback {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: center;
+  margin-top: 12px;
+  font-size: 0.7rem;
+}
+
+.placement-terminal__sources[hidden],
+.placement-terminal__examples[hidden] { display: none; }
+
+.page__content .placement-terminal__sources a,
+.page__content .placement-terminal__fallback a {
+  color: #a9d4b4 !important;
+  text-decoration: underline;
+  overflow-wrap: anywhere;
+}
+
+.placement-terminal__status {
+  display: block;
+  margin-top: 12px;
+  color: #9da69d;
+  font-size: 0.65rem;
+  line-height: 1.5;
+}
 
 .placement-terminal__cursor {
   position: absolute;
-  top: 8px;
+  top: 15px;
   left: 0;
   display: block;
   width: 7px;
@@ -310,6 +369,7 @@
 }
 
 .placement-terminal__prompt:focus-within .placement-terminal__cursor,
+.placement-terminal__prompt-input:disabled + .placement-terminal__cursor,
 .placement-terminal__prompt-input:not(:placeholder-shown) + .placement-terminal__cursor {
   opacity: 0;
   animation: none;
@@ -1108,7 +1168,6 @@
   }
 
   .placement-terminal__body {
-    height: 220px;
     min-height: 220px;
     padding: 24px 20px 20px;
   }

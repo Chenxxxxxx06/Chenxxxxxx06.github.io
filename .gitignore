@@ -15,3 +15,7 @@ assets/images/mascot/*.png
 # Never upload personal CV / resume
 pdfs/
 *.pdf
+
+# Local package cache used for validation
+.pnpm-store/
+node_modules/

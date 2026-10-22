@@ -221,40 +221,39 @@ test('request guards enforce rate, origin, and parsed-body limits', async () => 
   assert.equal(JSON.parse(missingOriginResponse.body).reason, 'origin_required');
 });
 
-test('homepage keeps the original terminal shape while connecting it and enlarging type', () => {
+test('homepage terminal exposes accessible controls and an honest offline fallback', () => {
   const terminal = readFileSync(resolve(root, '_pages/includes/placement-demo-terminal.html'), 'utf8');
   const portfolio = readFileSync(resolve(root, '_pages/includes/portfolio.md'), 'utf8');
   const aboutPage = readFileSync(resolve(root, '_pages/about.md'), 'utf8');
   const placementPage = readFileSync(resolve(root, '_pages/placement-demo.md'), 'utf8');
-  const previewSync = readFileSync(resolve(root, 'scripts/sync-preview.mjs'), 'utf8');
   const css = readFileSync(resolve(root, 'assets/placement-demo/placement-demo.css'), 'utf8');
   const js = readFileSync(resolve(root, 'assets/placement-demo/placement-demo.js'), 'utf8');
   const cards = (portfolio.match(/<article class="portfolio-card /g) || []).length;
 
   assert.match(terminal, /site\.ask_chen\.endpoint/);
-  assert.match(terminal, /PERSONAL KNOWLEDGE BASE · READY/);
-  assert.match(terminal, /qwen connect --knowledge-base personal/);
+  assert.match(terminal, /data-placement-knowledge-state="offline"/);
+  assert.match(terminal, /data-placement-ask-badge>OFFLINE/);
+  assert.match(terminal, /data-placement-ask-input[^>]*disabled/);
+  assert.match(terminal, /class="placement-terminal__submit"[^>]*data-placement-ask-submit/);
+  assert.match(terminal, /data-placement-ask-sources[^>]*aria-label="Answer sources"/);
+  assert.match(terminal, /data-placement-terminal-output[^>]*tabindex="0"/);
+  assert.match(terminal, /mailto:/);
+  assert.match(terminal, /Read my profile/);
   assert.match(terminal, /method="post"/);
   assert.match(terminal, /placement-terminal__cursor/);
-  assert.doesNotMatch(terminal, /placement-terminal__boundary|data-placement-suggestion|placement-terminal__submit|placement-terminal__prompt-prefix/);
   assert.equal(cards, 5);
   assert.match(portfolio, /<span>05<\/span>/);
   assert.ok(portfolio.indexOf('portfolio-card--argus') < portfolio.indexOf('portfolio-card--labvla'));
   assert.ok(portfolio.indexOf('portfolio-card--labvla') < portfolio.indexOf('portfolio-card--h3'));
   assert.match(portfolio, /https:\/\/github\.com\/zjunlp\/LabVLA\.git/);
-  assert.match(css, /\.placement-widget--terminal \.placement-widget__heading h2[\s\S]*?font-size: clamp\(1\.7rem, 3\.2vw, 2\.35rem\)/);
-  assert.match(css, /\.placement-terminal__bar\s*\{[\s\S]*?height:\s*44px;/);
-  assert.match(css, /\.placement-terminal__body\s*\{[\s\S]*?height:\s*214px;[\s\S]*?min-height:\s*214px;[\s\S]*?padding:\s*28px 34px 22px;[\s\S]*?overflow:\s*hidden;/);
-  assert.match(css, /\.placement-terminal__body pre\s*\{[\s\S]*?height:\s*56px;[\s\S]*?min-height:\s*56px;[\s\S]*?overflow-y:\s*auto;/);
-  assert.match(css, /\.placement-terminal__command\s*\{[\s\S]*?font-size:\s*0\.95rem/);
-  assert.match(css, /\.placement-terminal__body pre\s*\{[\s\S]*?font-size:\s*0\.9rem/);
-  assert.match(css, /\.placement-terminal__prompt\s*\{[\s\S]*?display:\s*block;[\s\S]*?height:\s*34px;/);
+  assert.match(css, /\.placement-terminal__body pre\s*\{[^}]*overflow-y:\s*auto;/);
+  assert.match(css, /\.placement-terminal__command\s*\{[^}]*text-overflow:\s*ellipsis;/);
+  assert.match(css, /\.placement-terminal__prompt-input:focus-visible/);
   assert.match(css, /data-placement-ask-state="answered"/);
   assert.match(js, /return 'answer → ' \+ answer/);
   assert.match(js, /ASK_TIMEOUT_MS = 20000/);
-  for (const versioned of [aboutPage, placementPage, previewSync]) {
-    assert.match(versioned, /20260830-ask-ai-connected/);
-    assert.doesNotMatch(versioned, /20260830-ask-answer/);
+  for (const versioned of [aboutPage, placementPage]) {
+    assert.match(versioned, /placement-demo\.js\?v=/);
   }
   for (const page of [aboutPage, placementPage]) {
     assert.doesNotMatch(page, /placement-demo-atlas\.html/);

@@ -1,5 +1,5 @@
 <span class="anchor" id="placement-terminal"></span>
-<section class="placement-widget placement-widget--terminal" data-placement-widget="terminal" data-placement-ask-endpoint="{{ site.ask_chen.endpoint | escape }}" data-placement-knowledge-state="ready" aria-labelledby="placement-terminal-title">
+<section class="placement-widget placement-widget--terminal" data-placement-widget="terminal" data-placement-ask-endpoint="{{ site.ask_chen.endpoint | escape }}" data-placement-knowledge-state="offline" aria-labelledby="placement-terminal-title">
   <header class="placement-widget__header">
     <span class="placement-widget__number" aria-hidden="true">01</span>
     <div class="placement-widget__heading">
@@ -14,18 +14,28 @@
     <div class="placement-terminal__bar" aria-hidden="true">
       <span></span><span></span><span></span>
       <em>chen@gpt / ask</em>
-      <b>PERSONAL KNOWLEDGE BASE · READY</b>
+      <b>PERSONAL KNOWLEDGE BASE · <span data-placement-ask-badge>OFFLINE</span></b>
     </div>
-    <div class="placement-terminal__body" data-placement-ask-state="ready" data-placement-terminal-focus="">
-      <p class="placement-terminal__command"><i aria-hidden="true">$</i> <code data-placement-terminal-command>qwen connect --knowledge-base personal</code></p>
-      <pre data-placement-terminal-output aria-live="polite">ready — type a question at the cursor and press Enter.</pre>
+    <div class="placement-terminal__body" data-placement-ask-state="offline" data-placement-terminal-focus="">
+      <p class="placement-terminal__command"><i aria-hidden="true">$</i> <code data-placement-terminal-command>ask --public-profile</code></p>
+      <pre data-placement-terminal-output aria-live="polite" tabindex="0" aria-label="Ask Chen response">Ask Chen is currently unavailable. You can still browse my profile or contact me below.</pre>
+      <nav class="placement-terminal__sources" data-placement-ask-sources aria-label="Answer sources" hidden></nav>
       <form class="placement-terminal__prompt" data-placement-ask-form action="/api/ask" method="post" aria-label="Ask Chen">
         <label class="screen-reader-text" for="placement-ask-input">Ask Chen a question</label>
-        <input id="placement-ask-input" class="placement-terminal__prompt-input" data-placement-ask-input name="question" type="text" maxlength="240" autocomplete="off" placeholder=" " aria-describedby="placement-ask-status">
+        <input id="placement-ask-input" class="placement-terminal__prompt-input" data-placement-ask-input name="question" type="text" maxlength="240" autocomplete="off" placeholder="Ask about my work…" aria-describedby="placement-ask-status" disabled>
         <span class="placement-terminal__cursor" aria-hidden="true"></span>
-        <button class="screen-reader-text" data-placement-ask-submit type="submit">Submit question</button>
+        <button class="placement-terminal__submit" data-placement-ask-submit type="submit" disabled>Offline</button>
       </form>
-      <span id="placement-ask-status" class="screen-reader-text" data-placement-ask-status>Knowledge source: Qwen3.8-Flash connected to the approved public profile.</span>
+      <div class="placement-terminal__examples" data-placement-ask-examples hidden>
+        <span>Try:</span>
+        <button type="button" data-placement-suggestion data-question="What projects has Chen worked on?" disabled>Projects</button>
+        <button type="button" data-placement-suggestion data-question="What are Chen’s research interests?" disabled>Research interests</button>
+      </div>
+      <span id="placement-ask-status" class="placement-terminal__status" data-placement-ask-status>JavaScript and a connected service are required to ask a question.</span>
+      <nav class="placement-terminal__fallback" aria-label="Learn more about Chen">
+        <a href="{{ '/#-about-me' | relative_url }}" target="_self">Read my profile</a>
+        {% if site.author.email and site.author.email != '' %}<a href="mailto:{{ site.author.email | escape }}" target="_self">Email me</a>{% endif %}
+      </nav>
     </div>
   </div>
 </section>

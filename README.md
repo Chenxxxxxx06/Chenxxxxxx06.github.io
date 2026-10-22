@@ -1,86 +1,66 @@
-# NPUwho.github.io
+# Chen Xi — Personal Homepage
 
-Personal academic homepage of **Chen Xi**, focusing on VLM · VLA · Agent at Northwestern Polytechnical University (NPU).
+Personal homepage of Chen Xi, Software Engineering at Northwestern Polytechnical University, with projects in VLM, VLA, autonomous agents, and inference optimization.
 
-🌐 **Live site:** [npuwho.github.io](https://npuwho.github.io)
+Live site: [chenxxxxxx06.github.io](https://chenxxxxxx06.github.io)
 
-## About
-
-Built on [Jekyll](https://jekyllrb.com/) with the [Minimal Mistakes](https://github.com/mmistakes/minimal-mistakes) theme, hosted on GitHub Pages. Features a custom design system with 4 switchable colour themes, animated UI components, and auto-updated Google Scholar citation counts.
-
-The layout and design system are adapted from the excellent personal homepage of [**Wanghan Xu (徐望瀚)**](https://black-yt.github.io) — many thanks to the original author for sharing such a clean and well-crafted template. All content on this site is my own.
+Built with Jekyll and a customized Minimal Mistakes layout. The design is adapted from [Wanghan Xu’s homepage](https://black-yt.github.io); all personal content belongs to Chen Xi.
 
 ## Features
 
-- **4 colour themes** — Pure White / Warm Yellow / Cool Blue / Dark, switchable via floating dot palette, persisted in `localStorage`
-- **Auto Google Scholar citations** — GitHub Actions workflow runs daily (UTC 08:00) to fetch citation data via `scholarly` and store it in the `google-scholar-stats` branch
-- **Animated components** — breathing glow button, segmented control with sliding indicator, smooth news expand/collapse
-- **Responsive layout** — JS-pinned sidebar on desktop, compact horizontal profile on mobile
-- **Performance** — non-blocking font loading, Font Awesome preloaded, lazy images (below-fold only)
+- Four persistent colour themes and responsive navigation.
+- Five-project portfolio with mouse, touch, and keyboard navigation.
+- Published GitHub/AI activity snapshots, with actual dates and stale/offline status.
+- Ask Chen: a closed-set public-profile question service with visible submission, suggested questions, source links, and retryable errors.
+- A time-aware mascot with an accessible email card.
+- Search/share metadata, site icons, and legacy `/about/` and `/about.html` redirects.
 
-## Customising Font Sizes
+Ask Chen requires a separately deployed Node API. The repository currently leaves its public endpoint empty, so GitHub Pages displays the unavailable state with profile/contact links. See [api/README.md](api/README.md) before connecting it.
 
-All typography and spacing values are centralised in **`_sass/_config.scss`**. Edit that one file — no other files need to be touched.
+## Local development
 
-| Variable | Controls | Unit | Default |
-|---|---|---|---|
-| `$font-size-base` | Em base for the whole page | px | `15px` |
-| `$nav-font-size` | Navigation tab text | px | `21px` |
-| `$nav-link-padding` | Tab height / width (top-bottom × left-right) | em | `0.1em 0.6em` |
-| `$sidebar-name-size` | Name ("Chen Xi") | em | `1.3em` |
-| `$sidebar-bio-size` | Affiliation ("NPU") | em | `1.1em` |
-| `$sidebar-direction-size` | Research direction ("Focusing on...") | em | `1.0em` |
-| `$sidebar-icon-size` | Social icons (GitHub, Scholar…) | em | `1.3em` |
-| `$content-p-size` | Body paragraphs and lists | px | `17px` |
-| `$content-font-weight` | Body text weight (400–900) | — | `800` |
-| `$h1-font-size` | Section headings ("About Me", "Publications"…) | px | `21px` |
-| `$h1-font-weight` | Section heading weight | — | `1000` |
-| `$h1-letter-spacing` | Section heading letter spacing | em | `-0.015em` |
-| `$section-icon-size` | Small icon before each heading | em | `0.8em` |
-| `$badge-font-size` | "Key Contributor" badge | em | `0.75em` |
-| `$app-card-name-size` | App card title | em | `1em` |
-| `$app-card-desc-size` | App card description | em | `0.8em` |
+Install Ruby and Bundler, then run:
 
-**Note on units:**
-- `px` variables set an absolute size regardless of anything else — use these for text you want at a fixed, predictable size.
-- `em` variables scale relative to their parent container's font size (e.g. sidebar variables are relative to `$font-size-base`; app card variables are relative to `$content-p-size`).
-
-## Project Structure
-
-```
-_pages/
-  about.md                  # Main page (assembles includes)
-  includes/
-    intro.md                # About Me + My Apps
-    news.md                 # News with expand/collapse
-    pub.md                  # Publications with All / Key Contributor filter
-    honors.md               # Honors and Awards
-    talks.md                # Invited Talks
-    services.md             # Academic Services
-    others.md               # Other info
-_includes/
-  author-profile.html       # Sidebar profile card
-  head/custom.html          # Favicons, fonts, MathJax
-assets/
-  css/main.scss             # All custom styles + theme variables
-  js/custom-scripts.js      # Theme switcher, sidebar pin, filter, news toggle
-_sass/
-  _config.scss              # Centralised font/size config (edit here)
-_config.yml                 # Site config: author info, analytics, SEO
+```sh
+bundle install
+bundle exec jekyll serve --livereload
 ```
 
-## Local Development
+Open `http://localhost:4000`. `bash run_server.sh` runs the same command. Ruby and Bundler must be on PATH; the script does not assume a machine-specific installation directory.
 
-```bash
-bash run_server.sh
-# equivalent to: bundle exec jekyll liveserve
-# visit: http://localhost:4000
+For the Node-backed Ask Chen preview:
+
+```sh
+# Create .env.local from .env.example and set the server-only key locally.
+npm run sync:preview
+npm run preview
 ```
 
-Requires Ruby + Bundler. Dependencies are listed in `Gemfile`.
+`sync:preview` performs a full Jekyll build and overrides only the local preview endpoint to `/api/ask`. It requires Ruby/Bundler as above. If Ruby is installed outside PATH, set `JEKYLL_RUBY` to its executable. This avoids serving stale HTML from an earlier `_site` build. The preview server listens only on `127.0.0.1:4000`.
 
-## Updating Content
+## Validation
 
-Edit the relevant file in `_pages/includes/` — changes to `about.md` are generally not needed. The page assembles content via `include_relative`.
+```sh
+npm test
+bundle exec jekyll build
+```
 
-To trigger a manual Google Scholar citation update, run the workflow from the Actions tab.
+If npm is unavailable, `node --test tests/*.test.mjs` runs the same tests. Tests cover Ask Chen API boundaries, frontend recovery/source links, activity refresh failures, and keyboard interactions. They use local mocks and do not call the external model.
+
+## Content and configuration
+
+| File | Purpose |
+| --- | --- |
+| `_config.yml` | Profile, public API URL, search/share description |
+| `_data/navigation.yml` | Navigation links |
+| `_pages/includes/` | Introduction, projects, activity, news, experience, honors |
+| `_sass/_config.scss` | Type and size settings |
+| `assets/css/custom-overrides.css` | Activity, experience, mascot styles |
+| `assets/js/custom-scripts.js` | Themes, navigation, portfolio, activity, mascot |
+| `assets/placement-demo/` | Ask Chen interface |
+| `api/_lib/catalog.mjs` | Approved public answers and source links |
+| `scripts/export_activity.py` | Activity snapshot generation |
+
+Activity data is a published snapshot, not live access to personal tools. The browser periodically checks for a newer JSON snapshot; this does not guarantee the publisher has generated one. This repository currently contains no GitHub Actions workflow for Scholar or activity updates.
+
+Use `bundle exec jekyll build` for a production site without the local API override. Never publish `.env.local` or server credentials. Drafts, temporary builds, and unrelated local assets should remain outside commits.

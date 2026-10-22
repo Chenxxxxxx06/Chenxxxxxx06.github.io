@@ -19,9 +19,11 @@
     const input = widget.querySelector('[data-placement-ask-input]');
     const submit = widget.querySelector('[data-placement-ask-submit]');
     const suggestions = widget.querySelectorAll('[data-placement-suggestion]');
-    input.disabled = busy;
-    submit.disabled = busy;
-    suggestions.forEach(function (button) { button.disabled = busy; });
+    const unavailable = !askEndpoint(widget);
+    input.disabled = busy || unavailable;
+    submit.disabled = busy || unavailable;
+    submit.textContent = unavailable ? 'Offline' : busy ? 'Asking…' : 'Ask →';
+    suggestions.forEach(function (button) { button.disabled = busy || unavailable; });
     widget.setAttribute('aria-busy', busy ? 'true' : 'false');
   }
 
@@ -31,40 +33,66 @@
     widget.querySelector('[data-placement-terminal-command]').textContent = commandText;
     widget.querySelector('[data-placement-terminal-output]').textContent = outputText;
     widget.querySelector('[data-placement-ask-status]').textContent = statusText;
+    widget.querySelector('[data-placement-ask-badge]').textContent = state === 'retrieving' ? 'CHECKING' : state.toUpperCase();
+    const sources = widget.querySelector('[data-placement-ask-sources]');
+    sources.replaceChildren();
+    sources.hidden = true;
   }
 
-  function sourceLabels(payload) {
+  function approvedSources(payload) {
     if (!payload || !Array.isArray(payload.sources)) return [];
-    return payload.sources
-      .map(function (source) { return source && (source.label || source.id); })
-      .filter(Boolean)
-      .filter(function (label, index, labels) { return labels.indexOf(label) === index; });
+    const seen = new Set();
+    return payload.sources.reduce(function (sources, source) {
+      if (!source || typeof source.url !== 'string') return sources;
+      const label = typeof source.label === 'string' ? source.label.trim() : '';
+      if (!label || !source.url.trim()) return sources;
+      try {
+        const url = new URL(source.url, document.baseURI);
+        if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || seen.has(url.href)) return sources;
+        seen.add(url.href);
+        sources.push({ label: label, url: url.href });
+      } catch (error) { /* Ignore malformed source URLs. */ }
+      return sources;
+    }, []);
+  }
+
+  function renderSources(widget, payload) {
+    const container = widget.querySelector('[data-placement-ask-sources]');
+    approvedSources(payload).forEach(function (source) {
+      const link = document.createElement('a');
+      link.textContent = source.label;
+      link.href = source.url;
+      if (new URL(source.url).origin !== new URL(document.baseURI).origin) {
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+      } else link.target = '_self';
+      container.appendChild(link);
+    });
+    container.hidden = container.children.length === 0;
   }
 
   function resultText(payload) {
     const answer = payload && typeof payload.answer === 'string' ? payload.answer.trim() : '';
     const status = payload && typeof payload.status === 'string' ? payload.status : '';
-    const sources = sourceLabels(payload);
+    const sources = approvedSources(payload);
     if (!answer) return '';
     if (status === 'answered') {
       if (sources.length === 0) return '';
-      return 'answer → ' + answer + '\n\nSources → ' + sources.join(' · ');
+      return 'answer → ' + answer;
     }
     if (STATUS_COPY[status]) return answer;
     return '';
   }
 
   async function readPayload(response) {
-    try {
-      return await response.json();
-    } catch (error) {
-      return null;
-    }
+    // A body-read abort or malformed JSON is a transport failure, not an
+    // evidence-free answer. Preserve the error for submitAsk's error state.
+    return response.json();
   }
 
   async function submitAsk(form) {
     const widget = form.closest('[data-placement-widget="terminal"]');
-    if (!widget) return;
+    if (!widget || widget.getAttribute('aria-busy') === 'true' || !askEndpoint(widget)) return;
 
     const input = form.querySelector('[data-placement-ask-input]');
     const restoreFocus = widget.contains(document.activeElement);
@@ -86,19 +114,6 @@
       'retrieving'
     );
 
-    if (!endpoint) {
-      writeAskResult(
-        widget,
-        commandText,
-        'configuration pending\nThe public knowledge endpoint has not been connected.',
-        'Qwen · endpoint not configured',
-        'offline'
-      );
-      setInteractive(widget, false);
-      if (restoreFocus && (document.activeElement === document.body || widget.contains(document.activeElement))) input.focus();
-      return;
-    }
-
     const controller = new AbortController();
     const timeout = window.setTimeout(function () { controller.abort(); }, ASK_TIMEOUT_MS);
     try {
@@ -110,24 +125,19 @@
       });
       const payload = await readPayload(response);
       const output = resultText(payload);
-      if (!output) {
-        if (!response.ok) throw new Error('ask endpoint returned ' + response.status);
-        writeAskResult(
-          widget,
-          commandText,
-          'evidence missing\nThis topic is not in Chen\'s approved public profile.',
-          'Knowledge base · no approved evidence',
-          'insufficient'
-        );
-        return;
-      }
+      if (!output) throw new Error('ask endpoint returned an invalid response');
+      if (!response.ok && response.status !== 429) throw new Error('ask endpoint returned ' + response.status);
+      if (payload.status === 'upstream_error') throw new Error('ask endpoint is unavailable');
+      if (response.status === 429 || payload.status === 'rate_limited') input.value = question;
 
-      const copy = STATUS_COPY[payload.status] || STATUS_COPY.insufficient;
+      const copy = response.status === 429 ? STATUS_COPY.rate_limited : STATUS_COPY[payload.status];
       writeAskResult(widget, commandText, output, copy.status, copy.state);
+      if (response.ok && payload.status === 'answered') renderSources(widget, payload);
     } catch (error) {
+      input.value = question;
       const output = error && error.name === 'AbortError'
-        ? 'timeout\nThe public knowledge router did not respond within 20 seconds.'
-        : 'offline\nThe public knowledge router is not reachable right now.';
+        ? 'timeout\nNo response within 20 seconds. Your question is saved; please try again.'
+        : 'offline\nThe service could not complete this request. Your question is saved; please try again.';
       writeAskResult(widget, commandText, output, 'Qwen · knowledge router offline', 'offline');
     } finally {
       window.clearTimeout(timeout);
@@ -135,6 +145,26 @@
       if (restoreFocus && (document.activeElement === document.body || widget.contains(document.activeElement))) input.focus();
     }
   }
+
+  function initializeTerminals() {
+    document.querySelectorAll('[data-placement-widget="terminal"]').forEach(function (widget) {
+      const configured = Boolean(askEndpoint(widget));
+      writeAskResult(
+        widget,
+        'ask --public-profile',
+        configured
+          ? 'ready — ask about my projects, research, or experience.'
+          : 'currently unavailable — browse my profile or contact me using the links below.',
+        configured ? 'Answers use only Chen’s approved public profile.' : 'Ask Chen is not connected yet.',
+        configured ? 'ready' : 'offline'
+      );
+      widget.querySelector('[data-placement-ask-examples]').hidden = !configured;
+      setInteractive(widget, false);
+    });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initializeTerminals);
+  else initializeTerminals();
 
   document.addEventListener('submit', function (event) {
     const form = event.target.closest('[data-placement-ask-form]');
@@ -158,7 +188,7 @@
     }
 
     const terminalBody = event.target.closest('[data-placement-terminal-focus]');
-    if (terminalBody && !event.target.closest('input, button, a')) {
+    if (terminalBody && !event.target.closest('input, button, a, [tabindex]')) {
       terminalBody.querySelector('[data-placement-ask-input]').focus();
     }
   });

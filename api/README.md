@@ -49,6 +49,10 @@ ask_chen:
 Only this public endpoint belongs in Jekyll. Keep `DASHSCOPE_API_KEY` in the serverless provider's secret store.
 Keep the production origin requirement enabled. The function applies per-process minute/hour limits; add the host's shared rate limit or WAF rule when running across multiple serverless instances.
 
+An empty public endpoint keeps the homepage terminal visibly offline with its question controls disabled. Profile and email links remain usable. Setting an endpoint enables questions; it does not claim the upstream service has passed a health check. GitHub Pages only serves the static homepage and does not run `api/ask.mjs`.
+
+The browser supports Enter or the visible Ask button, project/research examples, and clickable HTTP(S) sources. It blocks duplicate submissions while a request is pending and keeps the question after a timeout, malformed response, service failure, or rate limit so visitors can retry. No live model call is made during tests.
+
 ## Response contract
 
 ```json
@@ -67,4 +71,4 @@ Policy states are `refused`, `insufficient`, `rate_limited`, and `upstream_error
 npm test
 ```
 
-The suite verifies sensitive and outside-scope blocking, zero upstream calls on hard refusals, the exact DashScope request shape, fail-closed routing, the five-card portfolio order, and the terminal endpoint/font changes.
+The suite verifies sensitive and outside-scope blocking, zero upstream calls on hard refusals, the exact DashScope request shape, fail-closed routing, and the five-card portfolio order. The UI suite executes the actual browser script against a small DOM test harness to cover offline initialization, safe source links, duplicate submissions, focus, and retry behavior.
