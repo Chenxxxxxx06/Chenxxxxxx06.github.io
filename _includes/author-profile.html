@@ -9,7 +9,7 @@
 
   <div class="author__avatar">
     <button class="profile-photo-switcher" type="button" data-profile-photos aria-label="Next photo" aria-busy="false">
-      <img src="{{ author.avatar | relative_url }}" class="author__avatar" alt="{{ author.name | escape }}" width="1280" height="1707">
+      <img src="{{ author.avatar | relative_url }}" class="author__avatar" alt="{{ author.name | escape }}" width="1280" height="1707" fetchpriority="high" decoding="async">
     </button>
     <script type="application/json" data-profile-photo-list>[{{ author.avatar | relative_url | jsonify }}{% for photo in author.photos %},{{ photo | relative_url | jsonify }}{% endfor %}]</script>
   </div>

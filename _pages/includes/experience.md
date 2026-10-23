@@ -55,7 +55,7 @@
     <div class="experience-item__node" aria-hidden="true"><span></span></div>
     <div class="experience-item__content">
       <span class="experience-item__logo" aria-hidden="true">
-        <img src="{{ '/assets/images/brand/thu-emblem.png' | relative_url }}" alt="" loading="lazy">
+        <img src="{{ '/assets/images/brand/thu-emblem.webp' | relative_url }}" alt="" loading="lazy">
       </span>
       <div class="experience-item__copy">
         <time class="experience-item__date" datetime="2026-03">2026.03 — 2026.04</time>

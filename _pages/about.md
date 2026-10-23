@@ -3,6 +3,7 @@ permalink: /
 title: ""
 excerpt: ""
 author_profile: true
+mathjax: false
 ---
 
 <link rel="stylesheet" href="{{ '/assets/placement-demo/placement-demo.css?v=20261023-terminal-window-draft' | relative_url }}">

@@ -25,7 +25,7 @@
     <article class="portfolio-card portfolio-card--argus">
       <a class="portfolio-card__link" href="https://github.com/lbx154/Argus" target="_blank" rel="noopener noreferrer" aria-label="Open the Argus repository on GitHub">
         <div class="portfolio-card__media portfolio-card__media--generated">
-          <img class="portfolio-card__image" src="{{ '/assets/portfolio/generated/argus-pixel.webp' | relative_url }}" alt="Pixel-art illustration: Conceptual illustration of a persistent agent workflow" width="1672" height="941" loading="lazy">
+          <img class="portfolio-card__image" src="{{ '/assets/portfolio/generated/argus-pixel.webp?v=20261023-lite' | relative_url }}" alt="Pixel-art illustration: Conceptual illustration of a persistent agent workflow" width="960" height="540" loading="lazy" decoding="async" fetchpriority="low">
           <span class="portfolio-project-brand portfolio-project-brand--argus"><img src="{{ '/assets/portfolio/brand/argus-wordmark.svg' | relative_url }}" alt="Argus" width="105" height="36"></span>
         </div>
         <div class="portfolio-card__body">
@@ -45,8 +45,8 @@
     <article class="portfolio-card portfolio-card--labvla">
       <a class="portfolio-card__link" href="https://github.com/zjunlp/LabVLA" target="_blank" rel="noopener noreferrer" aria-label="Open the LabVLA repository on GitHub">
         <div class="portfolio-card__media portfolio-card__media--generated">
-          <img class="portfolio-card__image" src="{{ '/assets/portfolio/generated/labvla-pixel.webp' | relative_url }}" alt="Pixel-art illustration: A laboratory robot working with scientific equipment" width="1672" height="941" loading="lazy">
-          <span class="portfolio-project-brand portfolio-project-brand--labvla"><img src="{{ '/assets/portfolio/labvla-symbol.png' | relative_url }}" alt="" width="36" height="26"><img src="{{ '/assets/portfolio/labvla-wordmark.png' | relative_url }}" alt="LabVLA" width="96" height="25"></span>
+          <img class="portfolio-card__image" src="{{ '/assets/portfolio/generated/labvla-pixel.webp?v=20261023-lite' | relative_url }}" alt="Pixel-art illustration: A laboratory robot working with scientific equipment" width="960" height="540" loading="lazy" decoding="async" fetchpriority="low">
+          <span class="portfolio-project-brand portfolio-project-brand--labvla"><img src="{{ '/assets/portfolio/labvla-symbol.webp' | relative_url }}" alt="" width="36" height="26"><img src="{{ '/assets/portfolio/labvla-wordmark.png' | relative_url }}" alt="LabVLA" width="96" height="25"></span>
         </div>
         <div class="portfolio-card__body">
           <div class="portfolio-card__topline">
@@ -65,7 +65,7 @@
     <article class="portfolio-card portfolio-card--h3">
       <a class="portfolio-card__link" href="https://github.com/Argus-AiTeam/minimax-h3-desktop" target="_blank" rel="noopener noreferrer" aria-label="Open the MiniMax-H3 desktop optimization repository on GitHub">
         <div class="portfolio-card__media portfolio-card__media--generated">
-          <img class="portfolio-card__image" src="{{ '/assets/portfolio/generated/minimax-h3-pixel.webp' | relative_url }}" alt="Pixel-art illustration: A single GPU generating video and audio" width="1672" height="941" loading="lazy">
+          <img class="portfolio-card__image" src="{{ '/assets/portfolio/generated/minimax-h3-pixel.webp?v=20261023-lite' | relative_url }}" alt="Pixel-art illustration: A single GPU generating video and audio" width="960" height="540" loading="lazy" decoding="async" fetchpriority="low">
           <span class="portfolio-project-brand">MiniMax-H3</span>
         </div>
         <div class="portfolio-card__body">
@@ -85,8 +85,8 @@
     <article class="portfolio-card portfolio-card--ironrock">
       <a class="portfolio-card__link" href="https://github.com/bclz19/IronRock" target="_blank" rel="noopener noreferrer" aria-label="Open the IronRock desktop pet repository on GitHub">
         <div class="portfolio-card__media portfolio-card__media--generated">
-          <img class="portfolio-card__image" src="{{ '/assets/portfolio/generated/ironrock-pixel.webp' | relative_url }}" alt="Pixel-art illustration: A desktop companion organizing a local lab knowledge base" width="1672" height="941" loading="lazy">
-          <span class="portfolio-project-brand portfolio-project-brand--pet"><img src="{{ '/assets/portfolio/ironrock-pet.webp' | relative_url }}" alt="" width="34" height="34">IronRock</span>
+          <img class="portfolio-card__image" src="{{ '/assets/portfolio/generated/ironrock-pixel.webp?v=20261023-lite' | relative_url }}" alt="Pixel-art illustration: A desktop companion organizing a local lab knowledge base" width="960" height="540" loading="lazy" decoding="async" fetchpriority="low">
+          <span class="portfolio-project-brand portfolio-project-brand--pet"><img src="{{ '/assets/portfolio/ironrock-pet.webp?v=20261023-lite' | relative_url }}" alt="" width="34" height="34">IronRock</span>
         </div>
         <div class="portfolio-card__body">
           <div class="portfolio-card__topline">
@@ -105,7 +105,7 @@
     <article class="portfolio-card portfolio-card--feng">
       <a class="portfolio-card__link" href="https://github.com/Chenxxxxxx06/feng" target="_blank" rel="noopener noreferrer" aria-label="Open the Feng wind-turbine PHM repository on GitHub">
         <div class="portfolio-card__media portfolio-card__media--generated">
-          <img class="portfolio-card__image" src="{{ '/assets/portfolio/generated/feng-pixel.webp' | relative_url }}" alt="Pixel-art illustration: Wind turbines with health monitoring and diagnostic signals" width="1672" height="941" loading="lazy">
+          <img class="portfolio-card__image" src="{{ '/assets/portfolio/generated/feng-pixel.webp?v=20261023-lite' | relative_url }}" alt="Pixel-art illustration: Wind turbines with health monitoring and diagnostic signals" width="960" height="540" loading="lazy" decoding="async" fetchpriority="low">
           <span class="portfolio-project-brand">Feng</span>
         </div>
         <div class="portfolio-card__body">

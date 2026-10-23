@@ -1,8 +1,16 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 {% if jekyll.environment == "production" %}
-<link rel="preconnect" href="https://statable.com" crossorigin>
-<script src="https://statable.com/js/3209844/s.js" defer></script>
+<script>
+  window.addEventListener('load', function () {
+    window.setTimeout(function () {
+      var script = document.createElement('script');
+      script.src = 'https://statable.com/js/3209844/s.js';
+      script.async = true;
+      document.head.appendChild(script);
+    }, 1500);
+  }, { once: true });
+</script>
 {% endif %}
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap"></noscript>
@@ -19,6 +27,7 @@
 <link rel="manifest" href="{{ "/images/site.webmanifest" | relative_url }}">
 <meta name="theme-color" content="#ffffff">
 
+{% unless page.mathjax == false %}
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({
     TeX: { equationNumbers: { autoNumber: "all" } },
@@ -42,3 +51,4 @@
     window.addEventListener('load', _loadMathJax);
   }
 </script>
+{% endunless %}

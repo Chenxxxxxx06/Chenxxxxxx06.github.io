@@ -19,7 +19,7 @@ baidu_site_verification  :
 # Site Author
 author:
   name          : "Chen Xi"
-  avatar        : "images/avatar.jpg"
+  avatar        : "images/avatar.webp"
   photos:
     - "assets/images/profile/photo-02.jpg"
     - "assets/images/profile/photo-03.jpg"

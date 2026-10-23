@@ -12,6 +12,26 @@
   var cachedRgb = '10,10,10';
   var lastDraw = 0;
   var FRAME_MS = 1000 / 24; // ~24 fps — smooth enough, half the CPU of 60 fps
+  var cols = 0, rows = 0, columns = [], rowBases = [];
+  var columnWave = [], rowWave = [], rowSin = [], rowCos = [];
+  var fillStyles = [];
+
+  function prepareGrid() {
+    cols = Math.ceil(canvas.width / TILE) + 1;
+    rows = Math.ceil(canvas.height / TILE) + 1;
+    columns = []; rowBases = [];
+    for (var c = 0; c < cols; c++) {
+      columns.push([Math.sin(c * .21), Math.cos(c * .21), Math.sin(c * .11), Math.cos(c * .11)]);
+    }
+    for (var r = 0; r < rows; r++) {
+      rowBases.push([Math.sin(r * .17), Math.cos(r * .17), Math.sin(r * .13), Math.cos(r * .13)]);
+    }
+  }
+
+  function prepareColors() {
+    cachedRgb = rgb();
+    for (var i = 0; i <= 20; i++) fillStyles[i] = 'rgba(' + cachedRgb + ',' + (i / 100) + ')';
+  }
 
   function rgb() {
     var th = document.documentElement.getAttribute('data-theme') || 'white';
@@ -27,23 +47,32 @@
     lastDraw = ts;
 
     var w = canvas.width, h = canvas.height;
-    var cols = Math.ceil(w / TILE) + 1;
-    var rows = Math.ceil(h / TILE) + 1;
-    var pre  = 'rgba(' + cachedRgb + ',';
+    // Angle addition preserves the original waves with six trig calls per
+    // frame, instead of three per tile. Spatial terms change only on resize.
+    var sx = Math.sin(t * .36), cx = Math.cos(t * .36);
+    var sy = Math.sin(t * .28), cy = Math.cos(t * .28);
+    var sd = Math.sin(t * .19), cd = Math.cos(t * .19);
+    for (var x = 0; x < cols; x++) columnWave[x] = columns[x][0] * cx + columns[x][1] * sx;
+    for (var y = 0; y < rows; y++) {
+      var base = rowBases[y];
+      rowWave[y] = base[0] * cy + base[1] * sy;
+      rowSin[y] = sd * base[3] - cd * base[2];
+      rowCos[y] = cd * base[3] + sd * base[2];
+    }
 
     ctx.clearRect(0, 0, w, h);
 
     for (var r = 0; r < rows; r++) {
       for (var c = 0; c < cols; c++) {
         // Two crossing wave trains + a slow diagonal swell
-        var wave = 0.6 * Math.sin(c * 0.21 + t * 0.36) * Math.sin(r * 0.17 + t * 0.28)
-                 + 0.4 * Math.sin(c * 0.11 - r * 0.13 + t * 0.19);
+        var wave = 0.6 * columnWave[c] * rowWave[r]
+                 + 0.4 * (columns[c][2] * rowCos[r] + columns[c][3] * rowSin[r]);
         // Cubic bias: crests ~19%, troughs ~0.4% — visible 2:1 light:dark ratio
         var norm = (wave + 1) * 0.5;
         var v    = norm * norm * norm;
-        var a    = Math.round((0.004 + v * 0.186) * 100) / 100; // 2dp — browser caches fillStyle
-        if (a < 0.02) continue;    // skip near-invisible tiles for speed
-        ctx.fillStyle = pre + a + ')';
+        var a    = Math.round((0.004 + v * 0.186) * 100);
+        if (a < 2) continue;
+        ctx.fillStyle = fillStyles[a];
         ctx.fillRect(c * TILE + GAP, r * TILE + GAP, TILE - GAP, TILE - GAP);
       }
     }
@@ -64,6 +93,7 @@
       if (newW === canvas.width && Math.abs(newH - canvas.height) <= 90) return;
       canvas.width  = newW;
       canvas.height = newH;
+      prepareGrid();
     }, 120);
   }
 
@@ -86,13 +116,15 @@
     ctx = canvas.getContext('2d');
     canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight;
+    prepareGrid();
+    prepareColors();
     window.addEventListener('resize', resize);
     document.addEventListener('visibilitychange', onVisibilityChange);
     rafId = requestAnimationFrame(frame);
   });
 
   // Watch for data-theme changes with MutationObserver — avoids patching Element.prototype
-  new MutationObserver(function () { cachedRgb = rgb(); })
+  new MutationObserver(prepareColors)
     .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 })();
 
@@ -155,6 +187,7 @@
   };
   var renderedTheme = null;
   var rerenderTimer = null;
+  var mapEnabled = false;
 
   function currentTheme() {
     return document.documentElement.getAttribute('data-theme') || 'white';
@@ -162,7 +195,7 @@
 
   function renderVisitorMap() {
     var host = document.getElementById('visitorMapWidget');
-    if (!host) return;
+    if (!host || !mapEnabled) return;
 
     var theme = currentTheme();
     if (theme === renderedTheme && host.querySelector('svg')) return;
@@ -191,7 +224,11 @@
     rerenderTimer = window.setTimeout(renderVisitorMap, 80);
   }
 
-  document.addEventListener('DOMContentLoaded', renderVisitorMap);
+  function startVisitorMap() {
+    window.setTimeout(function () { mapEnabled = true; renderVisitorMap(); }, 1000);
+  }
+  if (document.readyState === 'complete') startVisitorMap();
+  else window.addEventListener('load', startVisitorMap, { once: true });
   new MutationObserver(scheduleRender).observe(document.documentElement, {
     attributes: true,
     attributeFilter: ['data-theme']
