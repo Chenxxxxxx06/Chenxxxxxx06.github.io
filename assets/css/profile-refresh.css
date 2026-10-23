@@ -17,7 +17,6 @@
 .sidebar .author__bio { margin: 0 !important; line-height: 1.5; }
 .sidebar .author__direction { margin: 16px 0 0; }
 .sidebar .author__social-icons { margin: 10px 0 0; }
-.sidebar .visitor-map-widget { margin-top: 20px; }
 @media (max-width: 924px) {
   .sidebar .author__name { margin-top: 0 !important; }
   .sidebar .author__direction { margin-top: 12px; }

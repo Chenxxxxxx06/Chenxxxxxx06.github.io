@@ -1,24 +1,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-{% if jekyll.environment == "production" %}
-<script>
-  window.addEventListener('load', function () {
-    window.setTimeout(function () {
-      var script = document.createElement('script');
-      script.src = 'https://statable.com/js/3209844/s.js';
-      script.async = true;
-      document.head.appendChild(script);
-    }, 1500);
-  }, { once: true });
-</script>
-{% endif %}
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap"></noscript>
 
 <link rel="preload" href="{{ "/assets/fonts/fa-solid-900.woff2" | relative_url }}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{{ "/assets/fonts/fa-brands-400.woff2" | relative_url }}" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="{{ "/assets/css/custom-overrides.css" | relative_url }}?v=20261023-activity-grid">
-<link rel="stylesheet" href="{{ '/assets/css/profile-refresh.css' | relative_url }}?v=20261023-spacing-compact">
+<link rel="stylesheet" href="{{ "/assets/css/custom-overrides.css" | relative_url }}?v=20261023-no-map">
+<link rel="stylesheet" href="{{ '/assets/css/profile-refresh.css' | relative_url }}?v=20261023-no-map">
 
 <link rel="apple-touch-icon" sizes="180x180" href="{{ "/images/apple-touch-icon.png" | relative_url }}">
 <link rel="shortcut icon" href="{{ "/images/favicon.ico" | relative_url }}">

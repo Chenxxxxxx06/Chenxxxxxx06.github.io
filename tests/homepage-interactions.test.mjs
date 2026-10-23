@@ -273,7 +273,7 @@ test('mascot contact opens accessibly and Escape restores focus to its trigger',
 test('theme selection exposes exactly one pressed button and recovers invalid saved themes', () => {
   const env = environment();
   env.context.localStorage.getItem = () => 'not-a-theme';
-  env.run('// ── Theme Switcher', '// ── Visitor Map');
+  env.run('// ── Theme Switcher', '// ── Scroll-spy');
   const buttons = env.document.querySelectorAll('.theme-dot');
   assert.equal(buttons.filter((button) => button.getAttribute('aria-pressed') === 'true').length, 1);
   assert.equal(buttons[0].getAttribute('aria-pressed'), 'true');
