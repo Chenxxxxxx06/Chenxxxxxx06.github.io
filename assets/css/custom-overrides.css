@@ -117,35 +117,43 @@
 .activity-heatmap::-webkit-scrollbar-track { background: transparent; }
 .activity-heatmap::-webkit-scrollbar-thumb { background: var(--heat-2); border-radius: 5px; }
 
-.activity-heatmap svg {
-  display: block;
+.activity-heatmap__chart {
+  display: grid;
+  grid-template-columns: 22px repeat(var(--activity-weeks), minmax(0, 1fr));
+  grid-template-rows: 16px repeat(7, auto);
+  gap: 2px;
   width: 100%;
-  min-width: 360px;
-  max-width: 100%;
-  height: auto;
-  overflow: visible;
+  min-width: 0;
+  padding: 2px;
 }
 
-.activity-heatmap text {
-  fill: var(--c-text);
+.activity-heatmap__month,
+.activity-heatmap__weekday {
+  align-self: center;
+  color: var(--c-text);
   font-family: "Space Grotesk", sans-serif;
-  font-size: 7px;
+  font-size: 8px;
+  line-height: 1;
+  white-space: nowrap;
   opacity: 0.42;
 }
 
-.activity-cell {
-  fill: var(--heat-0);
-  rx: 1.8px;
-  transition: opacity 160ms ease, transform 160ms ease;
-  transform-box: fill-box;
-  transform-origin: center;
+.activity-heatmap .activity-cell {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  min-width: 0;
+  background: var(--heat-0);
+  border-radius: 2px;
+  transition: opacity 160ms ease;
 }
 
-.activity-cell:hover { opacity: 0.72; transform: scale(0.82); }
-.activity-cell.level-1 { fill: var(--heat-1); }
-.activity-cell.level-2 { fill: var(--heat-2); }
-.activity-cell.level-3 { fill: var(--heat-3); }
-.activity-cell.level-4 { fill: var(--heat-4); }
+.activity-heatmap .activity-cell:hover { opacity: 0.72; }
+.activity-heatmap .activity-cell:focus-visible { outline: 2px solid var(--heat-4); outline-offset: 1px; }
+.activity-heatmap .activity-cell.level-1 { background: var(--heat-1); }
+.activity-heatmap .activity-cell.level-2 { background: var(--heat-2); }
+.activity-heatmap .activity-cell.level-3 { background: var(--heat-3); }
+.activity-heatmap .activity-cell.level-4 { background: var(--heat-4); }
 
 .activity-card__footer {
   display: flex;

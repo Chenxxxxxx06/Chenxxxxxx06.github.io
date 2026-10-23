@@ -12,13 +12,14 @@ import { createRateLimiter, processAsk } from '../api/_lib/service.mjs';
 
 const root = resolve(fileURLToPath(new URL('..', import.meta.url)));
 
-test('normalizes untrusted input and selects the query language', () => {
+test('normalizes multilingual input and always selects English answers', () => {
   assert.equal(normalizeQuery('  ＬａｂＶＬＡ\u200b   项目  '), 'LabVLA 项目');
   assert.deepEqual(validatePayload({ query: '介绍 LabVLA', locale: 'en' }), {
     ok: true,
     query: '介绍 LabVLA',
-    locale: 'zh'
+    locale: 'en'
   });
+  assert.equal(validatePayload({ query: 'hello', locale: 'zh' }).locale, 'en');
   assert.equal(validatePayload({ query: 'hello', extra: true }).error, 'unexpected_field');
 });
 
@@ -43,6 +44,7 @@ test('hard-refuses sensitive requests before any model call', async () => {
     assert.equal(outcome.httpStatus, 200);
     assert.equal(outcome.body.status, 'refused');
     assert.equal(outcome.body.reason, 'sensitive');
+    assert.doesNotMatch(outcome.body.answer, /\p{Script=Han}/u);
   }
   assert.equal(modelCalls, 0);
 
@@ -94,6 +96,7 @@ test('returns only the approved catalog answer for an allowed route', async () =
     });
     assert.equal(natural.body.status, 'answered');
     assert.equal(natural.body.sources[0].id, source);
+    assert.doesNotMatch(natural.body.answer, /\p{Script=Han}/u);
   }
   assert.equal(modelCalls, naturalQueries.length);
 
@@ -108,7 +111,7 @@ test('returns only the approved catalog answer for an allowed route', async () =
   assert.equal(outsideCalls, 1);
   assert.equal(unknownOutside.body.status, 'refused');
   assert.equal(unknownOutside.body.reason, 'out_of_scope');
-  assert.equal(unknownOutside.body.answer, POLICY_RESPONSES.out_of_scope.zh);
+  assert.equal(unknownOutside.body.answer, POLICY_RESPONSES.out_of_scope.en);
 
   const routedNaturalQueries = [
     ['陈曦有什么亮点？', 'portfolio.list', 'portfolio'],
@@ -143,7 +146,7 @@ test('sends the exact locked router request to DashScope', async () => {
   assert.equal(intent, 'profile.interests');
   assert.equal(captured.url, 'https://dashscope.example/compatible-mode/v1/chat/completions');
   assert.equal(captured.init.headers.Authorization, 'Bearer test-only-key');
-  assert.equal(captured.body.model, 'qwen3.8-flash');
+  assert.equal(captured.body.model, 'qwen3.8-max-0902');
   assert.deepEqual(captured.body.response_format, { type: 'json_object' });
   assert.equal(captured.body.reasoning_effort, 'none');
   assert.equal(captured.body.max_completion_tokens, 96);
@@ -230,12 +233,11 @@ test('homepage Ask card exposes accessible controls and public-note fallback', (
 
   assert.match(terminal, /site\.ask_chen\.endpoint/);
   assert.match(terminal, /data-placement-knowledge-url=.*public-knowledge\.json/);
-  assert.match(terminal, /data-placement-ask-badge>Public notes/);
+  assert.match(terminal, /<h1 id="-ask-chen">/);
   assert.match(terminal, /data-placement-ask-input[^>]*disabled/);
   assert.match(terminal, /class="placement-terminal__submit"[^>]*data-placement-ask-submit/);
   assert.match(terminal, /data-placement-ask-sources[^>]*aria-label="Answer sources"/);
   assert.match(terminal, /data-placement-terminal-output[^>]*tabindex="0"/);
-  assert.match(terminal, /mailto:/);
   assert.match(terminal, /<noscript>.*read my profile/);
   assert.match(terminal, /method="post"/);
   assert.doesNotMatch(terminal, /qwen|ask --public-profile|placement-widget__number|AFTER PORTFOLIO|Profile → answer/);

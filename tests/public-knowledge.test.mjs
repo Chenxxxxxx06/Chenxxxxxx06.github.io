@@ -19,6 +19,8 @@ test('updated public facts include the expected PhD and keep unpublished details
   assert.match(CATALOG['honors.summary'].answer.en, /2025.*October 2026/);
   assert.match(CATALOG['education.advisor'].answer.en, /name private.*love my advisor/);
   assert.match(CATALOG['profile.now'].answer.en, /vlogger.*internships/);
+  assert.match(CATALOG['profile.now'].answer.en, /growing alongside the team and helping it grow/);
+  assert.match(CATALOG['profile.now'].answer.zh, /陪团队一起成长/);
   assert.equal(CATALOG['opportunity.internship'].sources[0].url, '/#more-to-come');
   assert.match(CATALOG['news.summary'].answer.en, /September 2026.*October 2026/);
   assert.match(CATALOG['publications.status'].answer.en, /LongInterSQL/);

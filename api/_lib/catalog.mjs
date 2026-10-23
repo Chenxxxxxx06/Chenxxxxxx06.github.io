@@ -15,8 +15,8 @@ export const CATALOG = Object.freeze({
 
   'profile.interests': Object.freeze({
     answer: Object.freeze({
-      zh: '陈曦目前公开的研究兴趣包括多模态异常检测、具身智能，以及面向数据分析的智能体框架。他尤其关注 VLM、VLA 与能长期规划、执行和复盘的自主智能体。',
-      en: 'Chen currently publishes three main research interests: multimodal anomaly detection, embodied AI, and agent frameworks for data analysis. His broader focus is on VLMs, VLAs, and autonomous agents that can plan, execute, and review longer-running work.'
+      zh: '陈曦目前公开的四个研究方向是视频异常检测（VAD，包括多模态异常检测）、视觉语言动作模型（VLA）、智能体（Agents）以及 Harness：连接模型、工具、反馈和长程任务的运行框架。',
+      en: 'Chen explores four areas: video anomaly detection (VAD), including multimodal anomaly detection; vision-language-action models (VLA); agents that plan, act, and remember; and harnesses that connect models to tools, feedback, and long-running work.'
     }),
     sources: Object.freeze([source('exploring', 'About Me · What I’m Exploring', '/#-about-me')])
   }),
@@ -63,8 +63,8 @@ export const CATALOG = Object.freeze({
 
   'profile.now': Object.freeze({
     answer: Object.freeze({
-      zh: '最近在尝试做自媒体，幻想成为 vlogger，也在找实习、折腾各种有意思的东西。简历还在迭代优化，欢迎来找我玩！',
-      en: 'Lately: making content, daydreaming about becoming a vlogger, looking for internships, and trying all sorts of fun things. The résumé is still a work in progress. Come say hi — I’m always up for something interesting!'
+      zh: '最近在尝试做自媒体，幻想成为 vlogger，也在找实习、折腾各种有意思的东西。也在陪团队一起成长，帮团队变得更好。简历还在迭代优化，欢迎来找我玩！',
+      en: 'Lately: making content, daydreaming about becoming a vlogger, looking for internships, and trying all sorts of fun things. I’m also growing alongside the team and helping it grow. The résumé is still a work in progress. Come say hi — I’m always up for something interesting!'
     }),
     sources: Object.freeze([source('lately', 'Life Lately', '/#more-to-come')])
   }),
@@ -191,7 +191,7 @@ export const POLICY_RESPONSES = Object.freeze({
   }),
   insufficient: Object.freeze({
     zh: '这条还没写进公开笔记。试试上面的小问题，或者直接来找我聊聊。',
-    en: 'That’s not in my public notes yet. Try a question above, or come ask me directly.'
+    en: 'That’s not in my public notes yet. Feel free to ask me directly.'
   }),
   unavailable: Object.freeze({
     zh: '暂时没能连接。问题已经保留，可以再试一次。',
@@ -204,7 +204,7 @@ export const POLICY_RESPONSES = Object.freeze({
 });
 
 export function localize(copy, locale) {
-  return copy[locale === 'zh' ? 'zh' : 'en'];
+  return copy.en;
 }
 
 export function answerForIntent(intent, locale) {

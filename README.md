@@ -9,13 +9,13 @@ Built with Jekyll and a customized Minimal Mistakes layout. The design is adapte
 ## Features
 
 - Four persistent colour themes and responsive navigation.
-- Five-project responsive gallery with directly accessible repository links.
+- Five-project horizontal carousel with directly accessible repository links.
 - Published GitHub/AI activity snapshots, with per-source recorded dates and a quiet fallback state.
-- Ask Chen: a closed-set public-profile question service with visible submission, suggested questions, source links, and retryable errors.
+- Ask Chen: a minimal terminal for public-profile questions, with source links and retryable errors. Responses are always English, including answers to Chinese questions.
 - A time-aware mascot with an accessible email card.
 - Search/share metadata, site icons, and legacy `/about/` and `/about.html` redirects.
 
-Ask Chen works on GitHub Pages using approved public notes, without sending visitor questions to an external service. Its JSON is generated from the same catalog used by the optional Node API. After changing the catalog or policy, run `node scripts/export-public-knowledge.mjs`; `node scripts/export-public-knowledge.mjs --check` verifies it is current. See [api/README.md](api/README.md) for connecting a model-backed intent router.
+Ask Chen can use a server-side model API to classify questions and select an approved public answer. API keys remain on the server. GitHub Pages alone cannot run this API: a deployed service URL must be configured for the published site. With an empty endpoint, the static page uses approved public notes. Its JSON is generated from the same catalog used by the Node API. After changing the catalog or policy, run `node scripts/export-public-knowledge.mjs`; `node scripts/export-public-knowledge.mjs --check` verifies it is current. See [api/README.md](api/README.md) for the model-backed intent router.
 
 ## Local development
 
@@ -65,7 +65,9 @@ If npm is unavailable, `node --test tests/*.test.mjs` runs the same tests. Tests
 
 The Peking University emblem is the original transparent PNG from the university's [official identity downloads](https://vim.pku.edu.cn/xzzq/). The NPU mark uses the existing circular emblem with a circular container. Zhejiang and Tsinghua emblems come from their [official ZJU identity page](https://www.zju.edu.cn/514/listm.htm) and [official Tsinghua identity page](https://vi.tsinghua.edu.cn/gk/xxbz/xh.htm). LabVLA links to [arXiv:2606.13578](https://arxiv.org/abs/2606.13578); Argus links to [arXiv:2608.05144](https://arxiv.org/abs/2608.05144).
 
-The original horizontal portfolio carousel, typography, experience timeline, and honors list are retained. Five conceptual project covers were generated using the built-in image generation tool; their prompts and repository references are in `assets/portfolio/generated/prompts.json`. WebP copies are served on the site; full-size PNG originals remain local.
+The original horizontal portfolio carousel, typography, experience timeline, and honors list are retained. The current pixel-art covers were generated using the built-in image generation tool; prompts are in `assets/portfolio/generated/prompts-pixel.json`. Original Argus and LabVLA logos and the IronRock mascot are layered separately to preserve their identity. WebP copies are served on the site; full-size PNG originals remain local. The portrait button cycles through the original photo and two additional photos without changing its rectangular layout.
+
+Activity heatmaps use HTML/CSS calendar cells with keyboard navigation, retaining the published daily data and original color scales. Ask Chen is a minimal terminal UI with a normal section heading; its appearance takes cues from the [official Claude Code terminal interface](https://www.anthropic.com/news/enabling-claude-code-to-work-more-autonomously).
 
 Activity data is a published snapshot, not live access to personal tools. The browser periodically checks for a newer JSON snapshot; this does not guarantee the publisher has generated one. This repository currently contains no GitHub Actions workflow for Scholar or activity updates.
 

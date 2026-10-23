@@ -248,17 +248,23 @@
     }
 
     // Click: lock highlight + suppress scroll-spy for 1 s
-    // About Me: always scroll to top instead of jumping to anchor.
-    // Use capture phase so we fire before jQuery's bubble-phase smoothScroll handler.
+    // Use the same CSS scroll offset for every section, without spacer elements.
+    // Capture before the legacy jQuery smooth-scroll handler.
     links.forEach(function (link) {
       link.addEventListener('click', function (e) {
+        if (e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+        var hash = (link.getAttribute('href') || '').split('#')[1];
+        var target = hash && document.getElementById(hash);
+        if (!target) return;
+        e.preventDefault();
+        e.stopImmediatePropagation();
         setActive(link);
         suppressUntil = Date.now() + 1000;
+        var behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
         if ((link.getAttribute('href') || '').indexOf('about-me') !== -1) {
-          e.preventDefault();
-          e.stopImmediatePropagation(); // block jQuery smoothScroll which fires in bubble phase
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+          window.scrollTo({ top: 0, behavior: behavior });
+        } else target.scrollIntoView({ block: 'start', behavior: behavior });
+        window.history.replaceState(null, '', '#' + hash);
       }, { capture: true });
     });
 
@@ -564,7 +570,6 @@ document.addEventListener('DOMContentLoaded', function() {
 // Activity heatmaps. The JSON contains aggregate counts only. A local scheduled
 // task runs scripts/refresh_activity.ps1 every six hours and publishes the snapshot.
 (function () {
-  var SVG_NS = 'http://www.w3.org/2000/svg';
   var DAY_MS = 24 * 60 * 60 * 1000;
   var REFRESH_MS = 6 * 60 * 60 * 1000;
   var ACTIVE_REFRESH_COOLDOWN_MS = 60 * 1000;
@@ -634,12 +639,6 @@ document.addEventListener('DOMContentLoaded', function() {
     return 4;
   }
 
-  function svgNode(name, attrs) {
-    var node = document.createElementNS(SVG_NS, name);
-    Object.keys(attrs || {}).forEach(function (key) { node.setAttribute(key, attrs[key]); });
-    return node;
-  }
-
   function renderHeatmap(element, days, valueKey, unitLabel) {
     if (!element || !days || !days.length) return;
     var sorted = days.slice().sort(function (a, b) { return a.date.localeCompare(b.date); });
@@ -647,29 +646,30 @@ document.addEventListener('DOMContentLoaded', function() {
     var firstSunday = new Date(first.getTime() - first.getUTCDay() * DAY_MS);
     var last = new Date(sorted[sorted.length - 1].date + 'T00:00:00Z');
     var weekCount = Math.floor((last - firstSunday) / (7 * DAY_MS)) + 1;
-    var step = 13;
-    var size = 11;
-    var left = 24;
-    var top = 18;
-    var width = left + weekCount * step + 3;
-    var height = top + 7 * step + 4;
     var breaks = quantiles(sorted, valueKey);
-    var svg = svgNode('svg', {
-      viewBox: '0 0 ' + width + ' ' + height,
-      role: 'img',
-      'aria-label': element.getAttribute('aria-label') || 'Activity heatmap',
-      preserveAspectRatio: 'xMinYMin meet'
-    });
+    // Ordinary HTML cells avoid browser-specific SVG painting failures while
+    // keeping the same calendar layout and the source's exact daily values.
+    var chart = document.createElement('div');
+    chart.className = 'activity-heatmap__chart';
+    chart.style.setProperty('--activity-weeks', weekCount);
+    chart.setAttribute('role', 'group');
+    chart.setAttribute('aria-label', element.getAttribute('aria-label') || 'Activity heatmap');
+    chart.setAttribute('translate', 'no');
 
     [['Mon', 1], ['Wed', 3], ['Fri', 5]].forEach(function (item) {
-      var text = svgNode('text', { x: 0, y: top + item[1] * step + 6 });
+      var text = document.createElement('span');
+      text.className = 'activity-heatmap__weekday';
+      text.style.gridColumn = '1';
+      text.style.gridRow = String(item[1] + 2);
+      text.setAttribute('aria-hidden', 'true');
       text.textContent = item[0];
-      svg.appendChild(text);
+      chart.appendChild(text);
     });
 
     var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     var lastMonth = -1;
     var lastMonthColumn = -6;
+    var cells = [];
 
     sorted.forEach(function (item) {
       var date = new Date(item.date + 'T00:00:00Z');
@@ -677,32 +677,51 @@ document.addEventListener('DOMContentLoaded', function() {
       var weekday = date.getUTCDay();
       var month = date.getUTCMonth();
       if (month !== lastMonth && column - lastMonthColumn >= 4) {
-        var label = svgNode('text', { x: left + column * step, y: 8 });
+        var label = document.createElement('span');
+        label.className = 'activity-heatmap__month';
+        label.style.gridColumn = (column + 2) + ' / span ' + Math.min(3, weekCount - column);
+        label.style.gridRow = '1';
+        label.setAttribute('aria-hidden', 'true');
         label.textContent = monthNames[month];
-        svg.appendChild(label);
+        chart.appendChild(label);
         lastMonthColumn = column;
       }
       lastMonth = month;
 
       var value = Number(item[valueKey] || 0);
-      var rect = svgNode('rect', {
-        x: left + column * step,
-        y: top + weekday * step,
-        width: size,
-        height: size,
-        class: 'activity-cell level-' + levelFor(value, breaks),
-        tabindex: '-1'
-      });
-      var title = svgNode('title');
-      title.textContent = item.date + ': ' + value.toLocaleString('en-US') + ' ' + unitLabel;
-      rect.appendChild(title);
-      svg.appendChild(rect);
+      var cell = document.createElement('span');
+      cell.className = 'activity-cell level-' + levelFor(value, breaks);
+      cell.style.gridColumn = String(column + 2);
+      cell.style.gridRow = String(weekday + 2);
+      cell.title = item.date + ': ' + value.toLocaleString('en-US') + ' ' + unitLabel;
+      cell.setAttribute('role', 'img');
+      cell.setAttribute('aria-label', cell.title);
+      cell.setAttribute('tabindex', '-1');
+      cells.push(cell);
+      chart.appendChild(cell);
     });
 
-    element.replaceChildren(svg);
-    window.requestAnimationFrame(function () {
-      element.scrollLeft = element.scrollWidth;
+    var currentCell = cells.length - 1;
+    cells[currentCell].setAttribute('tabindex', '0');
+    chart.addEventListener('keydown', function (event) {
+      var active = cells.indexOf(document.activeElement);
+      if (active < 0) return;
+      var next = active;
+      if (event.key === 'ArrowRight') next += 7;
+      else if (event.key === 'ArrowLeft') next -= 7;
+      else if (event.key === 'ArrowDown') next += 1;
+      else if (event.key === 'ArrowUp') next -= 1;
+      else if (event.key === 'Home') next = 0;
+      else if (event.key === 'End') next = cells.length - 1;
+      else return;
+      event.preventDefault();
+      next = Math.max(0, Math.min(cells.length - 1, next));
+      cells[currentCell].setAttribute('tabindex', '-1');
+      cells[next].setAttribute('tabindex', '0');
+      cells[next].focus();
+      currentCell = next;
     });
+    element.replaceChildren(chart);
   }
 
   function updateActivity(payload) {

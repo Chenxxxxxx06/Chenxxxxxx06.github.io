@@ -1,10 +1,57 @@
 /* Requested additions only; original typography, layout and theme are retained. */
+/* Use scroll offsets without adding invisible space above every heading. */
+.page__content > h1 { margin: 32px 0 16px !important; padding-bottom: 0; scroll-margin-top: 76px; }
+.page__content > h1:first-of-type { margin-top: 8px !important; }
+.page__content > h1::before, .page__content .anchor::before, .page__content #about-me::before { content: none; display: none; }
+.page__content .anchor, .page__content #about-me { display: block; height: 0; margin: 0 !important; padding: 0; line-height: 0; scroll-margin-top: 76px; }
+.page__content > p:has(> .anchor:only-child) { height: 0; margin: 0 !important; line-height: 0; }
+.page__content > h2 { margin: 24px 0 12px; }
+.page__content > p { margin-bottom: 12px; }
+.page__content > blockquote { margin: 20px 0; }
+.page__content > hr { margin: 16px 0; }
+.page__content > hr + h1 { margin-top: 16px !important; }
+.page__content > ul:not(.research-topics), .news-wrapper > .news-content > ul { margin-top: 0; margin-bottom: 0; }
+.news-wrapper, .portfolio-showcase, .experience-timeline { margin-bottom: 0; }
+.placement-widget.placement-widget--terminal { margin-bottom: 0; }
+.sidebar .author__name { margin: 12px 0 6px !important; }
+.sidebar .author__bio { margin: 0 !important; line-height: 1.5; }
+.sidebar .author__direction { margin: 16px 0 0; }
+.sidebar .author__social-icons { margin: 10px 0 0; }
+.sidebar .visitor-map-widget { margin-top: 20px; }
+@media (max-width: 924px) {
+  .sidebar .author__name { margin-top: 0 !important; }
+  .sidebar .author__direction { margin-top: 12px; }
+}
 .experience-item__logo { border: 0; border-radius: 50%; box-shadow: none; background: transparent; }
 .experience-item__logo img { padding: 0; border-radius: 50%; box-shadow: none !important; }
 .experience-item--nwpu .experience-item__logo { background: #003b70; }
 .experience-item--nwpu .experience-item__logo img { padding: 2px; }
+.experience-item { min-height: 0; }
+.experience-item__content { padding-bottom: 24px; }
+.experience-item:last-child .experience-item__content { padding-bottom: 8px; }
+.experience-timeline { padding-bottom: 8px; }
+.experience-item__node, .experience-item__content { grid-row: 1; }
+@media (min-width: 601px) {
+  .experience-item:nth-child(even) .experience-item__content { grid-column: 1; grid-template-columns: minmax(0, 1fr) 46px; padding-right: 6px; padding-left: 0; text-align: right; }
+  .experience-item:nth-child(even) .experience-item__logo { grid-column: 2; grid-row: 1; }
+  .experience-item:nth-child(even) .experience-item__copy { grid-column: 1; grid-row: 1; }
+}
+.page__content .research-topics { margin: 16px 0 24px; padding: 0; list-style: none; }
+.page__content .research-topics li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 12px; align-items: baseline; margin: 0 0 14px; line-height: 1.7; }
+.research-topics li > i { color: #5a8171; font-size: .95em; text-align: center; }
+.research-topics li:nth-child(2) > i { color: #54799d; }
+.research-topics li:nth-child(3) > i { color: #8b709b; }
+.research-topics li:nth-child(4) > i { color: #ad8654; }
+[data-theme="dark"] .research-topics li > i { filter: brightness(1.4); }
 .portfolio-card__media--generated { background: #f2f3ed; }
 .portfolio-card__media--generated .portfolio-card__image { object-position: center; }
+.portfolio-project-brand { position: absolute; z-index: 3; top: 12px; left: 12px; display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 3px 10px; border: 1px solid rgba(28, 43, 37, .12); border-radius: 6px; color: #21352d; background: #fafbf5; font-size: 13px; font-weight: 700; line-height: 1; }
+.portfolio-project-brand img { display: block; object-fit: contain; box-shadow: none !important; border-radius: 0; }
+.portfolio-project-brand--argus { padding: 1px 8px; }
+.portfolio-project-brand--pet { padding-left: 4px; }
+.portfolio-card__footer { justify-content: flex-end; }
+.page__content .portfolio-card__desc { padding-bottom: 18px; }
+.portfolio-card__open { opacity: .8; transform: none; }
 .activity-updated[hidden] { display: none !important; }
 .placement-terminal__prompt .placement-terminal__prompt-input,
 .placement-terminal__prompt .placement-terminal__prompt-input:focus { border: 0; outline: 0; box-shadow: none; }

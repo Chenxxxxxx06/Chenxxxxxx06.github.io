@@ -19,7 +19,7 @@
     widget.querySelector('[data-placement-ask-input]').disabled = busy;
     const submit = widget.querySelector('[data-placement-ask-submit]');
     submit.disabled = busy;
-    submit.textContent = busy ? 'One sec…' : 'Ask ↵';
+    submit.textContent = busy ? '…' : 'enter ↵';
     widget.querySelectorAll('[data-placement-suggestion]').forEach(function (button) { button.disabled = busy; });
     widget.setAttribute('aria-busy', busy ? 'true' : 'false');
   }
@@ -33,7 +33,6 @@
     widget.querySelector('[data-placement-ask-answer]').hidden = !output;
     widget.querySelector('[data-placement-terminal-output]').textContent = output;
     widget.querySelector('[data-placement-ask-status]').textContent = status;
-    widget.querySelector('[data-placement-ask-badge]').textContent = askEndpoint(widget) ? 'Public profile' : 'Public notes';
     const sources = widget.querySelector('[data-placement-ask-sources]');
     sources.replaceChildren();
     sources.hidden = true;
@@ -95,7 +94,7 @@
 
   function answerFromNotes(data, question) {
     const query = question.normalize('NFKC').replace(/[\u200B-\u200D\u2060\uFEFF]/g, '').replace(/\s+/g, ' ').trim();
-    const locale = /[\u3400-\u9fff]/.test(query) || (document.documentElement.lang || '').toLowerCase().startsWith('zh') ? 'zh' : 'en';
+    const locale = 'en';
     function decline(reason, status) {
       return { status: status || 'refused', answer: data.responses[reason][locale], sources: [] };
     }
@@ -141,7 +140,7 @@
         const response = await fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ query: question, locale: document.documentElement.lang || 'en' }),
+          body: JSON.stringify({ query: question, locale: 'en' }),
           signal: controller.signal
         });
         payload = await response.json();

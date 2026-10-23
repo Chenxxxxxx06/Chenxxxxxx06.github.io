@@ -17,6 +17,7 @@ function environment(ids = []) {
       this.events = new Map();
       this.children = [];
       this.dataset = {};
+      this.style = { setProperty(name, value) { this[name] = String(value); } };
       this.textContent = '';
       const classes = new Set();
       this.classList = {
@@ -48,7 +49,11 @@ function environment(ids = []) {
   document.activeElement = document.body;
   document.visibilityState = 'visible';
   document.getElementById = (id) => nodes.get(id) || null;
-  document.createElement = () => new Element();
+  document.createElement = (name) => {
+    const element = new Element();
+    element.tagName = name;
+    return element;
+  };
   document.createElementNS = (_namespace, name) => {
     const element = new Element();
     element.tagName = name;
@@ -168,7 +173,7 @@ test('activity retries without overlapping requests and preserves the newest sna
   assert.equal(env.nodes.get('activityUpdated').textContent, '');
 });
 
-test('activity renders a sized heatmap cell for every recorded day', async () => {
+test('activity renders an HTML calendar cell for every recorded day, including zeros', async () => {
   const payload = snapshot();
   payload.github.days.push({ date: '2026-10-21', count: 0 });
   payload.ai.days = [{ date: '2026-10-19', tokens: 17 }];
@@ -177,18 +182,44 @@ test('activity renders a sized heatmap cell for every recorded day', async () =>
   env.start();
   await settle();
   for (const [id, expected] of [['githubHeatmap', 2], ['tokenHeatmap', 1]]) {
-    const svg = env.nodes.get(id).children[0];
-    assert.equal(svg.tagName, 'svg');
-    const cells = svg.children.filter((node) => node.tagName === 'rect');
+    const chart = env.nodes.get(id).children[0];
+    assert.equal(chart.tagName, 'div');
+    assert.equal(chart.className, 'activity-heatmap__chart');
+    const cells = chart.children.filter((node) => node.className.startsWith('activity-cell '));
     assert.equal(cells.length, expected);
     for (const cell of cells) {
-      assert.ok(Number(cell.getAttribute('width')) > 0);
-      assert.ok(Number(cell.getAttribute('height')) > 0);
-      assert.match(cell.getAttribute('class'), /^activity-cell level-[0-4]$/);
-      assert.ok(cell.children[0].textContent.length > 0);
+      assert.equal(cell.tagName, 'span');
+      assert.ok(Number(cell.style.gridColumn) >= 2);
+      assert.ok(Number(cell.style.gridRow) >= 2 && Number(cell.style.gridRow) <= 8);
+      assert.match(cell.className, /^activity-cell level-[0-4]$/);
+      assert.equal(cell.getAttribute('aria-label'), cell.title);
+      assert.ok(cell.title.length > 0);
     }
+    assert.equal(cells.filter((cell) => cell.getAttribute('tabindex') === '0').length, 1);
   }
+  const githubCells = env.nodes.get('githubHeatmap').children[0].children
+    .filter((node) => node.className.startsWith('activity-cell '));
+  assert.equal(githubCells[0].className, 'activity-cell level-0');
+  assert.equal(githubCells[0].style.gridRow, '5'); // Wednesday, 2026-10-21.
   assert.equal(env.nodes.get('activityUpdated').hidden, true);
+});
+
+test('activity supports day/week keyboard navigation with one tab stop per chart', async () => {
+  const payload = snapshot();
+  payload.github.days = Array.from({ length: 10 }, (_, i) => ({ date: '2026-10-' + (13 + i), count: i }));
+  const env = activity(payload);
+  env.start();
+  await settle();
+  const chart = env.nodes.get('githubHeatmap').children[0];
+  const cells = chart.children.filter((node) => node.className.startsWith('activity-cell '));
+  cells.at(-1).focus();
+  for (const [key, index] of [['Home', 0], ['ArrowRight', 7], ['ArrowDown', 8], ['ArrowUp', 7], ['ArrowLeft', 0], ['End', 9]]) {
+    let prevented = false;
+    chart.emit('keydown', { key, preventDefault() { prevented = true; } });
+    assert.equal(prevented, true);
+    assert.equal(env.document.activeElement, cells[index]);
+    assert.equal(cells.filter((cell) => cell.getAttribute('tabindex') === '0').length, 1);
+  }
 });
 
 test('activity aborts a stuck request and allows the next refresh', async () => {

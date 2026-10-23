@@ -1,0 +1,32 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-10-23",
+  "assets": [
+    {
+      "id": "argus-pixel",
+      "prompt": "Use case: stylized-concept. Generate a new horizontal 16:9 pixel-art cover for a small portfolio card. Authentic hand-crafted 16-bit game pixel art: large clearly visible square pixels, crisp stair-step edges, very limited palette, flat pixel clusters, simple charming readable composition, NOT 3D rendering, NOT realistic, NOT clay, NOT a smooth vector illustration. Wide scene with the meaningful subject centered in the lower two-thirds, quiet space along upper edge reserved for a separately overlaid original project logo. Muted forest green, deep teal, warm ivory, soft gold accents. Beautiful restrained indie-game art, with tiny purposeful details. No lettering, words, numbers, watermarks, invented logos or UI labels. No decorative frame. Scene: a cozy late-night computer workstation in a small research studio. Four compact screens and a planning pinboard connected by a tidy cable loop, a neatly filed archive below. One screen shows abstract code strokes, another a small pixel checkmark. Symbolizes an autonomous system that plans, executes, reviews, remembers and resumes long tasks. Warm desk light, dark teal room. Avoid people and robots; keep distinct silhouettes readable at thumbnail size.",
+      "file": "argus-pixel.webp"
+    },
+    {
+      "id": "labvla-pixel",
+      "prompt": "Use case: stylized-concept. Generate a new horizontal 16:9 pixel-art cover for a small portfolio card. Authentic hand-crafted 16-bit game pixel art: large clearly visible square pixels, crisp stair-step edges, very limited palette, flat pixel clusters, simple charming readable composition, NOT 3D rendering, NOT realistic, NOT clay, NOT a smooth vector illustration. Wide scene with the meaningful subject centered in the lower two-thirds, quiet space along upper edge reserved for a separately overlaid original project logo. Muted forest green, deep teal, warm ivory, soft gold accents. Beautiful restrained indie-game art, with tiny purposeful details. No lettering, words, numbers, watermarks, invented logos or UI labels. No decorative frame. Scene: a clean scientific laboratory in side-on game view. A compact articulated robot arm with a two-finger gripper carefully transfers a glass vial near a flask and small rack of test tubes on a lab bench. Pale sage walls, teal apparatus, warm highlights. A small blank protocol card sits on the bench. Accurate obvious robotics-and-lab subject. No humanoid robot.",
+      "file": "labvla-pixel.webp"
+    },
+    {
+      "id": "minimax-h3-pixel",
+      "prompt": "Use case: stylized-concept. Generate a new horizontal 16:9 pixel-art cover for a small portfolio card. Authentic hand-crafted 16-bit game pixel art: large clearly visible square pixels, crisp stair-step edges, very limited palette, flat pixel clusters, simple charming readable composition, NOT 3D rendering, NOT realistic, NOT clay, NOT a smooth vector illustration. Wide scene with the meaningful subject centered in the lower two-thirds, quiet space along upper edge reserved for a separately overlaid original project logo. Muted forest green, deep teal, warm ivory, soft gold accents. Beautiful restrained indie-game art, with tiny purposeful details. No lettering, words, numbers, watermarks, invented logos or UI labels. No decorative frame. Scene: a single desktop graphics card on a computer workbench generating three small cinematic frames of a mountain landscape and a crisp sound-wave ribbon. The GPU is one clear central object; film frames form an orderly arc above it with a pixel audio waveform below. Dark teal studio, ivory equipment and muted gold highlights. Convey audio-video generation on one GPU, not a space scene.",
+      "file": "minimax-h3-pixel.webp"
+    },
+    {
+      "id": "ironrock-pixel",
+      "prompt": "Use case: stylized-concept. Generate a new horizontal 16:9 pixel-art cover for a small portfolio card. Authentic hand-crafted 16-bit game pixel art: large clearly visible square pixels, crisp stair-step edges, very limited palette, flat pixel clusters, simple charming readable composition, NOT 3D rendering, NOT realistic, NOT clay, NOT a smooth vector illustration. Wide scene with the meaningful subject centered in the lower two-thirds, quiet space along upper edge reserved for a separately overlaid original project logo. Muted forest green, deep teal, warm ivory, soft gold accents. Beautiful restrained indie-game art, with tiny purposeful details. No lettering, words, numbers, watermarks, invented logos or UI labels. No decorative frame. Scene: the reference desktop companion translated into authentic low-resolution 16-bit pixel art, recognizable young male mascot with neat short black hair, black glasses, navy suit, holding a notebook. He stands beside a miniature computer and neatly sorted documents in a cozy lab office. A few blank paper sheets lead into an archive drawer, hinting at local knowledge retrieval. Preserve the recognizable reference character and navy outfit, but render the entire new scene as crisp pixel art. Ivory/sage office, friendly calm mood.",
+      "reference": "../ironrock-pet.webp",
+      "file": "ironrock-pixel.webp"
+    },
+    {
+      "id": "feng-pixel",
+      "prompt": "Use case: stylized-concept. Generate a new horizontal 16:9 pixel-art cover for a small portfolio card. Authentic hand-crafted 16-bit game pixel art: large clearly visible square pixels, crisp stair-step edges, very limited palette, flat pixel clusters, simple charming readable composition, NOT 3D rendering, NOT realistic, NOT clay, NOT a smooth vector illustration. Wide scene with the meaningful subject centered in the lower two-thirds, quiet space along upper edge reserved for a separately overlaid original project logo. Muted forest green, deep teal, warm ivory, soft gold accents. Beautiful restrained indie-game art, with tiny purposeful details. No lettering, words, numbers, watermarks, invented logos or UI labels. No decorative frame. Scene: a peaceful wind farm of three white three-blade turbines on grassy green hills under a pale sky, shown in charming 16-bit side-view landscape style. A tiny diagnostic workstation in the lower foreground has a simple waveform and maintenance wrench symbol. Readable turbine shapes, forest green terrain, turquoise sky, ivory clouds. Convey health monitoring and predictive maintenance without any numeric measurements.",
+      "file": "feng-pixel.webp"
+    }
+  ]
+}

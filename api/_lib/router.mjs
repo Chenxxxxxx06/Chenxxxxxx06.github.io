@@ -92,7 +92,7 @@ export async function routeWithQwen(query, options = {}) {
   const fetchImpl = options.fetchImpl || globalThis.fetch;
   if (typeof fetchImpl !== 'function') throw new RouterConfigurationError('fetch is unavailable');
 
-  const model = options.model || process.env.ASK_CHEN_MODEL || 'qwen3.8-flash';
+  const model = options.model || process.env.ASK_CHEN_MODEL || 'qwen3.8-max-0902';
   const baseUrl = options.baseUrl || process.env.DASHSCOPE_BASE_URL || 'https://dashscope.aliyuncs.com/compatible-mode/v1';
   const timeoutMs = Number(options.timeoutMs || 16000);
   const controller = new AbortController();

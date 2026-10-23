@@ -9,7 +9,7 @@ url                      : "https://chenxxxxxx06.github.io"
 # Ask Chen API. Keep credentials on the server; this is only the public endpoint.
 # Use an absolute serverless URL when the site is deployed on GitHub Pages.
 ask_chen:
-  endpoint: ""
+  endpoint: "https://chenxi-ask-public-api.cxx2216.chatgpt.site/api/ask"
 
 # SEO Related
 google_site_verification :
@@ -20,6 +20,9 @@ baidu_site_verification  :
 author:
   name          : "Chen Xi"
   avatar        : "images/avatar.jpg"
+  photos:
+    - "assets/images/profile/photo-02.jpg"
+    - "assets/images/profile/photo-03.jpg"
   email         : "chenxxxxxx@mail.nwpu.edu.cn"
   googlescholar : ""
   github        : "Chenxxxxxx06"

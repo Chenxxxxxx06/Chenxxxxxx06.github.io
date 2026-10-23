@@ -6,6 +6,8 @@ const URL_LIKE = /(?:https?:\/\/|www\.)/i;
 const LONG_ENCODED_BLOCK = /[A-Za-z0-9+/=_-]{96,}/;
 
 const SENSITIVE_PATTERNS = Object.freeze([
+  /\b(?:api|access|auth|bearer|service)[\s_-]*(?:key|token)\b|\bcredentials?\b|\bsecrets?\b|environment\s+variables|\.env\b|\bsk-ws-/i,
+  /\b(?:full|complete|entire|raw)\s+(?:cv|resume|résumé)\b|\b(?:send|give|show|share|download)\b.{0,25}\b(?:cv|resume|résumé)\b/i,
   /排名|名次|第\s*几(?:名)?|百分位|保研位次|年级前\s*\d+/i,
   /绩点|成绩|分数|考分|每门课|逐门|考试结果|高考|四六级/i,
   /\b(?:rank(?:ing)?|percentile|g\s*[._-]?\s*p\s*[._-]?\s*a|grade|score|transcript)\b/i,
@@ -28,6 +30,7 @@ const COMPACT_SENSITIVE = Object.freeze([
 ]);
 
 const INJECTION_PATTERNS = Object.freeze([
+  /<\|(?:system|developer|assistant|im_start|im_end)[^>]*>|\[\/?INST\]|\[SYSTEM\]|(?:^|\s)(?:system|developer)\s*:/i,
   /ignore\s+(?:all\s+)?(?:previous|prior|above)\s+(?:instructions?|rules?)/i,
   /forget\s+(?:the\s+)?(?:previous|prior|above)\s+(?:instructions?|rules?)/i,
   /system\s+prompt|developer\s+message|hidden\s+prompt|reveal\s+.*instructions?/i,
@@ -59,8 +62,8 @@ export function normalizeQuery(value) {
 }
 
 export function selectLocale(query, requestedLocale) {
-  if (/\p{Script=Han}/u.test(query)) return 'zh';
-  return typeof requestedLocale === 'string' && requestedLocale.toLowerCase().startsWith('zh') ? 'zh' : 'en';
+  // Questions may use any language; every public answer is English.
+  return 'en';
 }
 
 export function validatePayload(payload) {

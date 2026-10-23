@@ -75,7 +75,7 @@ const server = createServer(async (req, res) => {
   if (requestUrl.pathname === '/api/health') {
     return sendJson(res, 200, {
       status: 'ok',
-      model: process.env.ASK_CHEN_MODEL || 'qwen3.8-flash',
+      model: process.env.ASK_CHEN_MODEL || 'qwen3.8-max-0902',
       keyConfigured: Boolean(process.env.DASHSCOPE_API_KEY)
     });
   }
@@ -103,7 +103,7 @@ const host = '127.0.0.1';
 const port = Number(process.env.ASK_CHEN_PORT || 4000);
 server.listen(port, host, () => {
   console.log(`ASK_CHEN_PREVIEW=http://${host}:${port}/`);
-  console.log(`ASK_CHEN_MODEL=${process.env.ASK_CHEN_MODEL || 'qwen3.8-flash'}`);
+  console.log(`ASK_CHEN_MODEL=${process.env.ASK_CHEN_MODEL || 'qwen3.8-max-0902'}`);
   console.log(`DASHSCOPE_KEY_CONFIGURED=${process.env.DASHSCOPE_API_KEY ? 1 : 0}`);
 });
 
