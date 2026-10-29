@@ -8,13 +8,14 @@
 
 <script>
   document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  try {
+    var theme = localStorage.getItem('site-theme');
+    if (['yellow', 'blue', 'dark'].indexOf(theme) !== -1) document.documentElement.setAttribute('data-theme', theme);
+  } catch (_) {}
 </script>
 
 <!-- For all browsers -->
 <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v=20261023-original-restored">
 
 <meta http-equiv="cleartype" content="on">
-{% if page.url == '/' %}
-{% include arrival-head.html %}
-{% endif %}
 <base target="_blank">
