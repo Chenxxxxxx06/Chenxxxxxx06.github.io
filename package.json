@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "test": "node --test tests/*.test.mjs",
-    "preview": "node scripts/ask-preview-server.mjs",
+    "preview": "node scripts/preview-server.mjs",
     "sync:preview": "node scripts/sync-preview.mjs"
   }
 }
